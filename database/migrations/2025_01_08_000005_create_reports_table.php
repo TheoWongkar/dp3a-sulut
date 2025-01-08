@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('reports', function (Blueprint $table) {
             $table->id();
-            $table->string('ticket_number')->unique();
             $table->foreignId('employee_id')->constrained('employees')->onDelete('cascade');
+            $table->string('ticket_number')->unique();
             $table->string('violence_category');
             $table->string('description');
             $table->date('date');
@@ -56,8 +56,8 @@ return new class extends Migration
         Schema::create('statuses', function (Blueprint $table) {
             $table->id();
             $table->foreignId('report_id')->constrained('reports')->onDelete('cascade');
-            $table->enum('status', ['Diterima', 'Diproses', 'Selesai', 'Dibatalkan']);
-            $table->string('description');
+            $table->enum('status', ['Diterima', 'Diproses', 'Selesai', 'Dibatalkan'])->default('Diterima');
+            $table->string('description')->default('Laporan diterima, menunggu persetujuan admin.');
             $table->timestamps();
         });
     }

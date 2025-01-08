@@ -20,7 +20,6 @@ class Employee extends Model
         'gender',
         'position',
         'profile_picture',
-        'status',
     ];
 
     public function user()

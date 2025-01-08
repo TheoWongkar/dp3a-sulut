@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Employee;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,13 @@ class ReportFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'employee_id' => Employee::inRandomOrder()->first()->id,
+            'ticket_number' => fake()->unique()->numerify('TICKET-####'),
+            'violence_category' => fake()->randomElement(['Kekerasan Fisik', 'Kekerasan Psikis', 'Kekerasan Seksual', 'Kekerasan Verbal']),
+            'description' => fake()->paragraph(1, true),
+            'date' => fake()->date(),
+            'scene' => fake()->address(),
+            'evidence' => fake()->word(),
         ];
     }
 }

@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Employee;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,8 +18,16 @@ class PostFactory extends Factory
      */
     public function definition(): array
     {
+        $title = fake()->sentence(6, true);
+
         return [
-            //
+            'employee_id' => Employee::inRandomOrder()->first()->id,
+            'title' => $title,
+            'slug' => Str::slug($title),
+            'excerpt' => fake()->text(100),
+            'body' => fake()->paragraphs(2, true),
+            'image' => fake()->imageUrl(640, 480, 'posts', true, 'Post Image'),
+            'status' => fake()->boolean(90),
         ];
     }
 }

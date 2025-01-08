@@ -21,7 +21,6 @@ return new class extends Migration
             $table->enum('gender', ['Pria', 'Wanita']);
             $table->string('position');
             $table->string('profile_picture')->nullable();
-            $table->boolean('status')->default(true);
             $table->softDeletes();
             $table->timestamps();
         });

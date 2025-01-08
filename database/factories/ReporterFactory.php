@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Report;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,11 @@ class ReporterFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'report_id' => Report::inRandomOrder()->first()->id,
+            'whatsapp' => fake()->optional()->phoneNumber(),
+            'telegram' => fake()->optional()->userName(),
+            'instagram' => fake()->optional()->userName(),
+            'email' => fake()->optional()->safeEmail(),
         ];
     }
 }

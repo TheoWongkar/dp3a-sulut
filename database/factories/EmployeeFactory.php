@@ -17,7 +17,14 @@ class EmployeeFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'nip' => fake()->unique()->numerify('##################'),
+            'name' => fake()->name(),
+            'phone' => fake()->optional()->numerify('08###########'),
+            'address' => fake()->address(),
+            'date_of_birth' => fake()->date(),
+            'gender' => fake()->randomElement(['Pria', 'Wanita']),
+            'position' => fake()->jobTitle(),
+            'profile_picture' => fake()->optional()->imageUrl(200, 200, 'people', true, 'Profile Picture'),
         ];
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Report;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,11 @@ class VictimFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'report_id' => Report::inRandomOrder()->first()->id,
+            'name' => fake()->name(),
+            'age' => fake()->numberBetween(18, 80),
+            'gender' => fake()->randomElement(['Pria', 'Wanita']),
+            'description' => fake()->paragraph(),
         ];
     }
 }
