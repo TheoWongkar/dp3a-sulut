@@ -9,4 +9,19 @@ class Post extends Model
 {
     /** @use HasFactory<\Database\Factories\PostFactory> */
     use HasFactory;
+
+    protected $fillable = [
+        'employee_id',
+        'title',
+        'slug',
+        'excerpt',
+        'body',
+        'image',
+        'status',
+    ];
+
+    public function employee()
+    {
+        return $this->belongsTo(Employee::class);
+    }
 }

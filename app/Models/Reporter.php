@@ -9,4 +9,17 @@ class Reporter extends Model
 {
     /** @use HasFactory<\Database\Factories\ReporterFactory> */
     use HasFactory;
+
+    protected $fillable = [
+        'report_id',
+        'whatsapp',
+        'telegram',
+        'instagram',
+        'email',
+    ];
+
+    public function report()
+    {
+        return $this->belongsTo(Report::class);
+    }
 }

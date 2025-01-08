@@ -9,4 +9,17 @@ class Perpetrator extends Model
 {
     /** @use HasFactory<\Database\Factories\PerpetratorFactory> */
     use HasFactory;
+
+    protected $fillable = [
+        'report_id',
+        'name',
+        'age',
+        'relationship_between',
+        'description',
+    ];
+
+    public function report()
+    {
+        return $this->belongsTo(Report::class);
+    }
 }
