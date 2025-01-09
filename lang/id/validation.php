@@ -276,5 +276,24 @@ return [
         'winner'                   => 'winner',
         'work'                     => 'work',
         'year'                     => 'tahun',
+
+        'violence_category'        => 'jenis kekerasan',
+        'scene'                    => 'tempat kejadian',
+        'evidence'                 => 'bukti pendukung',
+
+        'victim_name'              => 'nama korban',
+        'victim_age'               => 'usia korban',
+        'victim_gender'            => 'jenis kelamin korban',
+        'victim_description'       => 'deskripsi korban',
+
+        'perpetrator_name'         => 'nama pelaku',
+        'perpetrator_age'          => 'usia pelaku',
+        'relationship_between'     => 'hubungan pelaku dengan korban',
+        'perpetrator_description'  => 'deskripsi pelaku',
+
+        'reporter_whatsapp'        => 'whatsapp pelapor',
+        'reporter_telegram'        => 'telegram pelapor',
+        'reporter_instagram'       => 'instagram pelapor',
+        'reporter_email'           => 'email pelapor',
     ],
 ];

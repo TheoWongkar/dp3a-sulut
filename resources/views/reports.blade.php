@@ -11,6 +11,18 @@
             <div>
                 <form action="{{ route('reports.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
+                    <!-- Menampilkan Semua Pesan Error -->
+                    @if ($errors->any())
+                        <h3 class="text-red-500 font-semibold text-left">Mohon diperhatikan:</h3>
+                        <div class="text-red-500 mb-4">
+                            <ul class="list-inside list-disc text-left">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
                     <!-- Step 1: Laporan Kekerasan -->
                     <div x-cloak x-show="step === 1">
                         <h2 class="text-lg font-bold mb-6">Formulir Laporan Kekerasan</h2>
@@ -20,7 +32,7 @@
                                 Jenis Kekerasan <span class="text-red-500">*</span>
                             </label>
                             <div class="md:col-span-2">
-                                <select id="violence_category" name="violence_category" required
+                                <select id="violence_category" name="violence_category"
                                     class="w-full p-2 bg-[#DCE8FF] rounded-lg border-[#DCE8FF] focus:border-blue-400">
                                     <option selected disabled>Pilih jenis kekerasan</option>
                                     <option value="Kekerasan Fisik">Kekerasan Fisik</option>
@@ -29,53 +41,38 @@
                                     <option value="Penelantaran Anak">Penelantaran Anak</option>
                                     <option value="Eksploitasi Anak">Eksploitasi Anak</option>
                                 </select>
-                                @error('violence_category')
-                                    <p class="text-sm text-red-500">{{ $message }}</p>
-                                @enderror
                             </div>
-
                             <!-- Deskripsi Insiden -->
                             <label for="description" class="block text-sm font-medium text-left">
                                 Deskripsi Insiden <span class="text-red-500">*</span>
                             </label>
                             <div class="md:col-span-2">
-                                <textarea id="description" name="description" rows="4" required
+                                <textarea id="description" name="description" rows="4"
                                     class="w-full p-2 bg-[#DCE8FF] rounded-lg border-[#DCE8FF] focus:border-blue-400"></textarea>
-                                @error('description')
-                                    <p class="text-sm text-red-500">{{ $message }}</p>
-                                @enderror
                             </div>
-
                             <!-- Tanggal Kejadian -->
                             <label for="date" class="block text-sm font-medium text-left">
                                 Tanggal Kejadian <span class="text-red-500">*</span>
                             </label>
                             <div class="md:col-span-2">
-                                <input type="date" id="date" name="date" required
+                                <input type="date" id="date" name="date"
                                     class="w-full p-2 bg-[#DCE8FF] rounded-lg border-[#DCE8FF] focus:border-blue-400">
-                                @error('date')
-                                    <p class="text-sm text-red-500">{{ $message }}</p>
-                                @enderror
                             </div>
-
                             <!-- Tempat Kejadian -->
                             <label for="scene" class="block text-sm font-medium text-left">
                                 Tempat Kejadian <span class="text-red-500">*</span>
                             </label>
                             <div class="md:col-span-2">
-                                <textarea id="scene" name="scene" rows="4" required
+                                <textarea id="scene" name="scene" rows="4"
                                     class="w-full p-2 bg-[#DCE8FF] rounded-lg border-[#DCE8FF] focus:border-blue-400"></textarea>
-                                @error('scene')
-                                    <p class="text-sm text-red-500">{{ $message }}</p>
-                                @enderror
                             </div>
-
                             <!-- Bukti Pendukung -->
                             <label for="evidence" class="block text-sm font-medium text-left">
                                 Bukti Pendukung <span class="text-red-500">*</span>
                             </label>
                             <div class="md:col-span-1 mb-5">
-                                <div x-data="{ files: null, isDropping: false, previewUrl: null }" class="border-4 p-6 text-center bg-white rounded-md"
+                                <div x-cloak x-data="{ files: null, isDropping: false, previewUrl: null }"
+                                    class="border-4 p-6 text-center bg-white rounded-md"
                                     :class="{ 'border-blue-500': isDropping, 'border-[#DCE8FF]': !isDropping }"
                                     x-on:dragover.prevent="isDropping = true"
                                     x-on:dragleave.prevent="isDropping = false"
@@ -84,13 +81,12 @@
                                         files = $event.dataTransfer.files;
                                         previewUrl = URL.createObjectURL(files[0]);
                                     ">
-                                    <input type="file" id="evidence" name="evidence" required class="hidden"
+                                    <input type="file" id="evidence" name="evidence" class="hidden"
                                         accept="image/png, image/jpeg, image/jpg" x-ref="file"
                                         x-on:change="
                                             files = $event.target.files;
                                             previewUrl = URL.createObjectURL(files[0]);
                                         ">
-
                                     <!-- Placeholder -->
                                     <div x-show="!previewUrl" x-on:click="$refs.file.click()"
                                         class="cursor-pointer inline">
@@ -106,7 +102,6 @@
                                         <p class="text-xs text-red-500 mt-1">JPG/PNG</p>
                                         <p class="text-xs text-red-500 mt-1">Ukuran File 40 KB - 100 KB</p>
                                     </div>
-
                                     <!-- Image Preview -->
                                     <template x-if="previewUrl">
                                         <div class="mt-1">
@@ -121,7 +116,7 @@
                     </div>
 
                     <!-- Step 2: Data Korban -->
-                    <div x-show="step === 2" x-cloak>
+                    <div x-cloak x-show="step === 2">
                         <h2 class="text-lg font-bold mb-6">Formulir Data Korban</h2>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
                             <!-- Nama Korban -->
@@ -129,47 +124,44 @@
                                 Nama Korban <span class="text-red-500">*</span>
                             </label>
                             <div class="md:col-span-2">
-                                <input type="text" id="victim_name" name="victim_name" required
+                                <input type="text" id="victim_name" name="victim_name"
                                     placeholder="Masukkan nama korban"
                                     class="w-full p-2 bg-[#DCE8FF] rounded-lg border-[#DCE8FF] focus:border-blue-400">
                             </div>
-
                             <!-- Usia Korban -->
                             <label for="victim_age" class="block text-sm font-medium text-left">
                                 Usia Korban <span class="text-red-500">*</span>
                             </label>
                             <div class="md:col-span-2">
-                                <input type="number" id="victim_age" name="victim_age" required
+                                <input type="number" id="victim_age" name="victim_age"
                                     placeholder="Masukkan usia korban"
                                     class="w-full p-2 bg-[#DCE8FF] rounded-lg border-[#DCE8FF] focus:border-blue-400">
                             </div>
-
                             <!-- Jenis Kelamin Korban -->
                             <label for="victim_gender" class="block text-sm font-medium text-left">
                                 Jenis Kelamin Korban <span class="text-red-500">*</span>
                             </label>
                             <div class="md:col-span-2">
-                                <select id="victim_gender" name="victim_gender" required
+                                <select id="victim_gender" name="victim_gender"
                                     class="w-full p-2 bg-[#DCE8FF] rounded-lg border-[#DCE8FF] focus:border-blue-400">
                                     <option selected disabled>Pilih jenis kelamin korban</option>
                                     <option value="Pria">Pria</option>
                                     <option value="Wanita">Wanita</option>
                                 </select>
                             </div>
-
                             <!-- Deskripsi Tambahan Mengenai Korban -->
                             <label for="victim_description" class="block text-sm font-medium text-left">
                                 Deskripsi Tambahan Mengenai Korban
                             </label>
                             <div class="md:col-span-2">
-                                <textarea id="victim_description" name="victim_description" rows="4" required
+                                <textarea id="victim_description" name="victim_description" rows="4"
                                     class="w-full p-2 bg-[#DCE8FF] rounded-lg border-[#DCE8FF] focus:border-blue-400"></textarea>
                             </div>
                         </div>
                     </div>
 
                     <!-- Step 3: Data Pelaku -->
-                    <div x-show="step === 3" x-cloak>
+                    <div x-cloak x-show="step === 3">
                         <h2 class="text-lg font-bold mb-6">Formulir Data Pelaku</h2>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
                             <!-- Nama Pelaku -->
@@ -181,7 +173,6 @@
                                     placeholder="Masukkan nama pelaku"
                                     class="w-full p-2 bg-[#DCE8FF] rounded-lg border-[#DCE8FF] focus:border-blue-400">
                             </div>
-
                             <!-- Usia Pelaku -->
                             <label for="perpetrator_age" class="block text-sm font-medium text-left">
                                 Usia Pelaku
@@ -191,8 +182,7 @@
                                     placeholder="Masukkan usia pelaku"
                                     class="w-full p-2 bg-[#DCE8FF] rounded-lg border-[#DCE8FF] focus:border-blue-400">
                             </div>
-
-                            <!-- Hubungan Antara Pelaku Dengan Korban -->
+                            <!-- Hubungan Pelaku Dengan Korban -->
                             <label for="relationship_between" class="block text-sm font-medium text-left">
                                 Hubungan Pelaku Dengan Korban
                             </label>
@@ -207,7 +197,6 @@
                                     <option value="Lainnya">Lainnya</option>
                                 </select>
                             </div>
-
                             <!-- Deskripsi Tambahan Mengenai Pelaku -->
                             <label for="perpetrator_description" class="block text-sm font-medium text-left">
                                 Deskripsi Tambahan Mengenai Pelaku
@@ -220,7 +209,7 @@
                     </div>
 
                     <!-- Step 4: Data Pelapor -->
-                    <div x-show="step === 4" x-cloak>
+                    <div x-cloak x-show="step === 4">
                         <h2 class="text-lg font-bold mb-6">Formulir Data Pelapor</h2>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
                             <!-- Whatsapp -->
@@ -232,7 +221,6 @@
                                     placeholder="08XXXXXXXXXX"
                                     class="w-full p-2 bg-[#DCE8FF] rounded-lg border-[#DCE8FF] focus:border-blue-400">
                             </div>
-
                             <!-- Telegram -->
                             <label for="reporter_telegram" class="block text-sm font-medium text-left">
                                 Telegram
@@ -242,7 +230,6 @@
                                     placeholder="08XXXXXXXXXX"
                                     class="w-full p-2 bg-[#DCE8FF] rounded-lg border-[#DCE8FF] focus:border-blue-400">
                             </div>
-
                             <!-- Instagram -->
                             <label for="reporter_instagram" class="block text-sm font-medium text-left">
                                 Instagram
@@ -252,7 +239,6 @@
                                     placeholder="@xxx123"
                                     class="w-full p-2 bg-[#DCE8FF] rounded-lg border-[#DCE8FF] focus:border-blue-400">
                             </div>
-
                             <!-- Email -->
                             <label for="reporter_email" class="block text-sm font-medium text-left">
                                 Instagram
@@ -266,7 +252,7 @@
                     </div>
 
                     <!-- Step 5: Kirim Laporan -->
-                    <div x-show="step === 5" x-cloak>
+                    <div x-cloak x-show="step === 5">
                         <h2 class="text-lg font-bold mb-6">Formulir Laporan Kekerasan</h2>
                         <div class="text-sm md:text-lg">
                             <h3 class="font-bold text-center">Terima Kasih Telah Melakukan
@@ -280,25 +266,26 @@
 
                     <!-- Navigation Buttons -->
                     <div class="flex justify-between mt-6 text-sm">
-                        <button type="button" x-show="step > 1 && step <= 4" @click="step--"
+                        <button type="button" x-cloak x-show="step > 1 && step <= 4" @click="step--"
                             class="bg-gray-800 text-white py-2 px-6 rounded-md font-semibold hover:bg-gray-700 transition">
                             KEMBALI
                         </button>
 
-                        <button type="button" x-show="step <= 4" @click="step++"
+                        <button type="button" x-cloak x-show="step <= 4" @click="step++"
                             class="bg-[#141652] text-white py-2 px-6 rounded-md font-semibold hover:bg-blue-900 transition">
                             SELANJUTNYA
                         </button>
 
                     </div>
                     <div class="flex items-center justify-center text-sm">
-                        <button type="submit" x-show="step === 5"
+                        <button type="submit" x-cloak x-show="step === 5"
                             class="bg-[#141652] text-white py-2 px-6 rounded-md font-semibold hover:bg-blue-900 transition">
                             KIRIM LAPORAN
                         </button>
                     </div>
 
-                    <p class="text-sm text-red-500 mt-4" x-show="step <= 4">* Bertanda Pertanyaan yang wajib diisi
+                    <p class="text-sm text-red-500 mt-4" x-cloak x-show="step <= 4">* Bertanda Pertanyaan yang wajib
+                        diisi
                     </p>
                 </form>
             </div>
