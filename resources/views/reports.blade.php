@@ -29,6 +29,9 @@
                                     <option value="Penelantaran Anak">Penelantaran Anak</option>
                                     <option value="Eksploitasi Anak">Eksploitasi Anak</option>
                                 </select>
+                                @error('violence_category')
+                                    <p class="text-sm text-red-500">{{ $message }}</p>
+                                @enderror
                             </div>
 
                             <!-- Deskripsi Insiden -->
@@ -38,6 +41,9 @@
                             <div class="md:col-span-2">
                                 <textarea id="description" name="description" rows="4" required
                                     class="w-full p-2 bg-[#DCE8FF] rounded-lg border-[#DCE8FF] focus:border-blue-400"></textarea>
+                                @error('description')
+                                    <p class="text-sm text-red-500">{{ $message }}</p>
+                                @enderror
                             </div>
 
                             <!-- Tanggal Kejadian -->
@@ -47,6 +53,9 @@
                             <div class="md:col-span-2">
                                 <input type="date" id="date" name="date" required
                                     class="w-full p-2 bg-[#DCE8FF] rounded-lg border-[#DCE8FF] focus:border-blue-400">
+                                @error('date')
+                                    <p class="text-sm text-red-500">{{ $message }}</p>
+                                @enderror
                             </div>
 
                             <!-- Tempat Kejadian -->
@@ -56,6 +65,9 @@
                             <div class="md:col-span-2">
                                 <textarea id="scene" name="scene" rows="4" required
                                     class="w-full p-2 bg-[#DCE8FF] rounded-lg border-[#DCE8FF] focus:border-blue-400"></textarea>
+                                @error('scene')
+                                    <p class="text-sm text-red-500">{{ $message }}</p>
+                                @enderror
                             </div>
 
                             <!-- Bukti Pendukung -->
@@ -140,8 +152,8 @@
                                 <select id="victim_gender" name="victim_gender" required
                                     class="w-full p-2 bg-[#DCE8FF] rounded-lg border-[#DCE8FF] focus:border-blue-400">
                                     <option selected disabled>Pilih jenis kelamin korban</option>
-                                    <option value="Laki-Laki">Laki-Laki</option>
-                                    <option value="Perempuan">Perempuan</option>
+                                    <option value="Pria">Pria</option>
+                                    <option value="Wanita">Wanita</option>
                                 </select>
                             </div>
 

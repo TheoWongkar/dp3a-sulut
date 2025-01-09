@@ -20,6 +20,16 @@ class Report extends Model
         'evidence',
     ];
 
+    public static function generateTicketNumber()
+    {
+        do {
+            $ticketNumber = 'TKT-' . strtoupper(uniqid('', true)) . '-' . strtoupper(bin2hex(random_bytes(4))); // Example: TKT-605f4e16c4f2d4-7f3c19a1
+
+        } while (self::where('ticket_number', $ticketNumber)->exists());
+
+        return $ticketNumber;
+    }
+
     public function employee()
     {
         return $this->belongsTo(Employee::class);
