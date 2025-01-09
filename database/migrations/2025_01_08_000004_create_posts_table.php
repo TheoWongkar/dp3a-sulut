@@ -20,6 +20,7 @@ return new class extends Migration
             $table->text('body');
             $table->string('image');
             $table->boolean('status')->default(true);
+            $table->unsignedBigInteger('views')->default(0);
             $table->timestamps();
         });
     }

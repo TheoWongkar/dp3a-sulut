@@ -28,6 +28,7 @@ class PostFactory extends Factory
             'body' => fake()->paragraphs(2, true),
             'image' => fake()->imageUrl(640, 480, 'posts', true, 'Post Image'),
             'status' => fake()->boolean(90),
+            'views' => rand(1, 3),
         ];
     }
 }

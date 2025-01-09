@@ -45,7 +45,7 @@
             <nav class="hidden lg:flex items-center space-x-6 text-sm font-normal" aria-label="Main Navigation">
                 <ul class="flex space-x-6 text-white">
                     <li><a href="/" class="hover:border-b border-white">Beranda</a></li>
-                    <li><a href="#" class="hover:border-b border-white">Berita</a></li>
+                    <li><a href="{{ route('posts.index') }}" class="hover:border-b border-white">Berita</a></li>
                     <li><a href="#" class="hover:border-b border-white">Cek Status Laporan</a></li>
                 </ul>
                 <div class="flex space-x-4">
@@ -88,7 +88,8 @@
         <nav aria-label="Sidebar Navigation" class="flex flex-col text-[#141652]">
             <ul class="space-y-2">
                 <li><a href="/" class="font-semibold hover:text-[#708CFF]">Beranda</a></li>
-                <li><a href="#" class="font-semibold hover:text-[#708CFF]">Berita</a></li>
+                <li><a href="{{ route('posts.index') }}" class="font-semibold hover:text-[#708CFF]">Berita</a>
+                </li>
                 <li><a href="#" class="font-semibold hover:text-[#708CFF]">Cek Status Laporan</a></li>
                 <li><a href="#" class="font-semibold hover:text-[#708CFF]">Chat Dengan AI</a></li>
                 <li><a href="#" class="font-semibold hover:text-[#708CFF]">Laporkan Kekerasan</a></li>
