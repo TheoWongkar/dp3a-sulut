@@ -18,6 +18,7 @@ class Post extends Model
         'body',
         'image',
         'status',
+        'views',
     ];
 
     public function employee()
