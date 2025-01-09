@@ -15,7 +15,7 @@
                                     <span>{{ $post->employee->user->name }}</span>
                                 </div>
                                 <p>{{ $post->excerpt }}</p>
-                                <a href="{{ url('berita/post/' . $post->slug) }}"
+                                <a href="{{ route('posts.show', $post->slug) }}"
                                     class="text-blue-500 hover:text-blue-800">Selengkapnya...</a>
                             </div>
                             <img src="{{ asset('storage/' . $post->image) }}" alt="Gambar Berita"
