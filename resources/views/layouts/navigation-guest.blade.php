@@ -53,7 +53,7 @@
                         class="border border-white text-white px-4 py-1 rounded-full hover:bg-white hover:text-[#141652] duration-300">
                         Chat Dengan AI
                     </a>
-                    <a href="#"
+                    <a href="{{ route('reports.index') }}"
                         class="border border-white text-white px-4 py-1 rounded-full hover:bg-white hover:text-[#141652] duration-300">
                         Laporkan Kekerasan
                     </a>
@@ -92,7 +92,8 @@
                 </li>
                 <li><a href="#" class="font-semibold hover:text-[#708CFF]">Cek Status Laporan</a></li>
                 <li><a href="#" class="font-semibold hover:text-[#708CFF]">Chat Dengan AI</a></li>
-                <li><a href="#" class="font-semibold hover:text-[#708CFF]">Laporkan Kekerasan</a></li>
+                <li><a href="{{ route('reports.index') }}" class="font-semibold hover:text-[#708CFF]">Laporkan
+                        Kekerasan</a></li>
                 <li>
                     @auth
                         <a href="#"

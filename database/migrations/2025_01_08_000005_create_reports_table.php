@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('reports', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('employee_id')->constrained('employees')->onDelete('cascade');
+            $table->foreignId('employee_id')->nullable()->constrained('employees')->onDelete('cascade');
             $table->string('ticket_number')->unique();
             $table->string('violence_category');
             $table->string('description');
@@ -27,19 +27,19 @@ return new class extends Migration
             $table->id();
             $table->foreignId('report_id')->constrained('reports')->onDelete('cascade');
             $table->string('name');
-            $table->tinyInteger('age');
+            $table->unsignedTinyInteger('age');
             $table->enum('gender', ['Pria', 'Wanita']);
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->timestamps();
         });
 
         Schema::create('perpetrators', function (Blueprint $table) {
             $table->id();
             $table->foreignId('report_id')->constrained('reports')->onDelete('cascade');
-            $table->string('name');
-            $table->tinyInteger('age');
-            $table->string('relationship_between');
-            $table->string('description');
+            $table->string('name')->nullable();
+            $table->unsignedTinyInteger('age')->nullable();
+            $table->string('relationship_between')->nullable();
+            $table->string('description')->nullable();
             $table->timestamps();
         });
 

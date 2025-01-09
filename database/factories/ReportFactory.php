@@ -20,7 +20,7 @@ class ReportFactory extends Factory
         return [
             'employee_id' => Employee::inRandomOrder()->first()->id,
             'ticket_number' => fake()->unique()->numerify('TICKET-####'),
-            'violence_category' => fake()->randomElement(['Kekerasan Fisik', 'Kekerasan Psikis', 'Kekerasan Seksual', 'Kekerasan Verbal']),
+            'violence_category' => fake()->randomElement(['Kekerasan Fisik', 'Kekerasan Psikis', 'Kekerasan Seksual', 'Penelantaran Anak', 'Eksploitasi Anak']),
             'description' => fake()->paragraph(1, true),
             'date' => fake()->date(),
             'scene' => fake()->address(),
