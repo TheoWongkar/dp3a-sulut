@@ -15,29 +15,28 @@ class PostController extends Controller
             ->orderBy('created_at', 'DESC')
             ->paginate(10);
 
-        $newPosts = Post::with('employee.user')->where('status', true)
-            ->orderBy('created_at', 'DESC')
-            ->take(10)
-            ->get();
-
         $popularPosts = Post::with('employee.user')->where('status', true)
             ->orderBy('views', 'DESC')
             ->take(9)
             ->get();
 
-        return view('posts', compact('title', 'posts', 'newPosts', 'popularPosts'));
+        return view('posts', compact('title', 'posts', 'popularPosts'));
     }
 
     public function show(string $slug)
     {
-        $post = Post::with('employee.user')->where('slug', $slug)
+        $title = "Berita";
+
+        $post = Post::with('employee.user')->where('status', true)
+            ->where('slug', $slug)
             ->firstOrFail();
 
-        $newPosts = Post::with('employee.user')->where('status', true)
-            ->orderBy('created_at', 'DESC')
-            ->take(10)
-            ->get();
+        $sessionKey = 'viewed_post_' . $post->id;
+        if (!session()->has($sessionKey)) {
+            $post->increment('views');
+            session()->put($sessionKey, true);
+        }
 
-        return view('post', compact('post', 'newPosts'));
+        return view('post', compact('title', 'post'));
     }
 }

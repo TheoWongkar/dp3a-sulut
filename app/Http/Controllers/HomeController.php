@@ -17,11 +17,12 @@ class HomeController extends Controller
         $post = Post::with('employee.user')->where('status', true)
             ->latest()
             ->first();
-        $posts = Post::with('employee.user')->where('status', true)
+
+        $newPosts = Post::with('employee.user')->where('status', true)
             ->latest()
-            ->take(10)
+            ->take(5)
             ->get();
 
-        return view('index', compact('title', 'posts', 'post'));
+        return view('index', compact('title', 'post', 'newPosts'));
     }
 }
