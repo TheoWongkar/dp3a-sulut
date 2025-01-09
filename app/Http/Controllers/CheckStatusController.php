@@ -14,8 +14,8 @@ class CheckStatusController extends Controller
     {
         $search = $request->input('search');
 
-        $report = Report::where('ticket_number', 'LIKE', "$search")->first();
+        $report = Report::with('employee.user', 'statuses')->where('ticket_number', 'LIKE', "$search")->first();
 
-        return view('statuses', compact('report', 'search'));
+        return view('check-status', compact('report', 'search'));
     }
 }

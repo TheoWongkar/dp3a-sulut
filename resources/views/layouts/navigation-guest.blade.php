@@ -46,7 +46,7 @@
                 <ul class="flex space-x-6 text-white">
                     <li><a href="/" class="hover:border-b border-white">Beranda</a></li>
                     <li><a href="{{ route('posts.index') }}" class="hover:border-b border-white">Berita</a></li>
-                    <li><a href="#" class="hover:border-b border-white">Cek Status Laporan</a></li>
+                    <li><a href="{{ route('status') }}" class="hover:border-b border-white">Cek Status Laporan</a></li>
                 </ul>
                 <div class="flex space-x-4">
                     <a href="#" @click="open = true"
