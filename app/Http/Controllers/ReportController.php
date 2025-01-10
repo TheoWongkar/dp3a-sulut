@@ -62,20 +62,20 @@ class ReportController extends Controller
         // Simpan data korban
         $victim = Victim::create([
             'report_id' => $report->id,
-            'name' => $request->victim['name'],
-            'age' => $request->victim['age'],
-            'gender' => $request->victim['gender'],
-            'description' => $request->victim['description'] ?? null,
+            'name' => $validated['victim_name'],
+            'age' => $validated['victim_age'],
+            'gender' => $validated['victim_gender'],
+            'description' => $validated['victim_description'] ?? null,
         ]);
 
         // Simpan data pelaku (jika ada)
         if ($request->has('perpetrator')) {
             Perpetrator::create([
                 'report_id' => $report->id,
-                'name' => $request->perpetrator['name'] ?? null,
-                'age' => $request->perpetrator['age'] ?? null,
-                'relationship_between' => $request->perpetrator['relationship_between'] ?? null,
-                'description' => $request->perpetrator['description'] ?? null,
+                'name' => $validated['perpetrator_name'] ?? null,
+                'age' => $validated['perpetrator_age'] ?? null,
+                'relationship_between' => $validated['perpetrator_relationship_between'] ?? null,
+                'description' => $validated['perpetrator_description'] ?? null,
             ]);
         }
 
@@ -83,10 +83,10 @@ class ReportController extends Controller
         if ($request->has('reporter')) {
             Reporter::create([
                 'report_id' => $report->id,
-                'whatsapp' => $request->reporter['whatsapp'] ?? null,
-                'telegram' => $request->reporter['telegram'] ?? null,
-                'instagram' => $request->reporter['instagram'] ?? null,
-                'email' => $request->reporter['email'] ?? null,
+                'whatsapp' => $validated['reporter_whatsapp'] ?? null,
+                'telegram' => $validated['reporter_telegram'] ?? null,
+                'instagram' => $validated['reporter_instagram'] ?? null,
+                'email' => $validated['reporter_email'] ?? null,
             ]);
         }
 
@@ -94,6 +94,6 @@ class ReportController extends Controller
             'report_id' => $report->id,
         ]);
 
-        return redirect()->route('status.index')->with('success', $ticketNumber);
+        return redirect()->route('status')->with('success', $ticketNumber);
     }
 }

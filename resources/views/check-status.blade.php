@@ -2,10 +2,10 @@
 
     <!-- Bagian Pesan Success -->
     @if (session('success'))
-        <div class="w-full pt-20 px-0 bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded-md"
-            role="alert">
-            <div class="container mx-auto">
-                <p class="font-bold text-lg sm:text-xl">Laporan Berhasil Dikirim!</p>
+        <div
+            class="pt-16 px-2 pb-2 flex items-center justify-center bg-green-100 border-l-4 border-green-500 text-green-700">
+            <div class="block">
+                <p class="mb-2 font-bold text-lg sm:text-xl">Laporan Berhasil Dikirim!</p>
                 <p class="text-md sm:text-lg">Nomor tiket Anda:
                     <span class="font-bold text-md sm:text-lg">{{ session('success') }}</span>
                 </p>
@@ -74,7 +74,7 @@
                                 d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                         </svg>
                         <input type="text" name="search" value="{{ $search }}"
-                            placeholder="Masukkan nomor tiket laporan" autofocus
+                            placeholder="Masukkan nomor tiket laporan" autofocus autocomplete="off"
                             class="ml-2 md:ml-3 w-full bg-white border-none focus:outline-none focus:ring-0 text-gray-700">
                         <button type="submit"></button>
                     </div>

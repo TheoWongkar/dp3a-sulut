@@ -90,7 +90,8 @@
                 <li><a href="/" class="font-semibold hover:text-[#708CFF]">Beranda</a></li>
                 <li><a href="{{ route('posts.index') }}" class="font-semibold hover:text-[#708CFF]">Berita</a>
                 </li>
-                <li><a href="#" class="font-semibold hover:text-[#708CFF]">Cek Status Laporan</a></li>
+                <li><a href="{{ route('status') }}" class="font-semibold hover:text-[#708CFF]">Cek Status Laporan</a>
+                </li>
                 <li><a href="#" class="font-semibold hover:text-[#708CFF]">Chat Dengan AI</a></li>
                 <li><a href="{{ route('reports.index') }}" class="font-semibold hover:text-[#708CFF]">Laporkan
                         Kekerasan</a></li>

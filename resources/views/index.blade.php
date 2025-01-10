@@ -7,7 +7,7 @@
         <!-- Konten -->
         <div class="relative z-10 text-center text-white max-w-3xl mx-auto">
             <div class="mb-8 flex justify-center">
-                <x-application-logo class="w-16 h-16"></x-application-logo>
+                <x-application-logo class="w-16 h-16" />
             </div>
             <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight tracking-wider">
                 JANGAN TAKUT LAPORKAN KEKERASAN PADA ANAK
@@ -15,7 +15,7 @@
             <p class="mt-4 text-lg sm:text-xl lg:text-2xl">
                 BERSAMA, KITA LINDUNGI MEREKA!
             </p>
-            <a href="#"
+            <a href="{{ route('reports.index') }}"
                 class="mt-6 inline-block border hover:bg-[#141652] font-semibold py-2 px-8 rounded-xl transition duration-300">
                 LAPORKAN SEKARANG
             </a>
