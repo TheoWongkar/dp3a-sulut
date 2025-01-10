@@ -97,12 +97,12 @@
                         Kekerasan</a></li>
                 <li>
                     @auth
-                        <a href="#"
+                        <a href="{{ route('dashboard') }}"
                             class="inline-block w-full py-1 bg-[#141652] text-white text-center rounded-full font-semibold hover:bg-[#708CFF] duration-300">
                             Dashboard
                         </a>
                     @else
-                        <a href="#"
+                        <a href="{{ route('login') }}"
                             class="inline-block w-full py-1 bg-[#141652] text-white text-center rounded-full font-semibold hover:bg-[#708CFF] duration-300">
                             Login
                         </a>

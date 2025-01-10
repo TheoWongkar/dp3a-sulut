@@ -72,7 +72,7 @@
                             </svg>
                             <span>Profile</span>
                         </a>
-                        <form method="POST" action="#">
+                        <form method="POST" action="{{ route('logout') }}">
                             @csrf
                             <button type="submit"
                                 class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 flex items-center space-x-2">
