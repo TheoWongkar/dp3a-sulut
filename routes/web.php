@@ -25,3 +25,7 @@ Route::middleware(['auth', 'auth.session'])->group(function () {
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 });
+
+Route::get('/check-domain', function () {
+    return url('/');
+});

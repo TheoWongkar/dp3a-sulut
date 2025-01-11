@@ -38,6 +38,13 @@
                     </label>
                     <a href="#" class="text-sm text-blue-600 hover:underline">Lupa password?</a>
                 </div>
+                <!-- Google reCAPTCHA v2 -->
+                <div class="mb-4">
+                    <div class="g-recaptcha" data-sitekey="{{ env('RECAPTCHA_SITE_KEY') }}"></div>
+                    @error('g-recaptcha-response')
+                        <div class="text-red-500 text-xs">{{ $message }}</div>
+                    @enderror
+                </div>
                 <!-- Login Button -->
                 <div>
                     <button type="submit"
