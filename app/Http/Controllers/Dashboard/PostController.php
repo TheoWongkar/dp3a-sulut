@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -87,17 +88,40 @@ class PostController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $slug)
     {
-        //
+        $post = Post::where('slug', $slug)->firstOrFail();
+
+        return view('dashboard.post.edit', compact('post'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $slug)
     {
-        //
+        $validated = $request->validate([
+            'title' => 'required|string|min:5|max:255',
+            'image' => 'nullable|image|max:3072|mimes:jpg,jpeg,png',
+            'body' => 'required|string|max:10000',
+            'status' => 'required|boolean',
+        ]);
+
+        $post = Post::where('slug', $slug)->firstOrFail();
+
+        if ($request->hasFile('image')) {
+            if ($post->image) {
+                Storage::disk('public')->delete($post->image);
+            }
+            $filePath = $request->file('image')->store('posts', 'public');
+            $validated['image'] = $filePath;
+        }
+        $validated['excerpt'] = Str::limit(strip_tags($validated['body']), 100);
+
+        $post->update($validated);
+
+        return redirect()->route('dashboard.posts.index')
+            ->with('success', 'Berita berhasil diubah.');
     }
 
     /**
