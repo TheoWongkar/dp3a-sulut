@@ -35,16 +35,15 @@
                     </svg>
                 </button>
                 <!-- Logo -->
-                <a href="/" class="flex items-center">
+                <a href="{{ route('home') }}" class="flex items-center">
                     <x-application-logo class="w-8 h-8 mr-2 fill-current" />
                     <span class="text-white text-lg font-semibold">DP3A SULUT</span>
                 </a>
             </div>
-
             <!-- Link Navigasi -->
             <nav class="hidden lg:flex items-center space-x-6 text-sm font-normal" aria-label="Main Navigation">
                 <ul class="flex space-x-6 text-white">
-                    <li><a href="/" class="hover:border-b border-white">Beranda</a></li>
+                    <li><a href="{{ route('home') }}" class="hover:border-b border-white">Beranda</a></li>
                     <li><a href="{{ route('posts.index') }}" class="hover:border-b border-white">Berita</a></li>
                     <li><a href="{{ route('status') }}" class="hover:border-b border-white">Cek Status Laporan</a></li>
                 </ul>
@@ -87,7 +86,7 @@
         <!-- Link Navigasi -->
         <nav aria-label="Sidebar Navigation" class="flex flex-col text-[#141652]">
             <ul class="space-y-2">
-                <li><a href="/" class="font-semibold hover:text-[#708CFF]">Beranda</a></li>
+                <li><a href="{{ route('home') }}" class="font-semibold hover:text-[#708CFF]">Beranda</a></li>
                 <li><a href="{{ route('posts.index') }}" class="font-semibold hover:text-[#708CFF]">Berita</a>
                 </li>
                 <li><a href="{{ route('status') }}" class="font-semibold hover:text-[#708CFF]">Cek Status Laporan</a>

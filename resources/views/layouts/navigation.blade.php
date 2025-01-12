@@ -4,14 +4,14 @@
     <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" x-data="{ open: false }">
         <div class="flex justify-between items-center h-16">
             <!-- Logo -->
-            <div class="flex items-center flex-shrink-0 space-x-2">
-                <x-application-logo class="h-8 w-8 mr-2 fill-current" />
-                <a href="#" class="text-lg font-semibold">DP3A SULUT</a>
-            </div>
-
+            <a href="{{ route('dashboard') }}" class="flex items-center">
+                <x-application-logo class="w-8 h-8 mr-2 fill-current" />
+                <span class="text-white text-lg font-semibold">DP3A SULUT</span>
+            </a>
             <!-- Link Navigasi -->
             <div class="hidden md:flex space-x-1 font-normal">
-                <a href="#" class="hover:bg-blue-700 px-3 py-2 rounded-md text-sm flex items-center space-x-1">
+                <a href="{{ route('dashboard') }}"
+                    class="hover:bg-blue-700 px-3 py-2 rounded-md text-sm flex items-center space-x-1">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="size-5">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -19,7 +19,8 @@
                     </svg>
                     <span>Dashboard</span>
                 </a>
-                <a href="#" class="hover:bg-blue-700 px-3 py-2 rounded-md text-sm flex items-center space-x-1">
+                <a href="{{ route('dashboard.posts.index') }}"
+                    class="hover:bg-blue-700 px-3 py-2 rounded-md text-sm flex items-center space-x-1">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="size-5">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -35,7 +36,6 @@
                     </svg>
                     <span>Laporan</span>
                 </a>
-
                 <a href="#" class="hover:bg-blue-700 px-3 py-2 rounded-md text-sm flex items-center space-x-1">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="size-5">
@@ -44,7 +44,6 @@
                     </svg>
                     <span>Data Admin</span>
                 </a>
-
                 <div class="relative">
                     <button @click="open = !open"
                         class="hover:bg-blue-700 px-3 py-2 rounded-md text-sm flex items-center">
@@ -88,7 +87,6 @@
                     </div>
                 </div>
             </div>
-
             <!-- Tombol Menu Mobile -->
             <div class="md:hidden">
                 <button @click="open = !open" class="text-white focus:outline-none">
@@ -103,12 +101,12 @@
 
         <!-- Menu Mobile -->
         <div x-show="open" @click.away="open = false" class="md:hidden bg-[#141652] pb-4 text-sm text-white">
-            <p href="#" class="text-xs text-gray-400">MENU:</p>
-            <a href="#" class="block py-2 px-4 rounded-md  hover:bg-blue-700">Dashboard</a>
-            <a href="#" class="block py-2 px-4 rounded-md hover:bg-blue-700">Berita</a>
+            <p class="text-xs text-gray-400">MENU:</p>
+            <a href="{{ route('dashboard') }}" class="block py-2 px-4 rounded-md  hover:bg-blue-700">Dashboard</a>
+            <a href="{{ route('dashboard.posts.index') }}" class="block py-2 px-4 rounded-md hover:bg-blue-700">Berita</a>
             <a href="#" class="block py-2 px-4 rounded-md hover:bg-blue-700">Laporan</a>
             <a href="#" class="block py-2 px-4 rounded-md hover:bg-blue-700">Data Admin</a>
-            <p href="#" class="text-xs text-gray-400 mt-3">
+            <p class="text-xs text-gray-400 mt-3">
                 USER:
             </p>
             <p class="block py-2 px-4 rounded-md text-gray-300">
