@@ -8,6 +8,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CheckStatusController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\PostController as DashboardPostController;
+use App\Http\Controllers\Dashboard\ReportController as DashboardReportController;
 
 Route::get('/', HomeController::class)->name('home');
 Route::get('/berita', [PostController::class, 'index'])->name('posts.index');
@@ -32,4 +33,9 @@ Route::middleware(['auth', 'auth.session'])->group(function () {
     Route::get('/dashboard/berita/ubah/{slug}', [DashboardPostController::class, 'edit'])->name('dashboard.posts.edit');
     Route::put('/dashboard/berita/ubah/{slug}', [DashboardPostController::class, 'update'])->name('dashboard.posts.update');
     Route::delete('/dashboard/berita/hapus/{slug}', [DashboardPostController::class, 'destroy'])->name('dashboard.posts.destroy');
+
+    Route::get('/dashboard/laporan', [DashboardReportController::class, 'index'])->name('dashboard.reports.index');
+    Route::get('/dashboard/laporan/{ticket_number}', [DashboardReportController::class, 'show'])->name('dashboard.reports.show');
+    Route::put('/dashboard/laporan/ubah/{ticket_number}', [DashboardReportController::class, 'update'])->name('dashboard.reports.update');
+    Route::delete('/dashboard/laporan/hapus/{ticket_number}', [DashboardReportController::class, 'destroy'])->name('dashboard.reports.destroy');
 });

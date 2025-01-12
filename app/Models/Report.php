@@ -54,4 +54,9 @@ class Report extends Model
     {
         return $this->hasMany(Status::class);
     }
+
+    public function latestStatus()
+    {
+        return $this->hasOne(Status::class)->latestOfMany();
+    }
 }

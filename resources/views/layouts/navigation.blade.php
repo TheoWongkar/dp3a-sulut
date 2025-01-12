@@ -28,7 +28,8 @@
                     </svg>
                     <span>Berita</span>
                 </a>
-                <a href="#" class="hover:bg-blue-700 px-3 py-2 rounded-md text-sm flex items-center space-x-1">
+                <a href="{{ route('dashboard.reports.index') }}"
+                    class="hover:bg-blue-700 px-3 py-2 rounded-md text-sm flex items-center space-x-1">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="size-5">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -103,8 +104,10 @@
         <div x-show="open" @click.away="open = false" class="md:hidden bg-[#141652] pb-4 text-sm text-white">
             <p class="text-xs text-gray-400">MENU:</p>
             <a href="{{ route('dashboard') }}" class="block py-2 px-4 rounded-md  hover:bg-blue-700">Dashboard</a>
-            <a href="{{ route('dashboard.posts.index') }}" class="block py-2 px-4 rounded-md hover:bg-blue-700">Berita</a>
-            <a href="#" class="block py-2 px-4 rounded-md hover:bg-blue-700">Laporan</a>
+            <a href="{{ route('dashboard.posts.index') }}"
+                class="block py-2 px-4 rounded-md hover:bg-blue-700">Berita</a>
+            <a href="{{ route('dashboard.reports.index') }}"
+                class="block py-2 px-4 rounded-md hover:bg-blue-700">Laporan</a>
             <a href="#" class="block py-2 px-4 rounded-md hover:bg-blue-700">Data Admin</a>
             <p class="text-xs text-gray-400 mt-3">
                 USER:
