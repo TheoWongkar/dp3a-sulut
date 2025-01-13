@@ -43,6 +43,11 @@ class ReportController extends Controller
             'reporter_email' => 'nullable|email|max:255',
         ]);
 
+        if ($request->hasFile('evidence')) {
+            $filePath = $request->file('evidence')->store('evidences', 'public');
+            $validated['evidence'] = $filePath;
+        }
+
         // Simpan data laporan
         $ticket_number = Report::generateTicketNumber();
         $report = Report::create([
@@ -53,11 +58,6 @@ class ReportController extends Controller
             'scene' => $validated['scene'],
             'evidence' => $validated['evidence'],
         ]);
-
-        if ($request->hasFile('evidence')) {
-            $filePath = $request->file('evidence')->store('evidences', 'public');
-            $validated['evidence'] = $filePath;
-        }
 
         // Simpan data korban
         $victim = Victim::create([

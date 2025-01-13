@@ -13,7 +13,7 @@
                                 <span class="text-gray-900 font-semibold">{{ $report->ticket_number }}</span>
                             </div>
                             <div class="flex justify-between">
-                                <h3 class="font-semibold">Tanggal Laporan:</h3>
+                                <h3 class="font-semibold">Tanggal Kejadian:</h3>
                                 <span
                                     class="text-gray-900">{{ \Carbon\Carbon::parse($report->date)->locale('id')->isoFormat('D MMMM YYYY') }}</span>
                             </div>
