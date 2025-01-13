@@ -7,10 +7,13 @@ use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     */
     public function index()
     {
-        return view('dashboard.index', [
-            'title' => "Dashboard",
-        ]);
+        $title = "Dashboard";
+
+        return view('dashboard.index', compact('title'));
     }
 }

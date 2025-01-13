@@ -152,9 +152,8 @@ class EmployeeController extends Controller
             if ($employee->picture) {
                 Storage::disk('public')->delete($employee->picture);
             }
-
-            $imagePath = $request->file('picture')->store('employees', 'public');
-            $validated['picture'] = $imagePath;
+            $filePath = $request->file('picture')->store('employees', 'public');
+            $validated['picture'] = $filePath;
         }
 
         $employee->update([

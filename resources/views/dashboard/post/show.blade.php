@@ -1,14 +1,21 @@
-<x-guest-layout>
+<x-app-layout>
 
-    <!-- Bagian Berita -->
-    <section class="container mx-auto px-4 pt-24 pb-10 sm:px-6 lg:px-4">
+    <!-- Bagian Title -->
+    @section('title')
+        @isset($title)
+            | {{ $title }}
+        @endisset
+    @endsection
+
+    <!-- Bagian Lihat Berita -->
+    <section class="container mx-auto px-4 pt-5 pb-10 sm:px-6 lg:px-4">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <!-- Detail Berita -->
             <div class="md:col-span-2 space-y-8">
                 <div class="bg-white rounded-lg shadow-lg border-2 p-6">
-                    <div class="mb-3">
+                    <div class="mb-5">
                         <a href="{{ route('dashboard.posts.index') }}"
-                            class="inline-block px-6 py-2 text-white bg-[#141652] rounded-lg shadow-lg hover:bg-blue-600 transition">
+                            class="inline-block px-6 py-2 text-white bg-[#141652] rounded-lg shadow-lg hover:bg-blue-800 transition">
                             Kembali
                         </a>
                     </div>
@@ -30,4 +37,4 @@
         </div>
     </section>
 
-</x-guest-layout>
+</x-app-layout>
