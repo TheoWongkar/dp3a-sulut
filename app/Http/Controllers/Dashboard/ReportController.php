@@ -16,6 +16,7 @@ class ReportController extends Controller
     {
         $title = "Laporan";
 
+        // Validasi Search Form
         $validated = $request->validate([
             'receivedSearch' => 'nullable|string|max:50',
             'search' => 'nullable|string|max:50',
@@ -26,6 +27,7 @@ class ReportController extends Controller
         $search = $validated['search'] ?? null;
         $status = $validated['status'] ?? null;
 
+        // Semua Laporan Diterima
         $receivedReports = Report::with(['employee.user', 'latestStatus'])
             ->whereHas('latestStatus', function ($query) {
                 $query->where('status', 'Diterima');
@@ -42,6 +44,7 @@ class ReportController extends Controller
             ->orderBy('created_at', 'DESC')
             ->paginate(5);
 
+        // Semua Laporan
         $reports = Report::with(['employee.user', 'latestStatus'])
             ->when($status, function ($query) use ($status) {
                 return $query->whereHas('latestStatus', function ($query) use ($status) {
@@ -63,19 +66,21 @@ class ReportController extends Controller
         return view('dashboard.report.index', compact('title', 'receivedReports', 'reports', 'receivedSearch', 'search', 'status'));
     }
 
-
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request, string $ticket_number)
     {
+        // Validasi Input
         $validatedData = $request->validate([
             'status' => 'required|string|max:255',
             'description' => 'required|string|max:1000',
         ]);
 
+        // Ambil Data Berdasarkan Nomor Tiket
         $report = Report::with(['statuses', 'victim', 'perpetrator', 'reporter'])->where('ticket_number', $ticket_number)->firstOrFail();
 
+        // Isi Data Ditangani Oleh
         if (!$report->employee_id) {
             $user = Auth::user();
 
@@ -85,6 +90,7 @@ class ReportController extends Controller
             }
         }
 
+        // Isi Data Status
         $report->statuses()->create([
             'report_id' => $report->id,
             'status' => $validatedData['status'],
@@ -102,6 +108,7 @@ class ReportController extends Controller
     {
         $title = "Laporan " . $ticket_number;
 
+        // Ambil Data Berdasarkan Nomor Tiket Serta Statusnya
         $report = Report::with(['statuses', 'victim', 'perpetrator', 'reporter'])->where('ticket_number', $ticket_number)->firstOrFail();
         $statuses = $report->statuses;
 
@@ -113,13 +120,16 @@ class ReportController extends Controller
      */
     public function destroy(string $ticket_number)
     {
+        // Ambil Data Berdasarkan Nomor Tiket
         $report = Report::where('ticket_number', $ticket_number)->firstOrFail();
 
+        // Laporan Tidak Ditemukan
         if (!$report) {
             return redirect()->route('dashboard.reports.index')
                 ->with('error', 'Laporan tidak ditemukan.');
         }
 
+        // Hapus Data Laporan
         $report->delete();
 
         return redirect()->route('dashboard.reports.index')

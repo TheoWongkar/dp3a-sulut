@@ -1,5 +1,6 @@
 <x-app-layout>
 
+    <!-- Bagian Title -->
     @section('title')
         @isset($title)
             | {{ $title }}
@@ -126,6 +127,5 @@
             </div>
         </div>
     </div>
-
 
 </x-app-layout>

@@ -47,11 +47,11 @@
                     <span>Data Admin</span>
                 </a>
                 <div class="relative">
-                    <button @click="open = !open"
-                        class="hover:bg-blue-700 px-3 py-2 rounded-md text-sm flex items-center">
-                        <span>
+                    <button @click="open = !open" class="ml-2 rounded-md text-sm flex items-center">
+                        <span class="text-right text-sm">
                             @auth
                                 {{ Str::limit(auth()->user()->name, 12) }}
+                                <span class="block text-xs text-gray-400">{{ auth()->user()->employee->position }}</span>
                             @else
                                 User Admin
                             @endauth
@@ -64,6 +64,15 @@
                     <!-- Menu Dropdown -->
                     <div x-show="open" @click.away="open = false"
                         class="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-md py-1 z-10">
+                        <a href="{{ route('home') }}"
+                            class="px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 flex items-center space-x-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke-width="1.5" stroke="currentColor" class="size-5">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M9 9V4.5M9 9H4.5M9 9 3.75 3.75M9 15v4.5M9 15H4.5M9 15l-5.25 5.25M15 9h4.5M15 9V4.5M15 9l5.25-5.25M15 15h4.5M15 15v4.5m0-4.5 5.25 5.25" />
+                            </svg>
+                            <span>Beranda</span>
+                        </a>
                         <a href="#"
                             class="px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 flex items-center space-x-1">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -117,12 +126,32 @@
             <p class="block py-2 px-4 rounded-md text-gray-300">
                 @auth
                     {{ auth()->user()->name }}
+                    <span class="block text-sm text-gray-400">{{ auth()->user()->email }}</span>
                 @else
                     User Admin
                 @endauth
             </p>
-            <a href="#" class="block py-2 px-4 rounded-md hover:bg-blue-700">Profile</a>
-            <a href="#" class="block py-2 px-4 rounded-md hover:bg-blue-700">Logout</a>
+            <a href="#"
+                class="w-full text-left px-4 py-2 rounded-md hover:bg-blue-700 flex items-center space-x-2">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="size-5">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                </svg>
+                <span>Profile</span>
+            </a>
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit"
+                    class="w-full text-left px-4 py-2 rounded-md hover:bg-blue-700 flex items-center space-x-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-5">
+                        <path fill-rule="evenodd"
+                            d="M16.5 3.75a1.5 1.5 0 0 1 1.5 1.5v13.5a1.5 1.5 0 0 1-1.5 1.5h-6a1.5 1.5 0 0 1-1.5-1.5V15a.75.75 0 0 0-1.5 0v3.75a3 3 0 0 0 3 3h6a3 3 0 0 0 3-3V5.25a3 3 0 0 0-3-3h-6a3 3 0 0 0-3 3V9A.75.75 0 1 0 9 9V5.25a1.5 1.5 0 0 1 1.5-1.5h6ZM5.78 8.47a.75.75 0 0 0-1.06 0l-3 3a.75.75 0 0 0 0 1.06l3 3a.75.75 0 0 0 1.06-1.06l-1.72-1.72H15a.75.75 0 0 0 0-1.5H4.06l1.72-1.72a.75.75 0 0 0 0-1.06Z"
+                            clip-rule="evenodd" />
+                    </svg>
+                    <span>Logout</span>
+                </button>
+            </form>
         </div>
     </nav>
 </header>

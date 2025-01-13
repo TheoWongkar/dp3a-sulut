@@ -11,7 +11,9 @@
     <section class="py-5 bg-gray-50">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white shadow-lg rounded-lg p-8">
-                <h2 class="text-xl font-semibold mb-6">Ubah Berita</h2>
+                <div class="flex items-center space-x-4 border-b pb-4 mb-6">
+                    <h1 class="text-2xl font-bold">Ubah Berita</h1>
+                </div>
                 <!-- Form Ubah Berita -->
                 <form action="{{ route('dashboard.posts.update', $post->slug) }}" method="POST"
                     enctype="multipart/form-data">
