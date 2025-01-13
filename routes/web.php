@@ -9,6 +9,7 @@ use App\Http\Controllers\CheckStatusController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\PostController as DashboardPostController;
 use App\Http\Controllers\Dashboard\ReportController as DashboardReportController;
+use App\Http\Controllers\Dashboard\EmployeeController as DashboardEmployeeController;
 
 Route::get('/', HomeController::class)->name('home');
 Route::get('/berita', [PostController::class, 'index'])->name('posts.index');
@@ -38,4 +39,12 @@ Route::middleware(['auth', 'auth.session'])->group(function () {
     Route::post('/dashboard/laporan/tambah/{ticket_number}', [DashboardReportController::class, 'store'])->name('dashboard.reports.store');
     Route::get('/dashboard/laporan/{ticket_number}', [DashboardReportController::class, 'show'])->name('dashboard.reports.show');
     Route::delete('/dashboard/laporan/hapus/{ticket_number}', [DashboardReportController::class, 'destroy'])->name('dashboard.reports.destroy');
+
+    Route::get('/dashboard/karyawan', [DashboardEmployeeController::class, 'index'])->name('dashboard.employees.index');
+    Route::get('/dashboard/karyawan/tambah', [DashboardEmployeeController::class, 'create'])->name('dashboard.employees.create');
+    Route::post('/dashboard/karyawan/tambah', [DashboardEmployeeController::class, 'store'])->name('dashboard.employees.store');
+    Route::get('/dashboard/karyawan/{nip}', [DashboardEmployeeController::class, 'show'])->name('dashboard.employees.show');
+    Route::get('/dashboard/berita/ubah/{nip}', [DashboardEmployeeController::class, 'edit'])->name('dashboard.employees.edit');
+    Route::put('/dashboard/berita/ubah/{nip}', [DashboardEmployeeController::class, 'update'])->name('dashboard.employees.update');
+    Route::delete('/dashboard/karyawan/hapus/{nip}', [DashboardEmployeeController::class, 'destroy'])->name('dashboard.employees.destroy');
 });
