@@ -81,8 +81,8 @@
                                     <td class="py-4 px-2 text-center">{{ $employee->position }}</td>
                                     <td class="py-4 px-2 text-center whitespace-nowrap">
                                         <span
-                                            class="inline-block px-3 py-1 rounded-full text-xs shadow-md {{ $employee->deleted_at ? 'bg-orange-500 hover:bg-orange-600' : 'bg-green-500 hover:bg-green-600' }} text-white transition duration-200">
-                                            {{ $employee->deleted_at ? 'Tidak Aktif' : 'Aktif' }}
+                                            class="inline-block px-3 py-1 rounded-full text-xs shadow-md {{ $employee->status ? 'bg-green-500 hover:bg-green-600' : 'bg-orange-500 hover:bg-orange-600' }} text-white transition duration-200">
+                                            {{ $employee->status ? 'Aktif' : 'Tidak Aktif' }}
                                         </span>
                                     </td>
                                     <td class="py-4 px-2 text-center">{{ $employee->posts->count() }}</td>
@@ -103,8 +103,8 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="6" class="text-center py-2">
-                                        <h1 class="text-md font-semibold text-red-500">Maaf, postingan tidak ada</h1>
+                                    <td colspan="9" class="text-center py-2">
+                                        <h1 class="text-md font-semibold text-red-500">Maaf, karyawan tidak ada</h1>
                                         <p class="text-sm text-gray-500">Silakan cek kembali nanti!</p>
                                     </td>
                                 </tr>

@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Employee extends Model
 {
     /** @use HasFactory<\Database\Factories\EmployeeFactory> */
-    use HasFactory, SoftDeletes;
+    use HasFactory;
 
     protected $fillable = [
         'nip',
@@ -20,6 +20,7 @@ class Employee extends Model
         'address',
         'phone',
         'picture',
+        'status',
     ];
 
     public function user()

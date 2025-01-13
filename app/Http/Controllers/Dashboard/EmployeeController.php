@@ -26,15 +26,14 @@ class EmployeeController extends Controller
         $status = $validated['status'] ?? null;
 
         $employees = Employee::with(['user', 'posts', 'reports'])
-            ->withTrashed()
             ->when($search, function ($query, $search) {
                 return $query->where('name', 'like', '%' . $search . '%');
             })
             ->when($status, function ($query, $status) {
                 if ($status == 'active') {
-                    return $query->whereNull('deleted_at');
+                    return $query->where('status', true);
                 } elseif ($status == 'inactive') {
-                    return $query->onlyTrashed();
+                    return $query->where('status', false);
                 }
             })
             ->orderBy('name', 'ASC')
@@ -80,7 +79,6 @@ class EmployeeController extends Controller
             $imagePath = null;
         }
 
-        // Menyimpan data employee
         $employee = Employee::create([
             'nip' => $validated['nip'],
             'name' => $validated['name'],
@@ -92,10 +90,9 @@ class EmployeeController extends Controller
             'picture' => $validated['picture'],
         ]);
 
-        // Menyimpan data user dengan nama yang diambil dari username
         $employee->user()->create([
             'role' => $validated['role'],
-            'name' => $validated['username'],  // Menggunakan username untuk kolom name
+            'name' => $validated['username'],
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
         ]);
@@ -108,9 +105,9 @@ class EmployeeController extends Controller
      */
     public function show(string $nip)
     {
-        $title = "Karyawan" . $nip;
+        $title = "Karyawan " . $nip;
 
-        $employee = Employee::with(['user', 'posts', 'reports'])->withTrashed()->where('nip', $nip)->firstOrFail();
+        $employee = Employee::with(['user', 'posts', 'reports'])->where('nip', $nip)->firstOrFail();
 
         return view('dashboard.employee.show', compact('title', 'employee'));
     }
@@ -120,9 +117,9 @@ class EmployeeController extends Controller
      */
     public function edit(string $nip)
     {
-        $title = "Ubah Karyawan" . $nip;
+        $title = "Ubah Karyawan " . $nip;
 
-        $employee = Employee::with('user')->withTrashed()->where('nip', $nip)->firstOrFail();
+        $employee = Employee::with('user')->where('nip', $nip)->firstOrFail();
 
         return view('dashboard.employee.edit', compact('title', 'employee'));
     }
@@ -132,7 +129,7 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, string $nip)
     {
-        $employee = Employee::withTrashed()->where('nip', $nip)->firstOrFail();
+        $employee = Employee::where('nip', $nip)->firstOrFail();
 
         $validated = $request->validate([
             'nip' => 'required|string|max:255|unique:employees,nip,' . $nip . ',nip',
@@ -178,16 +175,17 @@ class EmployeeController extends Controller
             'password' => $validated['password'] ? Hash::make($validated['password']) : $employee->user->password,
         ]);
 
-        // Perbarui status
         if ($request->status == 'active') {
-            // Restore jika soft deleted
-            if ($employee->trashed()) {
-                $employee->restore();
+            // Set status menjadi true (aktif)
+            if (!$employee->status) {
+                $employee->status = true;
+                $employee->save();
             }
         } elseif ($request->status == 'inactive') {
-            // Soft delete jika belum terhapus
-            if (!$employee->trashed()) {
-                $employee->delete();
+            // Set status menjadi false (tidak aktif)
+            if ($employee->status) {
+                $employee->status = false;
+                $employee->save();
             }
         }
 

@@ -80,15 +80,14 @@
                                     <label for="status" class="block font-medium text-sm">Status Karyawan</label>
                                     <select id="status" name="status" required
                                         class="mt-1 p-2 w-full border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#141652]">
-                                        <option value="active" {{ is_null($employee->deleted_at) ? 'selected' : '' }}>
+                                        <option value="active" {{ $employee->status ? 'selected' : '' }}>
                                             Aktif
                                         </option>
-                                        <option value="inactive"
-                                            {{ !is_null($employee->deleted_at) ? 'selected' : '' }}>
+                                        <option value="inactive" {{ !$employee->status ? 'selected' : '' }}>
                                             Tidak Aktif
                                         </option>
                                     </select>
-                                    @error('deleted_at')
+                                    @error('status')
                                         <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                     @enderror
                                 </div>

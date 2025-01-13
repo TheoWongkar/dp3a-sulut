@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('address');
             $table->string('phone', 13)->nullable();
             $table->string('picture')->nullable();
-            $table->softDeletes();
+            $table->boolean('status')->default(true);
             $table->timestamps();
         });
     }
