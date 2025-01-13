@@ -41,7 +41,6 @@ class EmployeeController extends Controller
         return view('dashboard.employee.index', compact('title', 'employees', 'search', 'status'));
     }
 
-
     /**
      * Store a newly created resource in storage.
      */
@@ -55,7 +54,11 @@ class EmployeeController extends Controller
      */
     public function show(string $nip)
     {
-        //
+        $title = "Karyawan" . $nip;
+
+        $employee = Employee::withTrashed()->where('nip', $nip)->firstOrFail();
+
+        return view('dashboard.employee.show', compact('title', 'employee'));
     }
 
     /**

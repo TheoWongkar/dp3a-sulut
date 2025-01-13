@@ -15,12 +15,12 @@ return new class extends Migration
             $table->id();
             $table->string('nip', 18)->unique();
             $table->string('name');
-            $table->string('phone', 13)->nullable();
-            $table->string('address');
-            $table->date('date_of_birth');
             $table->enum('gender', ['Pria', 'Wanita']);
             $table->string('position');
-            $table->string('profile_picture')->nullable();
+            $table->date('date_of_birth');
+            $table->string('address');
+            $table->string('phone', 13)->nullable();
+            $table->string('picture')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

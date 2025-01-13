@@ -44,7 +44,7 @@ Route::middleware(['auth', 'auth.session'])->group(function () {
     Route::get('/dashboard/karyawan/tambah', [DashboardEmployeeController::class, 'create'])->name('dashboard.employees.create');
     Route::post('/dashboard/karyawan/tambah', [DashboardEmployeeController::class, 'store'])->name('dashboard.employees.store');
     Route::get('/dashboard/karyawan/{nip}', [DashboardEmployeeController::class, 'show'])->name('dashboard.employees.show');
-    Route::get('/dashboard/berita/ubah/{nip}', [DashboardEmployeeController::class, 'edit'])->name('dashboard.employees.edit');
-    Route::put('/dashboard/berita/ubah/{nip}', [DashboardEmployeeController::class, 'update'])->name('dashboard.employees.update');
+    Route::get('/dashboard/karyawan/ubah/{nip}', [DashboardEmployeeController::class, 'edit'])->name('dashboard.employees.edit');
+    Route::put('/dashboard/karyawan/ubah/{nip}', [DashboardEmployeeController::class, 'update'])->name('dashboard.employees.update');
     Route::delete('/dashboard/karyawan/hapus/{nip}', [DashboardEmployeeController::class, 'destroy'])->name('dashboard.employees.destroy');
 });

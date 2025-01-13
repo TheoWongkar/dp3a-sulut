@@ -14,12 +14,12 @@ class Employee extends Model
     protected $fillable = [
         'nip',
         'name',
-        'phone',
-        'address',
-        'date_of_birth',
         'gender',
         'position',
-        'profile_picture',
+        'date_of_birth',
+        'address',
+        'phone',
+        'picture',
     ];
 
     public function user()
