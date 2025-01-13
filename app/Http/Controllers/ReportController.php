@@ -103,6 +103,6 @@ class ReportController extends Controller
             'report_id' => $report->id,
         ]);
 
-        return redirect()->route('status')->with('success', $ticket_number);
+        return redirect()->route('status.index')->with('success', $ticket_number);
     }
 }

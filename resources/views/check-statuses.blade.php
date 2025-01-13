@@ -73,7 +73,7 @@
                     Nomor tiket laporan seharusnya anda dapatkan setelah anda mengirim
                     formulir laporan kekerasan.
                 </p>
-                <form action="{{ route('status') }}" method="GET">
+                <form action="{{ route('status.index') }}" method="GET">
                     <div class="flex items-center border-2 border-[#141652] rounded-3xl p-2 mb-4 bg-white">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                             stroke="currentColor" stroke-width="2">

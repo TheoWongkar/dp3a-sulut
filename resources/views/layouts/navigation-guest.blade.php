@@ -45,7 +45,8 @@
                 <ul class="flex space-x-6 text-white">
                     <li><a href="{{ route('home') }}" class="hover:border-b border-white">Beranda</a></li>
                     <li><a href="{{ route('posts.index') }}" class="hover:border-b border-white">Berita</a></li>
-                    <li><a href="{{ route('status') }}" class="hover:border-b border-white">Cek Status Laporan</a></li>
+                    <li><a href="{{ route('status.index') }}" class="hover:border-b border-white">Cek Status Laporan</a>
+                    </li>
                 </ul>
                 <div class="flex space-x-4">
                     <a href="#" @click="open = true"
@@ -89,7 +90,8 @@
                 <li><a href="{{ route('home') }}" class="font-semibold hover:text-[#708CFF]">Beranda</a></li>
                 <li><a href="{{ route('posts.index') }}" class="font-semibold hover:text-[#708CFF]">Berita</a>
                 </li>
-                <li><a href="{{ route('status') }}" class="font-semibold hover:text-[#708CFF]">Cek Status Laporan</a>
+                <li><a href="{{ route('status.index') }}" class="font-semibold hover:text-[#708CFF]">Cek Status
+                        Laporan</a>
                 </li>
                 <li><a href="#" class="font-semibold hover:text-[#708CFF]">Chat Dengan AI</a></li>
                 <li><a href="{{ route('reports.index') }}" class="font-semibold hover:text-[#708CFF]">Laporkan

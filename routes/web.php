@@ -14,7 +14,7 @@ use App\Http\Controllers\Dashboard\EmployeeController as DashboardEmployeeContro
 Route::get('/', HomeController::class)->name('home');
 Route::get('/berita', [PostController::class, 'index'])->name('posts.index');
 Route::get('/berita/{slug}', [PostController::class, 'show'])->name('posts.show');
-Route::get('/cek-status', CheckStatusController::class)->name('status');
+Route::get('/cek-status', CheckStatusController::class)->name('status.index');
 Route::get('/laporkan', [ReportController::class, 'index'])->name('reports.index');
 Route::post('/laporkan', [ReportController::class, 'store'])->name('reports.store');
 

@@ -16,9 +16,9 @@
         <nav aria-labelledby="footer-links" class="flex flex-col items-center md:items-start">
             <h2 id="footer-links" class="font-semibold mb-4">Tautan Penting</h2>
             <ul class="space-y-2 text-center md:text-left">
-                <li><a href="#" class="hover:underline">Beranda</a></li>
-                <li><a href="#" class="hover:underline">Berita</a></li>
-                <li><a href="#" class="hover:underline">Cek Status</a></li>
+                <li><a href="{{ route('home') }}" class="hover:underline">Beranda</a></li>
+                <li><a href="{{ route('posts.index') }}" class="hover:underline">Berita</a></li>
+                <li><a href="{{ route('status.index') }}" class="hover:underline">Cek Status</a></li>
                 <li><a href="#" class="hover:underline">Kebijakan Privasi</a></li>
                 <li><a href="#" class="hover:underline">Bantuan</a></li>
             </ul>
