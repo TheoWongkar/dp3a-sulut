@@ -44,9 +44,9 @@ class ReportController extends Controller
         ]);
 
         // Simpan data laporan
-        $ticketNumber = Report::generateTicketNumber();
+        $ticket_number = Report::generateTicketNumber();
         $report = Report::create([
-            'ticket_number' => $ticketNumber,
+            'ticket_number' => $ticket_number,
             'violence_category' => $validated['violence_category'],
             'description' => $validated['description'],
             'date' => $validated['date'],
@@ -69,18 +69,18 @@ class ReportController extends Controller
         ]);
 
         // Simpan data pelaku (jika ada)
-        if ($request->has('perpetrator')) {
+        if ($request->has('perpetrator_name') || $request->has('perpetrator_age') || $request->has('relationship_between') || $request->has('perpetrator_description')) {
             Perpetrator::create([
                 'report_id' => $report->id,
                 'name' => $validated['perpetrator_name'] ?? null,
                 'age' => $validated['perpetrator_age'] ?? null,
-                'relationship_between' => $validated['perpetrator_relationship_between'] ?? null,
+                'relationship_between' => $validated['relationship_between'] ?? null,
                 'description' => $validated['perpetrator_description'] ?? null,
             ]);
         }
 
         // Simpan data pelapor (jika ada)
-        if ($request->has('reporter')) {
+        if ($request->has('reporter_whatsapp') || $request->has('reporter_telegram') || $request->has('reporter_instagram') || $request->has('reporter_email')) {
             Reporter::create([
                 'report_id' => $report->id,
                 'whatsapp' => $validated['reporter_whatsapp'] ?? null,
@@ -94,6 +94,6 @@ class ReportController extends Controller
             'report_id' => $report->id,
         ]);
 
-        return redirect()->route('status')->with('success', $ticketNumber);
+        return redirect()->route('status')->with('success', $ticket_number);
     }
 }

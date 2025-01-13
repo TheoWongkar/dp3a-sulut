@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Http\Controllers\Controller;
 use App\Models\Report;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class ReportController extends Controller
 {
@@ -25,7 +26,7 @@ class ReportController extends Controller
         $search = $validated['search'] ?? null;
         $status = $validated['status'] ?? null;
 
-        $receivedReports = Report::with('employee.user', 'latestStatus')
+        $receivedReports = Report::with(['employee.user', 'latestStatus'])
             ->whereHas('latestStatus', function ($query) {
                 $query->where('status', 'Diterima');
             })
@@ -41,7 +42,7 @@ class ReportController extends Controller
             ->orderBy('created_at', 'DESC')
             ->paginate(5);
 
-        $reports = Report::with('employee.user', 'latestStatus')
+        $reports = Report::with(['employee.user', 'latestStatus'])
             ->when($status, function ($query) use ($status) {
                 return $query->whereHas('latestStatus', function ($query) use ($status) {
                     $query->where('status', $status);
@@ -62,20 +63,36 @@ class ReportController extends Controller
         return view('dashboard.report.index', compact('title', 'receivedReports', 'reports', 'receivedSearch', 'search', 'status'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $ticket_number)
+    public function store(Request $request, string $ticket_number)
     {
-        //
+        $validatedData = $request->validate([
+            'status' => 'required|string|max:255',
+            'description' => 'required|string|max:1000',
+        ]);
+
+        $report = Report::with(['statuses', 'victim', 'perpetrator', 'reporter'])->where('ticket_number', $ticket_number)->firstOrFail();
+
+        if (!$report->employee_id) {
+            $user = Auth::user();
+
+            if ($user && $user->employee_id) {
+                $report->employee_id = $user->employee_id;
+                $report->save();
+            }
+        }
+
+        $report->statuses()->create([
+            'report_id' => $report->id,
+            'status' => $validatedData['status'],
+            'description' => $validatedData['description'],
+        ]);
+
+        return redirect()->route('dashboard.reports.show', $report->ticket_number)
+            ->with('success', 'Status berhasil ditambahkan.');
     }
 
     /**
@@ -83,23 +100,12 @@ class ReportController extends Controller
      */
     public function show(string $ticket_number)
     {
-        //
-    }
+        $title = "Laporan " . $ticket_number;
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $ticket_number)
-    {
-        //
-    }
+        $report = Report::with(['statuses', 'victim', 'perpetrator', 'reporter'])->where('ticket_number', $ticket_number)->firstOrFail();
+        $statuses = $report->statuses;
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $ticket_number)
-    {
-        //
+        return view('dashboard.report.show', compact('title', 'report', 'statuses'));
     }
 
     /**

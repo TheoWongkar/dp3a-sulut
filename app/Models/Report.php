@@ -23,11 +23,10 @@ class Report extends Model
     public static function generateTicketNumber()
     {
         do {
-            $ticketNumber = 'TKT-' . strtoupper(uniqid('', true)) . '-' . strtoupper(bin2hex(random_bytes(4))); // Example: TKT-605f4e16c4f2d4-7f3c19a1
+            $ticket_number = random_int(100000000000, 999999999999);
+        } while (self::where('ticket_number', $ticket_number)->exists());
 
-        } while (self::where('ticket_number', $ticketNumber)->exists());
-
-        return $ticketNumber;
+        return $ticket_number;
     }
 
     public function employee()

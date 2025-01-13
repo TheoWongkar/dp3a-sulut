@@ -35,11 +35,21 @@
                                 <select id="violence_category" name="violence_category"
                                     class="w-full p-2 bg-[#DCE8FF] rounded-lg border-[#DCE8FF] focus:border-blue-400">
                                     <option selected disabled>Pilih jenis kekerasan</option>
-                                    <option value="Kekerasan Fisik">Kekerasan Fisik</option>
-                                    <option value="Kekerasan Psikis">Kekerasan Psikis</option>
-                                    <option value="Kekerasan Seksual">Kekerasan Seksual</option>
-                                    <option value="Penelantaran Anak">Penelantaran Anak</option>
-                                    <option value="Eksploitasi Anak">Eksploitasi Anak</option>
+                                    <option value="Kekerasan Fisik"
+                                        {{ old('violence_category') == 'Kekerasan Fisik' ? 'selected' : '' }}>Kekerasan
+                                        Fisik</option>
+                                    <option value="Kekerasan Psikis"
+                                        {{ old('violence_category') == 'Kekerasan Psikis' ? 'selected' : '' }}>Kekerasan
+                                        Psikis</option>
+                                    <option value="Kekerasan Seksual"
+                                        {{ old('violence_category') == 'Kekerasan Seksual' ? 'selected' : '' }}>
+                                        Kekerasan Seksual</option>
+                                    <option value="Penelantaran Anak"
+                                        {{ old('violence_category') == 'Penelantaran Anak' ? 'selected' : '' }}>
+                                        Penelantaran Anak</option>
+                                    <option value="Eksploitasi Anak"
+                                        {{ old('violence_category') == 'Eksploitasi Anak' ? 'selected' : '' }}>
+                                        Eksploitasi Anak</option>
                                 </select>
                             </div>
                             <!-- Deskripsi Insiden -->
@@ -48,14 +58,14 @@
                             </label>
                             <div class="md:col-span-2">
                                 <textarea id="description" name="description" rows="4"
-                                    class="w-full p-2 bg-[#DCE8FF] rounded-lg border-[#DCE8FF] focus:border-blue-400"></textarea>
+                                    class="w-full p-2 bg-[#DCE8FF] rounded-lg border-[#DCE8FF] focus:border-blue-400">{{ old('description') }}</textarea>
                             </div>
                             <!-- Tanggal Kejadian -->
                             <label for="date" class="block text-sm font-medium text-left">
                                 Tanggal Kejadian <span class="text-red-500">*</span>
                             </label>
                             <div class="md:col-span-2">
-                                <input type="date" id="date" name="date"
+                                <input type="date" id="date" name="date" value="{{ old('date') }}"
                                     class="w-full p-2 bg-[#DCE8FF] rounded-lg border-[#DCE8FF] focus:border-blue-400">
                             </div>
                             <!-- Tempat Kejadian -->
@@ -64,7 +74,7 @@
                             </label>
                             <div class="md:col-span-2">
                                 <textarea id="scene" name="scene" rows="4"
-                                    class="w-full p-2 bg-[#DCE8FF] rounded-lg border-[#DCE8FF] focus:border-blue-400"></textarea>
+                                    class="w-full p-2 bg-[#DCE8FF] rounded-lg border-[#DCE8FF] focus:border-blue-400">{{ old('scene') }}</textarea>
                             </div>
                             <!-- Bukti Pendukung -->
                             <label for="evidence" class="block text-sm font-medium text-left">
@@ -125,7 +135,7 @@
                             </label>
                             <div class="md:col-span-2">
                                 <input type="text" id="victim_name" name="victim_name"
-                                    placeholder="Masukkan nama korban"
+                                    value="{{ old('victim_name') }}" placeholder="Masukkan nama korban"
                                     class="w-full p-2 bg-[#DCE8FF] rounded-lg border-[#DCE8FF] focus:border-blue-400">
                             </div>
                             <!-- Usia Korban -->
@@ -134,7 +144,7 @@
                             </label>
                             <div class="md:col-span-2">
                                 <input type="number" id="victim_age" name="victim_age"
-                                    placeholder="Masukkan usia korban"
+                                    value="{{ old('victim_age') }}" placeholder="Masukkan usia korban"
                                     class="w-full p-2 bg-[#DCE8FF] rounded-lg border-[#DCE8FF] focus:border-blue-400">
                             </div>
                             <!-- Jenis Kelamin Korban -->
@@ -145,8 +155,11 @@
                                 <select id="victim_gender" name="victim_gender"
                                     class="w-full p-2 bg-[#DCE8FF] rounded-lg border-[#DCE8FF] focus:border-blue-400">
                                     <option selected disabled>Pilih jenis kelamin korban</option>
-                                    <option value="Pria">Pria</option>
-                                    <option value="Wanita">Wanita</option>
+                                    <option value="Pria" {{ old('victim_gender') == 'Pria' ? 'selected' : '' }}>Pria
+                                    </option>
+                                    <option value="Wanita" {{ old('victim_gender') == 'Wanita' ? 'selected' : '' }}>
+                                        Wanita
+                                    </option>
                                 </select>
                             </div>
                             <!-- Deskripsi Tambahan Mengenai Korban -->
@@ -155,7 +168,7 @@
                             </label>
                             <div class="md:col-span-2">
                                 <textarea id="victim_description" name="victim_description" rows="4"
-                                    class="w-full p-2 bg-[#DCE8FF] rounded-lg border-[#DCE8FF] focus:border-blue-400"></textarea>
+                                    class="w-full p-2 bg-[#DCE8FF] rounded-lg border-[#DCE8FF] focus:border-blue-400">{{ old('victim_description') }}</textarea>
                             </div>
                         </div>
                     </div>
@@ -170,7 +183,7 @@
                             </label>
                             <div class="md:col-span-2">
                                 <input type="text" id="perpetrator_name" name="perpetrator_name"
-                                    placeholder="Masukkan nama pelaku"
+                                    value="{{ old('perpetrator_name') }}" placeholder="Masukkan nama pelaku"
                                     class="w-full p-2 bg-[#DCE8FF] rounded-lg border-[#DCE8FF] focus:border-blue-400">
                             </div>
                             <!-- Usia Pelaku -->
@@ -179,7 +192,7 @@
                             </label>
                             <div class="md:col-span-2">
                                 <input type="number" id="perpetrator_age" name="perpetrator_age"
-                                    placeholder="Masukkan usia pelaku"
+                                    value="{{ old('perpetrator_age') }}" placeholder="Masukkan usia pelaku"
                                     class="w-full p-2 bg-[#DCE8FF] rounded-lg border-[#DCE8FF] focus:border-blue-400">
                             </div>
                             <!-- Hubungan Pelaku Dengan Korban -->
@@ -189,12 +202,22 @@
                             <div class="md:col-span-2">
                                 <select id="relationship_between" name="relationship_between"
                                     class="w-full p-2 bg-[#DCE8FF] rounded-lg border-[#DCE8FF] focus:border-blue-400">
-                                    <option selected>Pilih hubungan pelaku dengan korban</option>
-                                    <option value="Orang Tua">Orang Tua</option>
-                                    <option value="Saudara">Saudara</option>
-                                    <option value="Guru">Guru</option>
-                                    <option value="Teman">Teman</option>
-                                    <option value="Lainnya">Lainnya</option>
+                                    <option selected disabled>Pilih hubungan pelaku dengan korban</option>
+                                    <option value="Orang Tua"
+                                        {{ old('relationship_between') == 'Orang Tua' ? 'selected' : '' }}>Orang Tua
+                                    </option>
+                                    <option value="Saudara"
+                                        {{ old('relationship_between') == 'Saudara' ? 'selected' : '' }}>
+                                        Saudara</option>
+                                    <option value="Guru"
+                                        {{ old('relationship_between') == 'Guru' ? 'selected' : '' }}>Guru
+                                    </option>
+                                    <option value="Teman"
+                                        {{ old('relationship_between') == 'Teman' ? 'selected' : '' }}>
+                                        Teman</option>
+                                    <option value="Lainnya"
+                                        {{ old('relationship_between') == 'Lainnya' ? 'selected' : '' }}>
+                                        Lainnya</option>
                                 </select>
                             </div>
                             <!-- Deskripsi Tambahan Mengenai Pelaku -->
@@ -203,7 +226,7 @@
                             </label>
                             <div class="md:col-span-2">
                                 <textarea id="perpetrator_description" name="perpetrator_description" rows="4"
-                                    class="w-full p-2 bg-[#DCE8FF] rounded-lg border-[#DCE8FF] focus:border-blue-400"></textarea>
+                                    class="w-full p-2 bg-[#DCE8FF] rounded-lg border-[#DCE8FF] focus:border-blue-400">{{ old('perpetrator_description') }}</textarea>
                             </div>
                         </div>
                     </div>
@@ -218,7 +241,7 @@
                             </label>
                             <div class="md:col-span-2">
                                 <input type="text" id="reporter_whatsapp" name="reporter_whatsapp"
-                                    placeholder="08XXXXXXXXXX"
+                                    value="{{ old('reporter_whatsapp') }}" placeholder="08XXXXXXXXXX"
                                     class="w-full p-2 bg-[#DCE8FF] rounded-lg border-[#DCE8FF] focus:border-blue-400">
                             </div>
                             <!-- Telegram -->
@@ -227,7 +250,7 @@
                             </label>
                             <div class="md:col-span-2">
                                 <input type="text" id="reporter_telegram" name="reporter_telegram"
-                                    placeholder="08XXXXXXXXXX"
+                                    value="{{ old('reporter_telegram') }}" placeholder="08XXXXXXXXXX"
                                     class="w-full p-2 bg-[#DCE8FF] rounded-lg border-[#DCE8FF] focus:border-blue-400">
                             </div>
                             <!-- Instagram -->
@@ -236,16 +259,16 @@
                             </label>
                             <div class="md:col-span-2">
                                 <input type="text" id="reporter_instagram" name="reporter_instagram"
-                                    placeholder="@xxx123"
+                                    value="{{ old('reporter_instagram') }}" placeholder="@xxx123"
                                     class="w-full p-2 bg-[#DCE8FF] rounded-lg border-[#DCE8FF] focus:border-blue-400">
                             </div>
                             <!-- Email -->
                             <label for="reporter_email" class="block text-sm font-medium text-left">
-                                Instagram
+                                Email
                             </label>
                             <div class="md:col-span-2">
                                 <input type="text" id="reporter_email" name="reporter_email"
-                                    placeholder="xxxxx@email.com"
+                                    value="{{ old('reporter_email') }}" placeholder="xxxxx@email.com"
                                     class="w-full p-2 bg-[#DCE8FF] rounded-lg border-[#DCE8FF] focus:border-blue-400">
                             </div>
                         </div>

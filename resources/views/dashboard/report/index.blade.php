@@ -56,13 +56,10 @@
                                     <td class="py-4 px-2 text-center">{{ $loop->iteration }}</td>
                                     <td class="py-4 px-2">{{ $report->ticket_number }}</td>
                                     <td class="py-4 px-2">{{ $report->violence_category }}</td>
-                                    <td class="py-4 px-2">{{ $report->employee->user->name }}</td>
+                                    <td class="py-4 px-2">{{ $report->employee->user->name ?? '' }}</td>
                                     <td class="py-4 px-2 text-center">
                                         <span
                                             class="{{ $report->latestStatus->status === 'Diterima' ? 'bg-blue-500 hover:bg-blue-600' : '' }}
-                                            {{ $report->latestStatus->status === 'Diproses' ? 'bg-yellow-500 hover:bg-yellow-600' : '' }}
-                                            {{ $report->latestStatus->status === 'Selesai' ? 'bg-green-500 hover:bg-green-600' : '' }}
-                                            {{ $report->latestStatus->status === 'Dibatalkan' ? 'bg-red-500 hover:bg-red-600' : '' }}
                                             inline-block px-3 py-1 rounded-full text-xs shadow-md text-white transition duration-200">
                                             {{ $report->latestStatus->status }}
                                         </span>
@@ -175,7 +172,7 @@
                                     <td class="py-4 px-2 text-center">{{ $loop->iteration }}</td>
                                     <td class="py-4 px-2">{{ $report->ticket_number }}</td>
                                     <td class="py-4 px-2">{{ $report->violence_category }}</td>
-                                    <td class="py-4 px-2">{{ $report->employee->user->name }}</td>
+                                    <td class="py-4 px-2">{{ $report->employee->user->name ?? '' }}</td>
                                     <td class="py-4 px-2 text-center">
                                         <span
                                             class="{{ $report->latestStatus->status === 'Diterima' ? 'bg-blue-500 hover:bg-blue-600' : '' }}
