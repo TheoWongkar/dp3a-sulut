@@ -1,5 +1,12 @@
 <x-guest-layout>
 
+    <!-- Bagian Title -->
+    @section('title')
+        @isset($title)
+            | {{ $title }}
+        @endisset
+    @endsection
+
     <!-- Bagian Pesan Success -->
     @if (session('success'))
         <div
@@ -80,16 +87,14 @@
                     </div>
                 </form>
                 <p class="text-center text-md">
-                    Belum membuat laporan? <a href="#" class="font-semibold">Buat Laporan Sekarang</a>
+                    Belum membuat laporan? <a href="{{ route('reports.index') }}" class="font-semibold">Buat Laporan
+                        Sekarang</a>
                 </p>
                 <p class="mt-10 text-center text-sm">
                     Butuh bantuan? <a href="#" class="font-semibold">Chat virtual asistenmu di sini</a>
                 </p>
             </div>
         </section>
-
     @endif
-
-
 
 </x-guest-layout>

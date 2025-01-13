@@ -11,6 +11,9 @@ use Illuminate\Http\Request;
 
 class ReportController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     */
     public function index()
     {
         $title = "Laporkan";
@@ -18,8 +21,12 @@ class ReportController extends Controller
         return view('reports', compact('title'));
     }
 
+    /**
+     * Store a newly created resource in storage.
+     */
     public function store(Request $request)
     {
+        // Validasi Input
         $validated = $request->validate([
             'violence_category' => 'required|string|max:255',
             'description' => 'required|string',
@@ -43,12 +50,13 @@ class ReportController extends Controller
             'reporter_email' => 'nullable|email|max:255',
         ]);
 
+        // Simpan Data Evidence
         if ($request->hasFile('evidence')) {
             $filePath = $request->file('evidence')->store('evidences', 'public');
             $validated['evidence'] = $filePath;
         }
 
-        // Simpan data laporan
+        // Simpan Data Laporan
         $ticket_number = Report::generateTicketNumber();
         $report = Report::create([
             'ticket_number' => $ticket_number,
@@ -59,7 +67,7 @@ class ReportController extends Controller
             'evidence' => $validated['evidence'],
         ]);
 
-        // Simpan data korban
+        // Simpan Data Korban
         $victim = Victim::create([
             'report_id' => $report->id,
             'name' => $validated['victim_name'],
@@ -68,7 +76,7 @@ class ReportController extends Controller
             'description' => $validated['victim_description'] ?? null,
         ]);
 
-        // Simpan data pelaku (jika ada)
+        // Simpan Data Pelaku (jika ada)
         if ($request->has('perpetrator_name') || $request->has('perpetrator_age') || $request->has('relationship_between') || $request->has('perpetrator_description')) {
             Perpetrator::create([
                 'report_id' => $report->id,
@@ -79,7 +87,7 @@ class ReportController extends Controller
             ]);
         }
 
-        // Simpan data pelapor (jika ada)
+        // Simpan Data Pelapor (jika ada)
         if ($request->has('reporter_whatsapp') || $request->has('reporter_telegram') || $request->has('reporter_instagram') || $request->has('reporter_email')) {
             Reporter::create([
                 'report_id' => $report->id,
@@ -90,6 +98,7 @@ class ReportController extends Controller
             ]);
         }
 
+        // Simpan Data Status
         Status::create([
             'report_id' => $report->id,
         ]);

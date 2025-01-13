@@ -1,5 +1,12 @@
 <x-guest-layout>
 
+    <!-- Bagian Title -->
+    @section('title')
+        @isset($title)
+            | {{ $title }}
+        @endisset
+    @endsection
+
     <!-- Bagian Lihat Berita -->
     <section class="container mx-auto px-4 pt-24 pb-10 sm:px-6 lg:px-4">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">

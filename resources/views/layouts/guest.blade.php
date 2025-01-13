@@ -9,9 +9,7 @@
 
     <title>
         DP3A Sulut
-        @isset($title)
-            | {{ $title }}
-        @endisset
+        @yield('title')
     </title>
 
     <!-- Fonts -->

@@ -1,12 +1,19 @@
 <x-guest-layout>
 
+    <!-- Bagian Title -->
+    @section('title')
+        @isset($title)
+            | {{ $title }}
+        @endisset
+    @endsection
+
     <!-- Bagian Laporkan -->
     <section
         class="bg-[#E9F0FF] min-h-screen flex flex-col items-center justify-start pt-24 pb-10 px-4 md:px-8 lg:px-16 space-y-6">
         <div class="bg-white w-full max-w-6xl py-4 px-6 rounded-md">
             <h1 class="text-lg font-bold">LAPORAN KEKERASAN</h1>
         </div>
-
+        <!-- Form Laporkan -->
         <div class="bg-white w-full max-w-6xl p-8 rounded-md shadow-md" x-data="{ step: 1 }">
             <div>
                 <form action="{{ route('reports.store') }}" method="POST" enctype="multipart/form-data">

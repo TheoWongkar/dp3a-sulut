@@ -1,5 +1,12 @@
 <x-guest-layout>
 
+    <!-- Bagian Title -->
+    @section('title')
+        @isset($title)
+            | {{ $title }}
+        @endisset
+    @endsection
+
     <!-- Bagian Hero -->
     <section class="relative flex items-center justify-center h-screen bg-cover bg-center"
         style="background-image: url('https://png.pngtree.com/background/20230424/original/pngtree-bamboo-pathway-in-the-forest-wallpaper-hd-picture-image_2464509.jpg');">
