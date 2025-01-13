@@ -1,6 +1,6 @@
 <x-guest-layout>
 
-    <!-- Bagian Berita -->
+    <!-- Bagian Lihat Berita -->
     <section class="container mx-auto px-4 pt-24 pb-10 sm:px-6 lg:px-4">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <!-- Detail Berita -->
@@ -12,7 +12,7 @@
                             Kembali
                         </a>
                     </div>
-                    <img src="{{ asset('storage/' . $post->image) }}" alt="Gambar Berita"
+                    <img src="{{ asset('storage/' . $post->image) }}" alt="Berita {{ $post->title }}"
                         class="w-full h-96 object-cover rounded-lg mb-6">
                     <h1 class="text-3xl font-bold">{{ $post->title }}</h1>
                     <div class="text-sm">

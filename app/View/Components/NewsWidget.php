@@ -17,6 +17,7 @@ class NewsWidget extends Component
 
     public function __construct()
     {
+        // Berita Terbaru Aktif
         $this->newPosts = Post::with('employee.user')->where('status', true)
             ->latest()
             ->take(10)

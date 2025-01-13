@@ -14,10 +14,12 @@ class HomeController extends Controller
     {
         $title = "Beranda";
 
+        // 1 Berita Aktif Terbaru
         $post = Post::with('employee.user')->where('status', true)
             ->latest()
             ->first();
 
+        // Berita Aktif Terbaru
         $newPosts = Post::with('employee.user')->where('status', true)
             ->latest()
             ->take(5)
