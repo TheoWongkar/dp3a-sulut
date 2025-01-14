@@ -7,7 +7,7 @@
                 <div class="flex items-center space-x-4 border-b pb-4 mb-6">
                     <h1 class="text-2xl font-bold">Tambah Karyawan</h1>
                 </div>
-                <!-- Form Input Berita -->
+                <!-- Form Tambah Karyawan -->
                 <form action="{{ route('dashboard.employees.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <h2 class="text-lg font-semibold mb-2">Informasi Karyawan</h2>

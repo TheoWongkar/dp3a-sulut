@@ -1,5 +1,12 @@
 <x-app-layout>
 
+    <!-- Bagian Title -->
+    @section('title')
+        @isset($title)
+            | {{ $title }}
+        @endisset
+    @endsection
+
     <!-- Bagian Ubah Karyawan -->
     <section class="py-5 bg-gray-50">
         <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
@@ -7,7 +14,7 @@
                 <div class="flex items-center space-x-4 border-b pb-4 mb-6">
                     <h1 class="text-2xl font-bold">Ubah Karyawan</h1>
                 </div>
-                <!-- Form Input Berita -->
+                <!-- Form Ubah Karyawan -->
                 <form action="{{ route('dashboard.employees.update', $employee->nip) }}" method="POST"
                     enctype="multipart/form-data">
                     @csrf
