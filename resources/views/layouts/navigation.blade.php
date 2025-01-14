@@ -62,7 +62,7 @@
                         </svg>
                     </button>
                     <!-- Menu Dropdown -->
-                    <div x-show="open" @click.away="open = false"
+                    <div x-cloak x-show="open" @click.away="open = false"
                         class="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-md py-1 z-10">
                         <a href="{{ route('home') }}"
                             class="px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 flex items-center space-x-1">
@@ -73,7 +73,7 @@
                             </svg>
                             <span>Beranda</span>
                         </a>
-                        <a href="#"
+                        <a href="{{ route('profile.edit') }}"
                             class="px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 flex items-center space-x-1">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                 stroke-width="1.5" stroke="currentColor" class="size-5">
@@ -131,7 +131,16 @@
                     User Admin
                 @endauth
             </p>
-            <a href="#"
+            <a href="{{ route('home') }}"
+                class="w-full text-left px-4 py-2 rounded-md hover:bg-blue-700 flex items-center space-x-2">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="size-5">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M9 9V4.5M9 9H4.5M9 9 3.75 3.75M9 15v4.5M9 15H4.5M9 15l-5.25 5.25M15 9h4.5M15 9V4.5M15 9l5.25-5.25M15 15h4.5M15 15v4.5m0-4.5 5.25 5.25" />
+                </svg>
+                <span>Beranda</span>
+            </a>
+            <a href="{{ route('profile.edit') }}"
                 class="w-full text-left px-4 py-2 rounded-md hover:bg-blue-700 flex items-center space-x-2">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="size-5">
