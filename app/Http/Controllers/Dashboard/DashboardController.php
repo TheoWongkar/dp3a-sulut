@@ -37,32 +37,32 @@ class DashboardController extends Controller
     private function getPostsStatistics()
     {
         return [
-            'postsCount' => Post::count(),
-            'statusTerbit' => Post::where('status', true)->count(),
-            'statusDiarsipkan' => Post::where('status', false)->count(),
-            'topPosts' => Post::orderBy('views', 'desc')->take(3)->get(),
+            'totalPosts' => Post::count(),
+            'publishedPosts' => Post::where('status', true)->count(),
+            'archivedPosts' => Post::where('status', false)->count(),
+            'popularPosts' => Post::orderBy('views', 'desc')->take(3)->get(),
         ];
     }
 
     private function getEmployeesStatistics()
     {
         return [
-            'employeesCount' => Employee::count(),
+            'totalEmployees' => Employee::count(),
             'activeEmployees' => Employee::where('status', true)->count(),
             'inactiveEmployees' => Employee::where('status', false)->count(),
-            'topPosters' => Employee::withCount('posts')->orderBy('posts_count', 'desc')->take(3)->get(),
-            'topReporters' => Employee::withCount('reports')->orderBy('reports_count', 'desc')->take(3)->get(),
+            'topPosters' => Employee::withCount('posts')->orderBy('posts_count', 'desc')->take(2)->get(),
+            'topReporters' => Employee::withCount('reports')->orderBy('reports_count', 'desc')->take(2)->get(),
         ];
     }
 
     private function getReportsStatistics()
     {
         return [
-            'reportsCount' => Report::count(),
-            'reportsDiterima' => Report::whereHas('statuses', fn($query) => $query->where('status', 'Diterima'))->count(),
-            'reportsDiproses' => Report::whereHas('statuses', fn($query) => $query->where('status', 'Diproses'))->count(),
-            'reportsSelesai' => Report::whereHas('statuses', fn($query) => $query->where('status', 'Selesai'))->count(),
-            'reportsDibatalkan' => Report::whereHas('statuses', fn($query) => $query->where('status', 'Dibatalkan'))->count(),
+            'totalReports' => Report::count(),
+            'receivedReports' => Report::whereHas('statuses', fn($query) => $query->where('status', 'Diterima'))->count(),
+            'processedReports' => Report::whereHas('statuses', fn($query) => $query->where('status', 'Diproses'))->count(),
+            'completedReports' => Report::whereHas('statuses', fn($query) => $query->where('status', 'Selesai'))->count(),
+            'canceledReports' => Report::whereHas('statuses', fn($query) => $query->where('status', 'Dibatalkan'))->count(),
         ];
     }
 }
