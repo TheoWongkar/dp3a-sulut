@@ -1,7 +1,14 @@
 <x-app-layout>
 
+    <!-- Bagian Title -->
+    @section('title')
+        @isset($title)
+            | {{ $title }}
+        @endisset
+    @endsection
+
     <!-- Bagian Berita -->
-    <div class="py-12 bg-gray-50">
+    <div class="py-5 bg-gray-50">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white shadow-lg rounded-lg p-8">
                 <!-- Tambah dan Cari -->
@@ -22,8 +29,9 @@
                         <select name="status"
                             class="bg-[#141652] text-white rounded-l-full px-4 py-2 border focus:ring-0 focus:border-blue-800">
                             <option value="">Status</option>
-                            <option value="1" {{ $status === true ? 'selected' : '' }}>Terbit</option>
-                            <option value="0" {{ $status === false ? 'selected' : '' }}>Arsip</option>
+                            <option value="1" {{ old('status', $status) === '1' ? 'selected' : '' }}>Terbit
+                            </option>
+                            <option value="0" {{ old('status', $status) === '0' ? 'selected' : '' }}>Arsip</option>
                         </select>
                         <input type="text" name="search" value="{{ $search }}"
                             class="px-4 py-2 w-full border-y focus:outline-none focus:bg-blue-50"
@@ -73,7 +81,7 @@
                                     <td class="py-4 px-2">{{ $post->employee->user->name }}</td>
                                     <td class="py-4 px-2 text-center">
                                         <span
-                                            class="inline-block px-3 py-1 rounded-full text-xs shadow-md {{ $post->status ? 'bg-green-600 hover:bg-green-500' : 'bg-orange-600 hover:bg-orange-500' }} text-white transition duration-200">
+                                            class="inline-block px-3 py-1 rounded-full text-xs shadow-md {{ $post->status ? 'bg-green-500 hover:bg-green-600' : 'bg-orange-500 hover:bg-orange-600' }} text-white transition duration-200">
                                             {{ $post->status ? 'Terbit' : 'Diarsipkan' }}
                                         </span>
                                     </td>
@@ -111,6 +119,5 @@
             </div>
         </div>
     </div>
-
 
 </x-app-layout>

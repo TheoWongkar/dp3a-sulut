@@ -1,5 +1,12 @@
 <x-app-layout>
 
+    <!-- Bagian Title -->
+    @section('title')
+        @isset($title)
+            | {{ $title }}
+        @endisset
+    @endsection
+
     <!-- Bagian Laporan Diterima -->
     <div class="py-5 bg-gray-50">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">

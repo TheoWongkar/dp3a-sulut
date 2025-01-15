@@ -1,12 +1,21 @@
 <x-app-layout>
 
+    <!-- Bagian Title -->
+    @section('title')
+        @isset($title)
+            | {{ $title }}
+        @endisset
+    @endsection
+
     <div class="py-5 bg-gray-50">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white shadow-lg rounded-lg p-8">
+                <div class="flex items-center space-x-4 border-b pb-4 mb-6">
+                    <h1 class="text-2xl font-bold">Informasi Laporan</h1>
+                </div>
                 <!-- Informasi Laporan -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-7">
                     <div>
-                        <h2 class="text-xl font-semibold">Informasi Laporan</h2>
                         <div class="mt-4 space-y-2">
                             <div class="flex justify-between">
                                 <h3 class="font-semibold">Nomor Tiket:</h3>

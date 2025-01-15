@@ -1,5 +1,12 @@
 <x-app-layout>
 
+    <!-- Bagian Title -->
+    @section('title')
+        @isset($title)
+            | {{ $title }}
+        @endisset
+    @endsection
+
     <!-- Detail Karyawan -->
     <div class="py-5 bg-gray-50">
         <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
@@ -62,7 +69,7 @@
                     </div>
                 </div>
 
-                <!-- Tombol Aksi -->
+                <!-- Tombol Kembali -->
                 <div class="mt-6 flex justify-end space-x-3">
                     <a href="{{ route('dashboard.employees.index') }}"
                         class="bg-gray-700 hover:bg-gray-800 text-white px-6 py-2 rounded-lg transition duration-200">

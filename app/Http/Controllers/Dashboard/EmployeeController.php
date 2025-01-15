@@ -17,6 +17,7 @@ class EmployeeController extends Controller
     {
         $title = "Karyawan";
 
+        // Validasi Search Form
         $validated = $request->validate([
             'search' => 'nullable|string|max:50',
             'status' => 'nullable|string|max:50',
@@ -25,6 +26,7 @@ class EmployeeController extends Controller
         $search = $validated['search'] ?? null;
         $status = $validated['status'] ?? null;
 
+        // Semua Karyawan Dengan Data Berita dan Laporan
         $employees = Employee::with(['user', 'posts', 'reports'])
             ->when($search, function ($query, $search) {
                 return $query->where('name', 'like', '%' . $search . '%');
@@ -57,6 +59,7 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
+        // Validasi Input
         $validated = $request->validate([
             'nip' => 'required|string|max:255|unique:employees',
             'name' => 'required|string|max:255',
@@ -66,12 +69,13 @@ class EmployeeController extends Controller
             'address' => 'required|string|max:255',
             'phone' => 'required|string|max:13',
             'picture' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'role' => 'required|in:user,admin,operator',
+            'role' => 'required|in:Customer Service,Moderator,Super Admin',
             'username' => 'required|string|max:255|unique:users,name',
             'email' => 'required|email|max:255|unique:users,email',
             'password' => 'required|string|min:8|confirmed',
         ]);
 
+        // Simpan Gambar (jika ada)
         if ($request->hasFile('picture')) {
             $imagePath = $request->file('picture')->store('employees', 'public');
             $validated['picture'] = $imagePath;
@@ -79,6 +83,7 @@ class EmployeeController extends Controller
             $imagePath = null;
         }
 
+        // Simpan Data Karyawan
         $employee = Employee::create([
             'nip' => $validated['nip'],
             'name' => $validated['name'],
@@ -90,6 +95,7 @@ class EmployeeController extends Controller
             'picture' => $validated['picture'],
         ]);
 
+        // Simpan Data User
         $employee->user()->create([
             'role' => $validated['role'],
             'name' => $validated['username'],
@@ -107,6 +113,7 @@ class EmployeeController extends Controller
     {
         $title = "Karyawan " . $nip;
 
+        // Ambil Data Karyawan Berdasarkan NIP
         $employee = Employee::with(['user', 'posts', 'reports'])->where('nip', $nip)->firstOrFail();
 
         return view('dashboard.employee.show', compact('title', 'employee'));
@@ -119,6 +126,7 @@ class EmployeeController extends Controller
     {
         $title = "Ubah Karyawan " . $nip;
 
+        // Ambil Data Karyawan Berdasarkan NIP
         $employee = Employee::with('user')->where('nip', $nip)->firstOrFail();
 
         return view('dashboard.employee.edit', compact('title', 'employee'));
@@ -129,8 +137,10 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, string $nip)
     {
+        // Ambil Data Karyawan Berdasarkan NIP
         $employee = Employee::where('nip', $nip)->firstOrFail();
 
+        // Validasi Input
         $validated = $request->validate([
             'nip' => 'required|string|max:255|unique:employees,nip,' . $nip . ',nip',
             'name' => 'required|string|max:255',
@@ -140,23 +150,23 @@ class EmployeeController extends Controller
             'address' => 'required|string|max:255',
             'phone' => 'nullable|string|max:13',
             'picture' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'role' => 'required|in:user,admin,operator',
+            'role' => 'required|in:Customer Service,Moderator,Super Admin',
             'username' => 'required|string|max:255|unique:users,name,' . $employee->user->name . ',name',
             'email' => 'required|email|max:255|unique:users,email,' . $employee->user->email . ',email',
             'password' => 'nullable|string|min:8|confirmed',
             'status' => 'required|in:active,inactive',
         ]);
 
-
+        // Simpan Gambar (jika ada)
         if ($request->hasFile('picture')) {
             if ($employee->picture) {
                 Storage::disk('public')->delete($employee->picture);
             }
-
-            $imagePath = $request->file('picture')->store('employees', 'public');
-            $validated['picture'] = $imagePath;
+            $filePath = $request->file('picture')->store('employees', 'public');
+            $validated['picture'] = $filePath;
         }
 
+        // Ubah Data Karyawan
         $employee->update([
             'nip' => $validated['nip'],
             'name' => $validated['name'],
@@ -168,6 +178,7 @@ class EmployeeController extends Controller
             'picture' => $validated['picture'] ?? $employee->picture,
         ]);
 
+        // Ubah Data Karyawan
         $employee->user->update([
             'role' => $validated['role'],
             'name' => $validated['username'],
@@ -175,6 +186,7 @@ class EmployeeController extends Controller
             'password' => $validated['password'] ? Hash::make($validated['password']) : $employee->user->password,
         ]);
 
+        // Set Status Karyawan
         if ($request->status == 'active') {
             // Set status menjadi true (aktif)
             if (!$employee->status) {
@@ -199,13 +211,16 @@ class EmployeeController extends Controller
      */
     public function destroy(string $nip)
     {
+        // Ambil Data Karyawan Berdasarkan NIP
         $employee = Employee::where('nip', $nip)->firstOrFail();
 
+        // Data Karyawan Tidak Ditemukan
         if (!$employee) {
             return redirect()->route('dashboard.employees.index')
                 ->with('error', 'Karyawan tidak ditemukan.');
         }
 
+        // Hapus Data Karyawan
         $employee->delete();
 
         return redirect()->route('dashboard.employees.index')

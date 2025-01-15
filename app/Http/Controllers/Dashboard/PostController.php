@@ -18,6 +18,7 @@ class PostController extends Controller
     {
         $title = "Berita";
 
+        // Validasi Search Form
         $validated = $request->validate([
             'search' => 'nullable|string|max:50',
             'status' => 'nullable|string|max:50',
@@ -26,6 +27,7 @@ class PostController extends Controller
         $search = $validated['search'] ?? null;
         $status = $validated['status'] ?? null;
 
+        // Semua Berita Aktif
         $posts = Post::with('employee.user')
             ->when($search, function ($query, $search) {
                 return $query->where('title', 'LIKE', "%{$search}%")
@@ -47,7 +49,9 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('dashboard.post.create');
+        $title = "Tambah Berita";
+
+        return view('dashboard.post.create', compact('title'));
     }
 
     /**
@@ -55,6 +59,7 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        // Validasi Input
         $validated = $request->validate([
             'title' => 'required|string|min:5|max:255',
             'image' => 'required|image|max:3072|mimes:jpg,jpeg,png',
@@ -62,6 +67,7 @@ class PostController extends Controller
             'status' => 'required|boolean',
         ]);
 
+        // Simpan Gambar
         $validated['employee_id'] = Auth::id();
         if ($request->hasFile('image')) {
             $filePath = $request->file('image')->store('posts', 'public');
@@ -69,6 +75,7 @@ class PostController extends Controller
         }
         $validated['excerpt'] = Str::limit(strip_tags($validated['body']), 100);
 
+        // Simpan Berita
         Post::create($validated);
 
         return redirect()->route('dashboard.posts.index')
@@ -80,9 +87,12 @@ class PostController extends Controller
      */
     public function show(string $slug)
     {
+        $title = "Berita " . $slug;
+
+        // Ambil Data Berdasarkan Slug
         $post = Post::where('slug', $slug)->firstOrFail();
 
-        return view('dashboard.post.show', compact('post'));
+        return view('dashboard.post.show', compact('title', 'post'));
     }
 
     /**
@@ -90,9 +100,12 @@ class PostController extends Controller
      */
     public function edit(string $slug)
     {
+        $title = "Ubah Berita " . $slug;
+
+        // Ambil Data Berdasarkan Slug
         $post = Post::where('slug', $slug)->firstOrFail();
 
-        return view('dashboard.post.edit', compact('post'));
+        return view('dashboard.post.edit', compact('title', 'post'));
     }
 
     /**
@@ -100,6 +113,7 @@ class PostController extends Controller
      */
     public function update(Request $request, string $slug)
     {
+        // Validasi Input
         $validated = $request->validate([
             'title' => 'required|string|min:5|max:255',
             'image' => 'nullable|image|max:3072|mimes:jpg,jpeg,png',
@@ -107,8 +121,10 @@ class PostController extends Controller
             'status' => 'required|boolean',
         ]);
 
+        // Ambil Data Berdasarkan Slug
         $post = Post::where('slug', $slug)->firstOrFail();
 
+        // Simpan Gambar
         if ($request->hasFile('image')) {
             if ($post->image) {
                 Storage::disk('public')->delete($post->image);
@@ -118,6 +134,7 @@ class PostController extends Controller
         }
         $validated['excerpt'] = Str::limit(strip_tags($validated['body']), 100);
 
+        // Simpan Berita
         $post->update($validated);
 
         return redirect()->route('dashboard.posts.index')
@@ -129,13 +146,16 @@ class PostController extends Controller
      */
     public function destroy(string $slug)
     {
+        // Ambil Data Berdasarkan Slug
         $post = Post::where('slug', $slug)->firstOrFail();
 
+        // Berita Tidak Ditemukan
         if (!$post) {
             return redirect()->route('dashboard.posts.index')
                 ->with('error', 'Berita tidak ditemukan.');
         }
 
+        //Hapus Berita
         $post->delete();
 
         return redirect()->route('dashboard.posts.index')

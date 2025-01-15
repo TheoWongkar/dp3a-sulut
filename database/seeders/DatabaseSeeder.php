@@ -29,6 +29,7 @@ class DatabaseSeeder extends Seeder
             if ($index === 0) {
                 $userData['name'] = 'Admin';
                 $userData['email'] = 'admin@example.com';
+                $userData['role'] = 'Super Admin';
             }
 
             User::factory()->create($userData);

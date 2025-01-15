@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\CheckStatusController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\PostController as DashboardPostController;
@@ -25,6 +26,10 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware(['auth', 'auth.session'])->group(function () {
     Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+    Route::get('profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('profile/ubah', [ProfileController::class, 'updateProfile'])->name('profile.update');
+    Route::put('profile/ubah-password', [ProfileController::class, 'updatePassword'])->name('profile.updatePassword');
+    Route::delete('profile/hapus', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/dashboard/berita', [DashboardPostController::class, 'index'])->name('dashboard.posts.index');

@@ -1,17 +1,25 @@
 <x-guest-layout>
 
+    <!-- Bagian Title -->
+    @section('title')
+        @isset($title)
+            | {{ $title }}
+        @endisset
+    @endsection
+
     <!-- Bagian Login -->
     <section class="min-h-screen flex items-center justify-center">
-        <div class="bg-[#DCE8FF] mx-5 px-5 py-5 md:mt-10 md:px-8 md:py-8 rounded-lg shadow-xl max-w-2xl w-full">
+        <div class="bg-[#DCE8FF] mx-5 px-5 py-5 md:mt-10 md:px-8 md:py-5 rounded-lg shadow-xl max-w-2xl w-full">
             <div class="flex flex-col items-center mb-5">
                 <!-- Logo -->
                 <x-application-logo class="h-20 mb-1" />
-                <!-- Text -->
+                <!-- Teks -->
                 <div class="text-center">
                     <h2 class="text-sm md:text-lg font-semibold">Dinas Pemberdayaan Perempuan</h2>
                     <span class="text-sm md:text-lg font-semibold">dan Perlindungan Anak</span>
                 </div>
             </div>
+            <!-- Form Login -->
             <form method="POST" action="{{ route('login') }}">
                 @csrf
                 <!-- Email Address -->
@@ -38,19 +46,22 @@
                     </label>
                     <a href="#" class="text-sm text-blue-600 hover:underline">Lupa password?</a>
                 </div>
-                <!-- Google reCAPTCHA v2 -->
-                <div class="mb-4">
-                    <div class="g-recaptcha" data-sitekey="{{ env('RECAPTCHA_SITE_KEY') }}"></div>
-                    @error('g-recaptcha-response')
-                        <div class="text-red-500 text-xs">{{ $message }}</div>
-                    @enderror
-                </div>
-                <!-- Login Button -->
-                <div>
-                    <button type="submit"
-                        class="w-full flex justify-center bg-[#141652] text-white px-4 py-2 rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-                        Login
-                    </button>
+                <!-- Google reCAPTCHA dan Login -->
+                <div class="flex justify-between gap-2">
+                    <!-- Google reCAPTCHA v2 -->
+                    <div>
+                        <div class="g-recaptcha" data-sitekey="{{ env('RECAPTCHA_SITE_KEY') }}"></div>
+                        @error('g-recaptcha-response')
+                            <div class="text-red-500 text-xs">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <!-- Login Button -->
+                    <div class="w-full">
+                        <button type="submit"
+                            class="w-full flex justify-center bg-[#141652] text-white px-4 py-2 rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                            Login
+                        </button>
+                    </div>
                 </div>
             </form>
         </div>

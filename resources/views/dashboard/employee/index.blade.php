@@ -1,7 +1,14 @@
 <x-app-layout>
 
+    <!-- Bagian Title -->
+    @section('title')
+        @isset($title)
+            | {{ $title }}
+        @endisset
+    @endsection
+
     <!-- Bagian Karyawan -->
-    <div class="py-12 bg-gray-50">
+    <div class="py-5 bg-gray-50">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white shadow-lg rounded-lg p-8">
                 <!-- Tambah dan Cari -->
@@ -120,6 +127,5 @@
             </div>
         </div>
     </div>
-
 
 </x-app-layout>
