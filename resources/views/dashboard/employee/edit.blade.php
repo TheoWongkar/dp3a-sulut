@@ -158,15 +158,17 @@
                                 <label for="role" class="block font-medium text-sm">Role</label>
                                 <select id="role" name="role" required
                                     class="mt-1 p-2 w-full border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#141652]">
-                                    <option value="user"
-                                        {{ old('role', $employee->user->role) == 'user' ? 'selected' : '' }}>User
+                                    <option value="Customer Service"
+                                        {{ old('role', $employee->user->role) == 'Customer Service' ? 'selected' : '' }}>
+                                        Customer Service
                                     </option>
-                                    <option value="admin"
-                                        {{ old('role', $employee->user->role) == 'admin' ? 'selected' : '' }}>Admin
+                                    <option value="Moderator"
+                                        {{ old('role', $employee->user->role) == 'Moderator' ? 'selected' : '' }}>
+                                        Moderator
                                     </option>
-                                    <option value="operator"
-                                        {{ old('role', $employee->user->role) == 'operator' ? 'selected' : '' }}>
-                                        Operator
+                                    <option value="Super Admin"
+                                        {{ old('role', $employee->user->role) == 'Super Admin' ? 'selected' : '' }}>
+                                        Super Admin
                                     </option>
                                 </select>
                                 @error('role')

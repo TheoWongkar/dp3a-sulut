@@ -131,10 +131,12 @@
                                 <label for="role" class="block font-medium text-sm">Role</label>
                                 <select id="role" name="role" required
                                     class="mt-1 p-2 w-full border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#141652]">
-                                    <option value="user" {{ old('role') == 'user' ? 'selected' : '' }}>User</option>
-                                    <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin
+                                    <option value="Customer Service"
+                                        {{ old('role') == 'Customer Service' ? 'selected' : '' }}>User</option>
+                                    <option value="Moderator" {{ old('role') == 'Moderator' ? 'selected' : '' }}>Admin
                                     </option>
-                                    <option value="operator" {{ old('role') == 'operator' ? 'selected' : '' }}>Operator
+                                    <option value="Super Admin" {{ old('role') == 'Super Admin' ? 'selected' : '' }}>
+                                        Operator
                                     </option>
                                 </select>
                                 @error('role')
