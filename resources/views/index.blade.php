@@ -28,10 +28,38 @@
             </a>
         </div>
 
-        <!-- Icon Chat Bot -->
-        <div class="absolute bottom-8 left-8 flex items-center">
-            <img src="https://img.freepik.com/free-vector/ai-technology-robot-cyborg-illustrations_24640-134419.jpg"
-                alt="Chat AI" class="w-16 h-16">
+        <!-- Chat Bot -->
+        <div x-data="{ open: false }" class="fixed bottom-4 right-4 z-20">
+            <!-- Chat Icon -->
+            <div x-show="!open" @click="open = true"
+                class="cursor-pointer bg-blue-700 hover:bg-[#141652] text-white p-2 rounded-full shadow-lg">
+                <img src="{{ asset('img/chatbot-logo.png') }}" alt="Chatbot" class="size-14">
+            </div>
+
+            <!-- Chat Widget -->
+            <div x-cloak x-show="open" class="w-80 bg-white rounded-lg shadow-lg flex flex-col">
+                <!-- Chat Header -->
+                <div class="bg-[#141652] hover:bg-blue-700 text-white p-3 rounded-t-lg cursor-pointer"
+                    @click="open = false">
+                    <h4 class="font-bold">DP3A Chatbot</h4>
+                </div>
+
+                <!-- Chat Container -->
+                <div id="chat-container" class="flex-1 p-4 space-y-3 max-h-64 overflow-y-auto">
+                    <!-- Messages will appear here -->
+                </div>
+
+                <!-- Chat Form -->
+                <form id="chat-form" class="p-3 border-t">
+                    <div class="flex items-center space-x-2">
+                        <input type="text" id="message"
+                            class="flex-1 border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring focus:ring-blue-300"
+                            placeholder="Tanyakan sesuatu..." autocomplete="off">
+                        <button type="submit"
+                            class="bg-[#141652] text-white px-4 py-2 rounded-lg hover:bg-blue-700">Kirim</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </section>
 
@@ -96,45 +124,6 @@
             </div>
         </div>
     </section>
-
-    <!-- Chat Bot -->
-    <div x-data="{ open: false }" class="fixed bottom-4 right-4 z-20">
-        <!-- Chat Icon -->
-        <div x-show="!open" @click="open = true"
-            class="cursor-pointer bg-blue-600 text-white p-4 rounded-full shadow-lg">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                stroke="currentColor" class="size-6">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                    d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 0 1-.825-.242m9.345-8.334a2.126 2.126 0 0 0-.476-.095 48.64 48.64 0 0 0-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0 0 11.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155" />
-            </svg>
-            <path stroke-linecap="round" stroke-linejoin="round"
-                d="M8 10h.01M12 10h.01M16 10h.01M21 16.24c-.79 1.21-2.59 2.01-4.83 2.01-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6c0 1.42-.5 2.71-1.33 3.74zM8.83 19.75A7.98 7.98 0 015.17 18c-.79-1.21-1.17-2.79-1.17-4.24 0-4.41 3.59-8 8-8s8 3.59 8 8c0 2.39-.94 4.57-2.47 6.17M15.5 13.75a5.02 5.02 0 01-1.5 0">
-            </path>
-            </svg>
-        </div>
-
-        <!-- Chat Widget -->
-        <div x-show="open" class="w-80 bg-white rounded-lg shadow-lg flex flex-col">
-            <!-- Chat Header -->
-            <div class="bg-blue-600 text-white p-3 rounded-t-lg cursor-pointer" @click="open = false">
-                <h4 class="text-center font-bold">Chat with Rasa Bot</h4>
-            </div>
-            <!-- Chat Container -->
-            <div id="chat-container" class="flex-1 p-4 space-y-3 max-h-64 overflow-y-auto">
-                <!-- Messages will appear here -->
-            </div>
-            <!-- Chat Form -->
-            <form id="chat-form" class="p-3 border-t">
-                <div class="flex items-center space-x-2">
-                    <input type="text" id="message"
-                        class="flex-1 border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring focus:ring-blue-300"
-                        placeholder="Type your message..." required>
-                    <button type="submit"
-                        class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">Send</button>
-                </div>
-            </form>
-        </div>
-    </div>
 
     <!-- Bagian Carousel -->
     <section class="py-12">
