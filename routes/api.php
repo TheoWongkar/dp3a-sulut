@@ -9,3 +9,4 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::post('/chatbot', [ChatbotController::class, 'sendMessage'])->name('chatbot.send');
+Route::post('/chatbot/report', [ChatbotController::class, 'storeFromChatbot'])->name('chatbot.reports.store');
