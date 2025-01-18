@@ -49,6 +49,11 @@
             const chatContainer = $('#chat-container');
             const chatForm = $('#chat-form');
 
+            // Fungsi Scroll Otomatis Ke Bawah
+            function scrollToBottom() {
+                chatContainer.scrollTop(chatContainer[0].scrollHeight);
+            }
+
             // Handle Form
             $('#chat-form').on('submit', function(e) {
                 e.preventDefault();
@@ -58,14 +63,17 @@
                 // Apend Pesan
                 chatContainer.append(`
                     <div class="text-right">
-                        <div class="inline-block bg-blue-600 text-white px-4 py-2 rounded-lg">
-                            <strong>You:</strong> ${message}
+                        <div class="inline-block bg-blue-600 text-white text-sm px-4 py-2 rounded-lg max-w-[80%] break-words">
+                            ${message}
                         </div>
                     </div>
                 `);
 
                 // Clear Input
                 $('#message').val('');
+
+                // Scroll ke Bawah
+                scrollToBottom();
 
                 // Kirim Pesan Ke Server
                 $.ajax({
@@ -78,8 +86,8 @@
                     success: function(response) {
                         chatContainer.append(`
                             <div class="text-left">
-                                <div class="inline-block bg-gray-200 px-4 py-2 rounded-lg">
-                                    <strong>Bot:</strong> ${response.bot_response}
+                                <div class="inline-block bg-gray-200 text-sm px-4 py-2 rounded-lg">
+                                    ${response.bot_response}
                                 </div>
                             </div>
                         `);
@@ -88,8 +96,8 @@
                     error: function() {
                         chatContainer.append(`
                             <div class="text-left">
-                                <div class="inline-block bg-red-200 text-red-600 px-4 py-2 rounded-lg">
-                                    <strong>Bot:</strong> Sorry, there was an error communicating with the bot.
+                                <div class="inline-block bg-red-200 text-red-600 text-sm px-4 py-2 rounded-lg">
+                                    Maaf, terjadi kesalahan saat menghubungi bot.
                                 </div>
                             </div>
                         `);
