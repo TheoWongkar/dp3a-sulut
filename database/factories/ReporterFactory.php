@@ -19,10 +19,10 @@ class ReporterFactory extends Factory
     {
         return [
             'report_id' => Report::inRandomOrder()->first()->id,
-            'whatsapp' => fake()->optional()->phoneNumber(),
-            'telegram' => fake()->optional()->userName(),
-            'instagram' => fake()->optional()->userName(),
-            'email' => fake()->optional()->safeEmail(),
+            'name' => fake()->optional()->name(),
+            'phone' => fake()->optional()->numerify('08##########'),
+            'address' => fake()->optional()->address(),
+            'relationship_between' => fake()->optional()->randomElement(['Orang Tua', 'Saudara', 'Guru', 'Teman', 'Lainnya']),
         ];
     }
 }

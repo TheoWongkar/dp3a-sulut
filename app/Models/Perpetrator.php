@@ -14,7 +14,7 @@ class Perpetrator extends Model
         'report_id',
         'name',
         'age',
-        'relationship_between',
+        'gender',
         'description',
     ];
 

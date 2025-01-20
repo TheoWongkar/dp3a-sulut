@@ -12,10 +12,10 @@ class Reporter extends Model
 
     protected $fillable = [
         'report_id',
-        'whatsapp',
-        'telegram',
-        'instagram',
-        'email',
+        'name',
+        'phone',
+        'address',
+        'relationship_between',
     ];
 
     public function report()

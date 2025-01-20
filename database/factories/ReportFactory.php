@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Employee;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,12 +20,12 @@ class ReportFactory extends Factory
     {
         return [
             'employee_id' => Employee::inRandomOrder()->first()->id,
-            'ticket_number' => fake()->unique()->numerify('############'),
+            'ticket_number' => 'TKT-' . Str::random(4) . now()->format('dmY'),
             'violence_category' => fake()->randomElement(['Kekerasan Fisik', 'Kekerasan Psikis', 'Kekerasan Seksual', 'Penelantaran Anak', 'Eksploitasi Anak']),
-            'description' => fake()->paragraph(1, true),
+            'chronology' => fake()->paragraph(1, true),
             'date' => fake()->date(),
             'scene' => fake()->address(),
-            'evidence' => fake()->word(),
+            'evidence' => null,
         ];
     }
 }

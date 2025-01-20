@@ -20,9 +20,11 @@ class VictimFactory extends Factory
         return [
             'report_id' => Report::inRandomOrder()->first()->id,
             'name' => fake()->name(),
+            'phone' => fake()->numerify('08##########'),
+            'address' => fake()->address(),
             'age' => fake()->numberBetween(18, 80),
             'gender' => fake()->randomElement(['Pria', 'Wanita']),
-            'description' => fake()->paragraph(),
+            'description' => fake()->optional()->sentence(8),
         ];
     }
 }

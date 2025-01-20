@@ -19,10 +19,10 @@ class PerpetratorFactory extends Factory
     {
         return [
             'report_id' => Report::inRandomOrder()->first()->id,
-            'name' => fake()->name(),
-            'age' => fake()->numberBetween(15, 60),
-            'relationship_between' => fake()->randomElement(['Orang Tua', 'Saudara', 'Guru', 'Teman', 'Lainnya']),
-            'description' => fake()->sentence(10),
+            'name' => fake()->optional()->name(),
+            'age' => fake()->optional()->numberBetween(15, 60),
+            'gender' => fake()->randomElement(['Pria', 'Wanita']),
+            'description' => fake()->optional()->sentence(8),
         ];
     }
 }

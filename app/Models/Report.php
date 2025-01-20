@@ -11,10 +11,10 @@ class Report extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id',
+        'employee_id',
         'ticket_number',
         'violence_category',
-        'description',
+        'chronology',
         'date',
         'scene',
         'evidence',
