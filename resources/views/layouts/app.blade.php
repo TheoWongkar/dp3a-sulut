@@ -8,7 +8,7 @@
     <link rel="icon" href="{{ asset('img/app-logo.svg') }}" type="image/x-icon">
 
     <title>
-        DP3A Sulut
+        DP3A Sulut -
         @yield('title')
     </title>
 
@@ -34,11 +34,21 @@
 
 <body class="font-sans text-[#141652]">
 
-    @include('layouts.navigation')
+    <div x-data="{ sidebarOpen: false }" class="flex h-screen overflow-hidden">
+        <!-- Navigasi -->
+        @include('layouts.navigation')
 
-    <main>
-        {{ $slot }}
-    </main>
+        <!-- Main content -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+            <!-- Header -->
+            @include('layouts.header')
+
+            <!-- Content -->
+            <main class="flex-1 p-4 overflow-y-auto bg-gray-200">
+                {{ $slot }}
+            </main>
+        </div>
+    </div>
 
 </body>
 

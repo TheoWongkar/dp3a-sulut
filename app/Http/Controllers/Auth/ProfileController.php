@@ -15,10 +15,11 @@ class ProfileController extends Controller
      */
     public function edit()
     {
-        $title = "Karyawan " . Auth::user()->name;
-
         // Ambil Data Pengguna
         $user = Auth::user();
+
+        // Judul Halaman
+        $title = "User: " . Auth::user()->name;
 
         return view('profile.edit', compact('title', 'user'));
     }
@@ -33,8 +34,8 @@ class ProfileController extends Controller
 
         // Validasi Input
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,' . $user->id,
+            'name' => 'required|string|min:3|max:255',
+            'email' => 'required|email|min:3|max:255|unique:users,email,' . $user->id,
             'picture' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
@@ -70,13 +71,25 @@ class ProfileController extends Controller
         $user = Auth::user();
 
         // Validasi Input
-        $validated = $request->validate([
-            'current_password' => 'required|string',
-            'password' => 'required|string|min:8|confirmed',
-        ]);
+        $validated = $request->validate(
+            [
+                'current_password' => 'required|string|max:255',
+                'password' => [
+                    'required',
+                    'string',
+                    'min:8',
+                    'max:255',
+                    'confirmed',
+                    'regex:/[0-9]/',
+                ],
+            ],
+            [
+                'password.regex' => 'Kata sandi harus mengandung setidaknya satu angka.',
+            ]
+        );
 
         // Cek Kata Sandi
-        if (!Hash::check($validated['current_password'], Auth::user()->password)) {
+        if (!Hash::check($validated['current_password'], $user->password)) {
             return back()->withErrors(['current_password' => 'Kata sandi saat ini tidak valid.']);
         }
 

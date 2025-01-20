@@ -24,7 +24,7 @@ class EmployeeFactory extends Factory
             'date_of_birth' => fake()->date(),
             'address' => fake()->address(),
             'phone' => fake()->optional()->numerify('08###########'),
-            'picture' => fake()->optional()->imageUrl(200, 200, 'people', true, 'Profile Picture'),
+            'picture' => null,
             'status' => fake()->boolean(90),
         ];
     }

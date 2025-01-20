@@ -35,7 +35,7 @@
             @enderror
         </div>
         <!-- Gambar -->
-        <div x-data="{ imagePreview: '{{ $user->employee->picture ? asset('storage/' . $user->employee->picture) : null }}' }">
+        <div x-data="{ imagePreview: '{{ $user->employee->picture ? asset('storage/' . $user->employee->picture) : asset('img/profile-placeholder.jpg') }}' }">
             <label for="picture" class="block text-sm font-medium">Foto Profil</label>
             <input id="picture" type="file" name="picture"
                 class="mt-1 w-full border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#141652] file:mr-4 file:py-2.5 file:px-4 file:font-medium file:border-0 file:text-sm file:bg-[#141652] file:text-white hover:file:bg-blue-800 transition ease-in-out duration-200"

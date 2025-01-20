@@ -53,4 +53,8 @@ Route::middleware(['auth', 'auth.session'])->group(function () {
     Route::get('/dashboard/karyawan/ubah/{nip}', [DashboardEmployeeController::class, 'edit'])->name('dashboard.employees.edit');
     Route::put('/dashboard/karyawan/ubah/{nip}', [DashboardEmployeeController::class, 'update'])->name('dashboard.employees.update');
     Route::delete('/dashboard/karyawan/hapus/{nip}', [DashboardEmployeeController::class, 'destroy'])->name('dashboard.employees.destroy');
+
+    Route::get('/dashboard/test', function () {
+        return view('test');
+    });
 });
