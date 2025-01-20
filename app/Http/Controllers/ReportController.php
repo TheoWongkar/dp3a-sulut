@@ -30,31 +30,35 @@ class ReportController extends Controller
         // Validasi Input
         $validated = $request->validate([
             'violence_category' => 'required|string|max:255',
-            'description' => 'required|string',
+            'chronology' => 'required|string|max:255',
             'date' => 'required|date',
-            'scene' => 'required|string',
-            'evidence' => 'required|image|mimes:jpg,png,jpeg|max:1024',
+            'scene' => 'required|string|max:255',
+            'evidence' => 'nullable|image|mimes:jpg,jpeg,png|max:3072',
 
             'victim_name' => 'required|string|max:255',
+            'victim_phone' => 'required|string|max:13',
+            'victim_address' => 'required|string|max:255',
             'victim_age' => 'required|integer|min:0',
             'victim_gender' => 'required|string|in:Pria,Wanita',
-            'victim_description' => 'nullable|string',
+            'victim_description' => 'nullable|string|max:255',
 
             'perpetrator_name' => 'nullable|string|max:255',
             'perpetrator_age' => 'nullable|integer|min:0',
-            'relationship_between' => 'nullable|string|max:255',
-            'perpetrator_description' => 'nullable|string',
+            'perpetrator_gender' => 'required|string|in:Pria,Wanita',
+            'perpetrator_description' => 'nullable|string|max:255',
 
-            'reporter_whatsapp' => 'nullable|string|max:15',
-            'reporter_telegram' => 'nullable|string|max:15',
-            'reporter_instagram' => 'nullable|string|max:50',
-            'reporter_email' => 'nullable|email|max:255',
+            'reporter_name' => 'nullable|string|max:255',
+            'reporter_phone' => 'nullable|string|max:13',
+            'reporter_address' => 'nullable|string|max:255',
+            'reporter_relationship_between' => 'required|string|max:255',
         ]);
 
         // Simpan Data Evidence
         if ($request->hasFile('evidence')) {
             $filePath = $request->file('evidence')->store('evidences', 'public');
             $validated['evidence'] = $filePath;
+        } else {
+            $validated['evidence'] = null;
         }
 
         // Simpan Data Laporan
@@ -62,7 +66,7 @@ class ReportController extends Controller
         $report = Report::create([
             'ticket_number' => $ticket_number,
             'violence_category' => $validated['violence_category'],
-            'description' => $validated['description'],
+            'chronology' => $validated['chronology'],
             'date' => $validated['date'],
             'scene' => $validated['scene'],
             'evidence' => $validated['evidence'],
@@ -72,32 +76,30 @@ class ReportController extends Controller
         $victim = Victim::create([
             'report_id' => $report->id,
             'name' => $validated['victim_name'],
+            'phone' => $validated['victim_phone'],
+            'address' => $validated['victim_address'],
             'age' => $validated['victim_age'],
             'gender' => $validated['victim_gender'],
             'description' => $validated['victim_description'] ?? null,
         ]);
 
-        // Simpan Data Pelaku (jika ada)
-        if ($request->has('perpetrator_name') || $request->has('perpetrator_age') || $request->has('relationship_between') || $request->has('perpetrator_description')) {
-            Perpetrator::create([
-                'report_id' => $report->id,
-                'name' => $validated['perpetrator_name'] ?? null,
-                'age' => $validated['perpetrator_age'] ?? null,
-                'relationship_between' => $validated['relationship_between'] ?? null,
-                'description' => $validated['perpetrator_description'] ?? null,
-            ]);
-        }
+        // Simpan Data Pelaku
+        Perpetrator::create([
+            'report_id' => $report->id,
+            'name' => $validated['perpetrator_name'] ?? null,
+            'age' => $validated['perpetrator_age'] ?? null,
+            'gender' => $validated['perpetrator_gender'],
+            'description' => $validated['perpetrator_description'] ?? null,
+        ]);
 
-        // Simpan Data Pelapor (jika ada)
-        if ($request->has('reporter_whatsapp') || $request->has('reporter_telegram') || $request->has('reporter_instagram') || $request->has('reporter_email')) {
-            Reporter::create([
-                'report_id' => $report->id,
-                'whatsapp' => $validated['reporter_whatsapp'] ?? null,
-                'telegram' => $validated['reporter_telegram'] ?? null,
-                'instagram' => $validated['reporter_instagram'] ?? null,
-                'email' => $validated['reporter_email'] ?? null,
-            ]);
-        }
+        // Simpan Data Pelapor
+        Reporter::create([
+            'report_id' => $report->id,
+            'name' => $validated['reporter_name'] ?? null,
+            'phone' => $validated['reporter_phone'] ?? null,
+            'address' => $validated['reporter_address'] ?? null,
+            'relationship_between' => $validated['reporter_relationship_between'],
+        ]);
 
         // Simpan Data Status
         Status::create([

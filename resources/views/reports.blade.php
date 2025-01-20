@@ -1,11 +1,7 @@
 <x-guest-layout>
 
     <!-- Bagian Title -->
-    @section('title')
-        @isset($title)
-            | {{ $title }}
-        @endisset
-    @endsection
+    <x-title :title=$title></x-title>
 
     <!-- Bagian Laporkan -->
     <section
@@ -59,13 +55,13 @@
                                         Eksploitasi Anak</option>
                                 </select>
                             </div>
-                            <!-- Deskripsi Insiden -->
-                            <label for="description" class="block text-sm font-medium text-left">
-                                Deskripsi Insiden <span class="text-red-500">*</span>
+                            <!-- Kronologi Insiden -->
+                            <label for="chronology" class="block text-sm font-medium text-left">
+                                Kronologi Insiden <span class="text-red-500">*</span>
                             </label>
                             <div class="md:col-span-2">
-                                <textarea id="description" name="description" rows="4"
-                                    class="w-full p-2 bg-[#DCE8FF] rounded-lg border-[#DCE8FF] focus:border-blue-400">{{ old('description') }}</textarea>
+                                <textarea id="chronology" name="chronology" rows="4"
+                                    class="w-full p-2 bg-[#DCE8FF] rounded-lg border-[#DCE8FF] focus:border-blue-400">{{ old('chronology') }}</textarea>
                             </div>
                             <!-- Tanggal Kejadian -->
                             <label for="date" class="block text-sm font-medium text-left">
@@ -85,7 +81,7 @@
                             </div>
                             <!-- Bukti Pendukung -->
                             <label for="evidence" class="block text-sm font-medium text-left">
-                                Bukti Pendukung <span class="text-red-500">*</span>
+                                Bukti Pendukung
                             </label>
                             <div class="md:col-span-1 mb-5">
                                 <div x-cloak x-data="{ files: null, isDropping: false, previewUrl: null }"
@@ -113,11 +109,11 @@
                                                 d="M1.5 6a2.25 2.25 0 0 1 2.25-2.25h16.5A2.25 2.25 0 0 1 22.5 6v12a2.25 2.25 0 0 1-2.25 2.25H3.75A2.25 2.25 0 0 1 1.5 18V6ZM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0 0 21 18v-1.94l-2.69-2.689a1.5 1.5 0 0 0-2.12 0l-.88.879.97.97a.75.75 0 1 1-1.06 1.06l-5.16-5.159a1.5 1.5 0 0 0-2.12 0L3 16.061Zm10.125-7.81a1.125 1.125 0 1 1 2.25 0 1.125 1.125 0 0 1-2.25 0Z"
                                                 clip-rule="evenodd" />
                                         </svg>
-                                        <p class="inline text-gray-500 text-xl font-bold">Image</p>
+                                        <p class="inline text-gray-500 text-xl font-bold">Gambar</p>
                                         <p class="text-gray-500 font-semibold"
-                                            x-text="files ? files[0].name : 'Drop Image to Upload'"></p>
-                                        <p class="text-xs text-red-500 mt-1">JPG/PNG</p>
-                                        <p class="text-xs text-red-500 mt-1">Ukuran File 40 KB - 100 KB</p>
+                                            x-text="files ? files[0].name : 'klik atau seret gambar'"></p>
+                                        <p class="text-xs text-red-500 mt-1">JPG/JPEG/PNG</p>
+                                        <p class="text-xs text-red-500 mt-1">Ukuran File 40 KB - 3072 KB</p>
                                     </div>
                                     <!-- Image Preview -->
                                     <template x-if="previewUrl">
@@ -144,6 +140,23 @@
                                 <input type="text" id="victim_name" name="victim_name"
                                     value="{{ old('victim_name') }}" placeholder="Masukkan nama korban"
                                     class="w-full p-2 bg-[#DCE8FF] rounded-lg border-[#DCE8FF] focus:border-blue-400">
+                            </div>
+                            <!-- Telepon Korban -->
+                            <label for="victim_phone" class="block text-sm font-medium text-left">
+                                No. Telepon Korban <span class="text-red-500">*</span>
+                            </label>
+                            <div class="md:col-span-2">
+                                <input type="text" id="victim_phone" name="victim_phone"
+                                    value="{{ old('victim_phone') }}" placeholder="08XXXXXXXXXX"
+                                    class="w-full p-2 bg-[#DCE8FF] rounded-lg border-[#DCE8FF] focus:border-blue-400">
+                            </div>
+                            <!-- Alamat Korban -->
+                            <label for="victim_address" class="block text-sm font-medium text-left">
+                                Alamat Korban <span class="text-red-500">*</span>
+                            </label>
+                            <div class="md:col-span-2">
+                                <textarea id="victim_address" name="victim_address" rows="4"
+                                    class="w-full p-2 bg-[#DCE8FF] rounded-lg border-[#DCE8FF] focus:border-blue-400">{{ old('victim_address') }}</textarea>
                             </div>
                             <!-- Usia Korban -->
                             <label for="victim_age" class="block text-sm font-medium text-left">
@@ -202,29 +215,21 @@
                                     value="{{ old('perpetrator_age') }}" placeholder="Masukkan usia pelaku"
                                     class="w-full p-2 bg-[#DCE8FF] rounded-lg border-[#DCE8FF] focus:border-blue-400">
                             </div>
-                            <!-- Hubungan Pelaku Dengan Korban -->
-                            <label for="relationship_between" class="block text-sm font-medium text-left">
-                                Hubungan Pelaku Dengan Korban
+                            <!-- Jenis Kelamin Pelaku -->
+                            <label for="perpetrator_gender" class="block text-sm font-medium text-left">
+                                Jenis Kelamin Pelaku <span class="text-red-500">*</span>
                             </label>
                             <div class="md:col-span-2">
-                                <select id="relationship_between" name="relationship_between"
+                                <select id="perpetrator_gender" name="perpetrator_gender"
                                     class="w-full p-2 bg-[#DCE8FF] rounded-lg border-[#DCE8FF] focus:border-blue-400">
-                                    <option selected disabled>Pilih hubungan pelaku dengan korban</option>
-                                    <option value="Orang Tua"
-                                        {{ old('relationship_between') == 'Orang Tua' ? 'selected' : '' }}>Orang Tua
+                                    <option selected disabled>Pilih jenis kelamin pelaku</option>
+                                    <option value="Pria"
+                                        {{ old('perpetrator_gender') == 'Pria' ? 'selected' : '' }}>Pria
                                     </option>
-                                    <option value="Saudara"
-                                        {{ old('relationship_between') == 'Saudara' ? 'selected' : '' }}>
-                                        Saudara</option>
-                                    <option value="Guru"
-                                        {{ old('relationship_between') == 'Guru' ? 'selected' : '' }}>Guru
+                                    <option value="Wanita"
+                                        {{ old('perpetrator_gender') == 'Wanita' ? 'selected' : '' }}>
+                                        Wanita
                                     </option>
-                                    <option value="Teman"
-                                        {{ old('relationship_between') == 'Teman' ? 'selected' : '' }}>
-                                        Teman</option>
-                                    <option value="Lainnya"
-                                        {{ old('relationship_between') == 'Lainnya' ? 'selected' : '' }}>
-                                        Lainnya</option>
                                 </select>
                             </div>
                             <!-- Deskripsi Tambahan Mengenai Pelaku -->
@@ -242,41 +247,57 @@
                     <div x-cloak x-show="step === 4">
                         <h2 class="text-lg font-bold mb-6">Formulir Data Pelapor</h2>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
-                            <!-- Whatsapp -->
-                            <label for="reporter_whatsapp" class="block text-sm font-medium text-left">
-                                Whatsapp
+                            <!-- Nama Pelapor -->
+                            <label for="reporter_name" class="block text-sm font-medium text-left">
+                                Nama Pelapor
                             </label>
                             <div class="md:col-span-2">
-                                <input type="text" id="reporter_whatsapp" name="reporter_whatsapp"
-                                    value="{{ old('reporter_whatsapp') }}" placeholder="08XXXXXXXXXX"
+                                <input type="text" id="reporter_name" name="reporter_name"
+                                    value="{{ old('reporter_name') }}" placeholder="Masukkan nama pelapor"
                                     class="w-full p-2 bg-[#DCE8FF] rounded-lg border-[#DCE8FF] focus:border-blue-400">
                             </div>
-                            <!-- Telegram -->
-                            <label for="reporter_telegram" class="block text-sm font-medium text-left">
-                                Telegram
+                            <!-- Telepon Pelapor -->
+                            <label for="reporter_phone" class="block text-sm font-medium text-left">
+                                No. Telepon
                             </label>
                             <div class="md:col-span-2">
-                                <input type="text" id="reporter_telegram" name="reporter_telegram"
-                                    value="{{ old('reporter_telegram') }}" placeholder="08XXXXXXXXXX"
+                                <input type="text" id="reporter_phone" name="reporter_phone"
+                                    value="{{ old('reporter_phone') }}" placeholder="08XXXXXXXXXX"
                                     class="w-full p-2 bg-[#DCE8FF] rounded-lg border-[#DCE8FF] focus:border-blue-400">
                             </div>
-                            <!-- Instagram -->
-                            <label for="reporter_instagram" class="block text-sm font-medium text-left">
-                                Instagram
+                            <!-- Alamat Pelapor -->
+                            <label for="reporter_address" class="block text-sm font-medium text-left">
+                                Alamat Pelapor
                             </label>
                             <div class="md:col-span-2">
-                                <input type="text" id="reporter_instagram" name="reporter_instagram"
-                                    value="{{ old('reporter_instagram') }}" placeholder="@xxx123"
-                                    class="w-full p-2 bg-[#DCE8FF] rounded-lg border-[#DCE8FF] focus:border-blue-400">
+                                <textarea id="reporter_address" name="reporter_address" rows="4"
+                                    class="w-full p-2 bg-[#DCE8FF] rounded-lg border-[#DCE8FF] focus:border-blue-400">{{ old('reporter_address') }}</textarea>
                             </div>
-                            <!-- Email -->
-                            <label for="reporter_email" class="block text-sm font-medium text-left">
-                                Email
+                            <!-- Hubungan Pelapor Dengan Korban -->
+                            <label for="reporter_relationship_between" class="block text-sm font-medium text-left">
+                                Hubungan Dengan Korban <span class="text-red-500">*</span>
                             </label>
                             <div class="md:col-span-2">
-                                <input type="text" id="reporter_email" name="reporter_email"
-                                    value="{{ old('reporter_email') }}" placeholder="xxxxx@email.com"
+                                <select id="reporter_relationship_between" name="reporter_relationship_between"
                                     class="w-full p-2 bg-[#DCE8FF] rounded-lg border-[#DCE8FF] focus:border-blue-400">
+                                    <option selected disabled>Pilih hubungan pelaku dengan korban</option>
+                                    <option value="Orang Tua"
+                                        {{ old('reporter_relationship_between') == 'Orang Tua' ? 'selected' : '' }}>
+                                        Orang Tua
+                                    </option>
+                                    <option value="Saudara"
+                                        {{ old('reporter_relationship_between') == 'Saudara' ? 'selected' : '' }}>
+                                        Saudara</option>
+                                    <option value="Guru"
+                                        {{ old('reporter_relationship_between') == 'Guru' ? 'selected' : '' }}>Guru
+                                    </option>
+                                    <option value="Teman"
+                                        {{ old('reporter_relationship_between') == 'Teman' ? 'selected' : '' }}>
+                                        Teman</option>
+                                    <option value="Lainnya"
+                                        {{ old('reporter_relationship_between') == 'Lainnya' ? 'selected' : '' }}>
+                                        Lainnya</option>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -313,7 +334,6 @@
                             KIRIM LAPORAN
                         </button>
                     </div>
-
                     <p class="text-sm text-red-500 mt-4" x-cloak x-show="step <= 4">* Bertanda Pertanyaan yang wajib
                         diisi
                     </p>

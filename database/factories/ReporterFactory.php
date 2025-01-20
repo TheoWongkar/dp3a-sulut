@@ -22,7 +22,7 @@ class ReporterFactory extends Factory
             'name' => fake()->optional()->name(),
             'phone' => fake()->optional()->numerify('08##########'),
             'address' => fake()->optional()->address(),
-            'relationship_between' => fake()->optional()->randomElement(['Orang Tua', 'Saudara', 'Guru', 'Teman', 'Lainnya']),
+            'relationship_between' => fake()->randomElement(['Orang Tua', 'Saudara', 'Guru', 'Teman', 'Lainnya']),
         ];
     }
 }

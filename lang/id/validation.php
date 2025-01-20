@@ -278,22 +278,25 @@ return [
         'year'                     => 'tahun',
 
         'violence_category'        => 'jenis kekerasan',
+        'chronology'               => 'kronologi kejadian',
         'scene'                    => 'tempat kejadian',
         'evidence'                 => 'bukti pendukung',
 
         'victim_name'              => 'nama korban',
+        'victim_phone'             => 'telepon korban',
+        'victim_address'           => 'alamat korban',
         'victim_age'               => 'usia korban',
         'victim_gender'            => 'jenis kelamin korban',
         'victim_description'       => 'deskripsi korban',
 
         'perpetrator_name'         => 'nama pelaku',
         'perpetrator_age'          => 'usia pelaku',
-        'relationship_between'     => 'hubungan pelaku dengan korban',
+        'perpetrator_gender'       => 'jenis kelamin pelaku',
         'perpetrator_description'  => 'deskripsi pelaku',
 
-        'reporter_whatsapp'        => 'whatsapp pelapor',
-        'reporter_telegram'        => 'telegram pelapor',
-        'reporter_instagram'       => 'instagram pelapor',
-        'reporter_email'           => 'email pelapor',
+        'reporter_name'            => 'nama pelapor',
+        'reporter_phone'           => 'telepon pelapor',
+        'reporter_address'         => 'alamat pelapor',
+        'reporter_relationship_between' => 'hubungan dengan korban',
     ],
 ];

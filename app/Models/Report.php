@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Report extends Model
 {
@@ -23,7 +23,7 @@ class Report extends Model
     public static function generateTicketNumber()
     {
         do {
-            $ticket_number = random_int(100000000000, 999999999999);
+            $ticket_number = 'TKT-' . rand(1000, 9999) . now()->format('dmy');
         } while (self::where('ticket_number', $ticket_number)->exists());
 
         return $ticket_number;

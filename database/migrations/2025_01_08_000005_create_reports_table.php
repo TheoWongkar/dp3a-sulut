@@ -51,7 +51,7 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->string('phone', 13)->nullable();
             $table->string('address')->nullable();
-            $table->string('relationship_between')->nullable();
+            $table->string('relationship_between');
             $table->timestamps();
         });
 
