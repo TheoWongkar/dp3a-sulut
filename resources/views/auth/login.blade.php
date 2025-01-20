@@ -1,11 +1,7 @@
 <x-guest-layout>
 
     <!-- Bagian Title -->
-    @section('title')
-        @isset($title)
-            | {{ $title }}
-        @endisset
-    @endsection
+    <x-title :title=$title></x-title>
 
     <!-- Bagian Login -->
     <section class="min-h-screen flex items-center justify-center">

@@ -15,8 +15,6 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $title = "Dashboard";
-
         // Statistik Berita
         $postsStats = $this->getPostsStatistics();
 
@@ -25,6 +23,9 @@ class DashboardController extends Controller
 
         // Statistik Laporan
         $reportsStats = $this->getReportsStatistics();
+
+        // Judul Halaman
+        $title = "Dashboard";
 
         return view('dashboard.index', array_merge(
             ['title' => $title],

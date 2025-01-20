@@ -13,7 +13,10 @@ class LoginController extends Controller
 {
     public function login(): View
     {
-        return view('auth.login');
+        // Judul Halaman
+        $title = "Login";
+
+        return view('auth.login', compact('title'));
     }
 
     public function authenticate(Request $request): RedirectResponse
