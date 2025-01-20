@@ -5,7 +5,7 @@
 
     <!-- Bagian Tambah Berita -->
     <section>
-        <div class="bg-white p-6 shadow-lg rounded-lg hover:shadow-xl transition-shadow"">
+        <div class="bg-white p-6 shadow-lg rounded-lg hover:shadow-xl transition-shadow">
             <div class="flex items-center space-x-4 border-b pb-4 mb-6">
                 <h1 class="text-2xl font-bold">Tambah Berita</h1>
             </div>

@@ -36,7 +36,7 @@ class ProfileController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|min:3|max:255',
             'email' => 'required|email|min:3|max:255|unique:users,email,' . $user->id,
-            'picture' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'picture' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
         // Simpan Gambar (jika ada)

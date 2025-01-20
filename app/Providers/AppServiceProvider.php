@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Policies\EmployeePolicy;
 use App\Policies\PostPolicy;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
@@ -21,6 +22,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Gate::define('update_delete-post', [PostPolicy::class, 'update']);
+        // Post Gate
+        Gate::define('update_delete-post', [PostPolicy::class, 'updateDelete']);
+
+        // Employee Gate
+        Gate::define('create-employee', [EmployeePolicy::class, 'create']);
+        Gate::define('show-employee', [EmployeePolicy::class, 'show']);
+        Gate::define('update_delete-employee', [EmployeePolicy::class, 'updateDelete']);
     }
 }

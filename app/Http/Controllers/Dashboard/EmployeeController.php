@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
@@ -15,41 +16,61 @@ class EmployeeController extends Controller
      */
     public function index(Request $request)
     {
-        $title = "Karyawan";
-
         // Validasi Search Form
         $validated = $request->validate([
+            'status' => 'nullable|string|in:1,0,all',
+            'start_date' => 'nullable|date',
+            'end_date' => 'nullable|date|after_or_equal:start_date',
             'search' => 'nullable|string|max:50',
-            'status' => 'nullable|string|max:50',
         ]);
 
+        // Ambil Nilai
+        $status = $validated['status'] ?? 'all';
+        $start_date = $validated['start_date'] ?? null;
+        $end_date = $validated['end_date'] ?? null;
         $search = $validated['search'] ?? null;
-        $status = $validated['status'] ?? null;
 
         // Semua Karyawan Dengan Data Berita dan Laporan
-        $employees = Employee::with(['user', 'posts', 'reports'])
+        $employees = Employee::with(['posts', 'reports'])
             ->when($search, function ($query, $search) {
-                return $query->where('name', 'like', '%' . $search . '%');
+                return $query->where(function ($query) use ($search) {
+                    $query->where('name', 'LIKE', "%{$search}%")
+                        ->orWhere('nip', 'LIKE', "{$search}%")
+                        ->orWhere('gender', 'LIKE', "{$search}");
+                });
             })
-            ->when($status, function ($query, $status) {
-                if ($status == 'active') {
-                    return $query->where('status', true);
-                } elseif ($status == 'inactive') {
-                    return $query->where('status', false);
+            ->when($status !== 'all', function ($query) use ($status) {
+                if (is_numeric($status)) {
+                    return $query->where('status', (bool) $status);
                 }
+            })
+            ->when($start_date, function ($query) use ($start_date) {
+                return $query->whereDate('created_at', '>=', $start_date);
+            })
+            ->when($end_date, function ($query) use ($end_date) {
+                return $query->whereDate('created_at', '<=', $end_date);
             })
             ->orderBy('name', 'ASC')
             ->paginate(10);
 
-        return view('dashboard.employee.index', compact('title', 'employees', 'search', 'status'));
+        // Judul Halaman
+        $title = "Karyawan";
+
+        return view('dashboard.employee.index', compact('title', 'employees', 'status', 'start_date', 'end_date', 'search'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Employee $employee)
     {
+        // Judul Halaman
         $title = "Tambah Karyawan";
+
+        // Cek Izin
+        if (! Gate::allows('create-employee', $employee)) {
+            abort(403);
+        }
 
         return view('dashboard.employee.create', compact('title'));
     }
@@ -60,27 +81,39 @@ class EmployeeController extends Controller
     public function store(Request $request)
     {
         // Validasi Input
-        $validated = $request->validate([
-            'nip' => 'required|string|max:255|unique:employees',
-            'name' => 'required|string|max:255',
-            'gender' => 'required|in:Pria,Wanita',
-            'position' => 'required|string|max:255',
-            'date_of_birth' => 'required|date',
-            'address' => 'required|string|max:255',
-            'phone' => 'required|string|max:13',
-            'picture' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'role' => 'required|in:Customer Service,Moderator,Super Admin',
-            'username' => 'required|string|max:255|unique:users,name',
-            'email' => 'required|email|max:255|unique:users,email',
-            'password' => 'required|string|min:8|confirmed',
-        ]);
+        $validated = $request->validate(
+            [
+                'nip' => 'required|string|min:15|max:18|unique:employees',
+                'name' => 'required|string|min:3|max:255',
+                'gender' => 'required|string|in:Pria,Wanita',
+                'position' => 'required|string|max:255',
+                'date_of_birth' => 'required|date',
+                'address' => 'required|string|max:255',
+                'phone' => 'nullable|string|max:13',
+                'picture' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+                'role' => 'required|string|in:Petugas,Admin,Developer',
+                'username' => 'required|string|max:255|unique:users,name',
+                'email' => 'required|email|min:3|max:255|unique:users,email',
+                'password' => [
+                    'required',
+                    'string',
+                    'min:8',
+                    'max:255',
+                    'confirmed',
+                    'regex:/[0-9]/',
+                ],
+            ],
+            [
+                'password.regex' => 'Kata sandi harus mengandung setidaknya satu angka.',
+            ]
+        );
 
         // Simpan Gambar (jika ada)
         if ($request->hasFile('picture')) {
             $imagePath = $request->file('picture')->store('employees', 'public');
             $validated['picture'] = $imagePath;
         } else {
-            $imagePath = null;
+            $validated['picture'] = null;
         }
 
         // Simpan Data Karyawan
@@ -111,10 +144,16 @@ class EmployeeController extends Controller
      */
     public function show(string $nip)
     {
-        $title = "Karyawan " . $nip;
-
         // Ambil Data Karyawan Berdasarkan NIP
         $employee = Employee::with(['user', 'posts', 'reports'])->where('nip', $nip)->firstOrFail();
+
+        // Cek Izin
+        if (! Gate::allows('show-employee', $employee)) {
+            abort(403);
+        }
+
+        // Judul Halaman
+        $title = "Karyawan: " . $employee->name;
 
         return view('dashboard.employee.show', compact('title', 'employee'));
     }
@@ -124,10 +163,16 @@ class EmployeeController extends Controller
      */
     public function edit(string $nip)
     {
-        $title = "Ubah Karyawan " . $nip;
-
         // Ambil Data Karyawan Berdasarkan NIP
         $employee = Employee::with('user')->where('nip', $nip)->firstOrFail();
+
+        // Cek Izin
+        if (! Gate::allows('update_delete-employee', $employee)) {
+            abort(403);
+        }
+
+        // Judul Halaman
+        $title = "Ubah Karyawan: " . $employee->name;
 
         return view('dashboard.employee.edit', compact('title', 'employee'));
     }
@@ -141,21 +186,33 @@ class EmployeeController extends Controller
         $employee = Employee::where('nip', $nip)->firstOrFail();
 
         // Validasi Input
-        $validated = $request->validate([
-            'nip' => 'required|string|max:255|unique:employees,nip,' . $nip . ',nip',
-            'name' => 'required|string|max:255',
-            'gender' => 'required|in:Pria,Wanita',
-            'position' => 'required|string|max:255',
-            'date_of_birth' => 'required|date',
-            'address' => 'required|string|max:255',
-            'phone' => 'nullable|string|max:13',
-            'picture' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'role' => 'required|in:Customer Service,Moderator,Super Admin',
-            'username' => 'required|string|max:255|unique:users,name,' . $employee->user->name . ',name',
-            'email' => 'required|email|max:255|unique:users,email,' . $employee->user->email . ',email',
-            'password' => 'nullable|string|min:8|confirmed',
-            'status' => 'required|in:active,inactive',
-        ]);
+        $validated = $request->validate(
+            [
+                'nip' => 'required|string|min:15|max:18|unique:employees,nip,' . $nip . ',nip',
+                'name' => 'required|string|min:3|max:255',
+                'gender' => 'required|string|in:Pria,Wanita',
+                'position' => 'required|string|max:255',
+                'date_of_birth' => 'required|date',
+                'address' => 'required|string|max:255',
+                'phone' => 'nullable|string|max:13',
+                'picture' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+                'status' => 'required|boolean',
+                'role' => 'required|string|in:Petugas,Admin,Developer',
+                'username' => 'required|string|max:255|unique:users,name,' . $employee->user->name . ',name',
+                'email' => 'required|email|min:3|max:255|unique:users,email,' . $employee->user->email . ',email',
+                'password' => [
+                    'nullable',
+                    'string',
+                    'min:8',
+                    'max:255',
+                    'confirmed',
+                    'regex:/[0-9]/',
+                ],
+            ],
+            [
+                'password.regex' => 'Kata sandi harus mengandung setidaknya satu angka.',
+            ]
+        );
 
         // Simpan Gambar (jika ada)
         if ($request->hasFile('picture')) {
@@ -176,6 +233,7 @@ class EmployeeController extends Controller
             'address' => $validated['address'],
             'phone' => $validated['phone'] ?? $employee->phone,
             'picture' => $validated['picture'] ?? $employee->picture,
+            'status' => $validated['status'],
         ]);
 
         // Ubah Data Karyawan
@@ -185,21 +243,6 @@ class EmployeeController extends Controller
             'email' => $validated['email'],
             'password' => $validated['password'] ? Hash::make($validated['password']) : $employee->user->password,
         ]);
-
-        // Set Status Karyawan
-        if ($request->status == 'active') {
-            // Set status menjadi true (aktif)
-            if (!$employee->status) {
-                $employee->status = true;
-                $employee->save();
-            }
-        } elseif ($request->status == 'inactive') {
-            // Set status menjadi false (tidak aktif)
-            if ($employee->status) {
-                $employee->status = false;
-                $employee->save();
-            }
-        }
 
         return redirect()->route('dashboard.employees.index')->with('success', 'Karyawan berhasil diubah.');
     }
@@ -218,6 +261,11 @@ class EmployeeController extends Controller
         if (!$employee) {
             return redirect()->route('dashboard.employees.index')
                 ->with('error', 'Karyawan tidak ditemukan.');
+        }
+
+        // Cek Izin
+        if (! Gate::allows('update_delete-employee', $employee)) {
+            abort(403);
         }
 
         // Hapus Data Karyawan

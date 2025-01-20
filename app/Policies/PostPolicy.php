@@ -11,7 +11,7 @@ class PostPolicy
      * Create a new policy instance.
      */
 
-    public function update(User $user, Post $post)
+    public function updateDelete(User $user, Post $post)
     {
         return $user->id === $post->employee_id || $user->role === 'Admin' || $user->role === 'Developer';
     }

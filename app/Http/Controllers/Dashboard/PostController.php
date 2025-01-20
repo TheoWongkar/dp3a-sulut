@@ -110,7 +110,7 @@ class PostController extends Controller
         $post = Post::where('slug', $slug)->firstOrFail();
 
         // Judul Halaman
-        $title = "Berita " . $post->title;
+        $title = "Berita: " . $post->title;
 
         return view('dashboard.post.show', compact('title', 'post'));
     }
@@ -129,7 +129,7 @@ class PostController extends Controller
         }
 
         // Judul Halaman
-        $title = "Berita " . $post->title;
+        $title = "Berita: " . $post->title;
 
         return view('dashboard.post.edit', compact('title', 'post'));
     }

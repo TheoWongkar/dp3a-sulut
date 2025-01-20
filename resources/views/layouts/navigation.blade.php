@@ -33,7 +33,8 @@
                 </svg>
                 <span>Berita</span>
             </a>
-            <a href="#" class="flex gap-4 px-4 py-1.5 text-white rounded hover:bg-gray-200 hover:text-gray-900">
+            <a href="{{ route('dashboard.employees.index') }}"
+                class="flex gap-4 px-4 py-1.5 text-white rounded hover:bg-gray-200 hover:text-gray-900">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="size-6">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -88,7 +89,8 @@
                 </svg>
                 <span class="inline">Beranda</span>
             </a>
-            <a href="#" class="flex gap-4 px-4 py-1.5 text-white rounded hover:bg-gray-200 hover:text-gray-900">
+            <a href="{{ route('dashboard.employees.show', auth()->user()->employee->nip) }}"
+                class="flex gap-4 px-4 py-1.5 text-white rounded hover:bg-gray-200 hover:text-gray-900">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="size-6">
                     <path stroke-linecap="round" stroke-linejoin="round"
