@@ -4,8 +4,8 @@
     <div class="space-y-4">
         @forelse ($newPosts as $post)
             <a href="{{ route('posts.show', $post->slug) }}" class="flex items-center">
-                <img src="{{ asset('storage/' . $post->image) }}" alt="Thumbnail Berita"
-                    class="w-16 h-16 object-cover rounded-lg mr-4 aspect-square">
+                <img src="{{ asset('storage/' . $post->image) }}" alt="Thumbnail {{ $post->title }}"
+                    class="w-16 h-16 object-cover rounded-lg mr-4 aspect-square border-2">
                 <div>
                     <h4 class="text-md font-semibold">{{ substr($post->title, 0, 15) }}</h4>
                     <p>{{ Str::limit($post->excerpt, 50) }}</p>

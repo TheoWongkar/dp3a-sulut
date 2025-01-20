@@ -14,8 +14,9 @@ class ReportController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function create()
     {
+        // Judul Halaman
         $title = "Laporkan";
 
         return view('reports', compact('title'));

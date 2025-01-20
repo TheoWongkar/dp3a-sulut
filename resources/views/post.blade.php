@@ -1,11 +1,7 @@
 <x-guest-layout>
 
     <!-- Bagian Title -->
-    @section('title')
-        @isset($title)
-            | {{ $title }}
-        @endisset
-    @endsection
+    <x-title :title=$title></x-title>
 
     <!-- Bagian Lihat Berita -->
     <section class="container mx-auto px-4 pt-24 pb-10 sm:px-6 lg:px-4">
@@ -21,14 +17,14 @@
                     </div>
                     <img src="{{ asset('storage/' . $post->image) }}" alt="Berita {{ $post->title }}"
                         class="w-full h-96 object-cover rounded-lg mb-6">
-                    <h1 class="text-3xl font-bold">{{ $post->title }}</h1>
+                    <h1 class="text-2xl font-bold">{{ $post->title }}</h1>
                     <div class="text-sm">
                         <span>{{ $post->created_at->diffForHumans() }}</span> &bull;
                         <span>{{ $post->employee->user->name }}</span> |
                         <span>{{ $post->views }}x dikunjungi</span>
                     </div>
                     <div class="border-t border-blue-300 mt-2 mb-4"></div>
-                    <p class="text-lg">{!! $post->body !!}</p>
+                    <p class="text-md">{!! $post->body !!}</p>
                 </div>
             </div>
 

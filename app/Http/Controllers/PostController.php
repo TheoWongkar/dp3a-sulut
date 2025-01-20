@@ -12,8 +12,6 @@ class PostController extends Controller
      */
     public function index()
     {
-        $title = "Berita";
-
         // Semua Berita Aktif
         $posts = Post::with('employee.user')->where('status', true)
             ->orderBy('created_at', 'DESC')
@@ -25,6 +23,9 @@ class PostController extends Controller
             ->take(9)
             ->get();
 
+        // Judul Halaman
+        $title = "Berita";
+
         return view('posts', compact('title', 'posts', 'popularPosts'));
     }
 
@@ -33,8 +34,6 @@ class PostController extends Controller
      */
     public function show(string $slug)
     {
-        $title = "Berita " . $slug;
-
         // Lihat Berita Aktif
         $post = Post::with('employee.user')->where('status', true)
             ->where('slug', $slug)
@@ -46,6 +45,9 @@ class PostController extends Controller
             $post->increment('views');
             session()->put($sessionKey, true);
         }
+
+        // Judul Halaman
+        $title = "Berita: " . $post->title;
 
         return view('post', compact('title', 'post'));
     }

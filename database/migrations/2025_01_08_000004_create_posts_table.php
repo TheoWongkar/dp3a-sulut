@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('employee_id')->constrained('employees')->onDelete('cascade');
             $table->string('title');
             $table->string('slug')->unique();
-            $table->string('excerpt');
+            $table->string('excerpt', 100);
             $table->text('body');
             $table->string('image');
             $table->boolean('status')->default(true);

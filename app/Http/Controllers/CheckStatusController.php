@@ -12,12 +12,19 @@ class CheckStatusController extends Controller
      */
     public function __invoke(Request $request)
     {
-        $title = "Cek Status";
-
-        $search = $request->input('search');
+        // Validasi Search Form
+        $validated = $request->validate([
+            'search' => 'nullable|string|max:255',
+        ]);
 
         // Status Laporan
-        $report = Report::with(['employee.user', 'statuses'])->where('ticket_number', 'LIKE', "$search")->first();
+        $search = $validated['search'] ?? null;
+
+        // Status Laporan
+        $report = Report::with('statuses')->where('ticket_number', 'LIKE', "$search")->first();
+
+        // Judul Halaman
+        $title = "Cek Status";
 
         return view('check-statuses', compact('title', 'report', 'search'));
     }

@@ -12,8 +12,6 @@ class HomeController extends Controller
      */
     public function __invoke()
     {
-        $title = "Beranda";
-
         // 1 Berita Aktif Terbaru
         $post = Post::with('employee.user')->where('status', true)
             ->latest()
@@ -24,6 +22,9 @@ class HomeController extends Controller
             ->latest()
             ->take(5)
             ->get();
+
+        // Judul Halaman
+        $title = "Beranda";
 
         return view('index', compact('title', 'post', 'newPosts'));
     }

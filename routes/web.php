@@ -16,7 +16,7 @@ Route::get('/', HomeController::class)->name('home');
 Route::get('/berita', [PostController::class, 'index'])->name('posts.index');
 Route::get('/berita/{slug}', [PostController::class, 'show'])->name('posts.show');
 Route::get('/cek-status', CheckStatusController::class)->name('status.index');
-Route::get('/laporkan', [ReportController::class, 'index'])->name('reports.index');
+Route::get('/laporkan', [ReportController::class, 'create'])->name('reports.create');
 Route::post('/laporkan', [ReportController::class, 'store'])->name('reports.store');
 
 Route::middleware('guest')->group(function () {
@@ -32,6 +32,7 @@ Route::middleware(['auth', 'auth.session'])->group(function () {
     Route::delete('profile/hapus', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
     Route::get('/dashboard/berita', [DashboardPostController::class, 'index'])->name('dashboard.posts.index');
     Route::get('/dashboard/berita/tambah', [DashboardPostController::class, 'create'])->name('dashboard.posts.create');
     Route::post('/dashboard/berita/tambah', [DashboardPostController::class, 'store'])->name('dashboard.posts.store');

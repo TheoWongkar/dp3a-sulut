@@ -8,7 +8,7 @@
     <link rel="icon" href="{{ asset('img/app-logo.svg') }}" type="image/x-icon">
 
     <title>
-        DP3A Sulut
+        DP3A Sulut -
         @yield('title')
     </title>
 

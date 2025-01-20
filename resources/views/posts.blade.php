@@ -1,11 +1,7 @@
 <x-guest-layout>
 
     <!-- Bagian Title -->
-    @section('title')
-        @isset($title)
-            | {{ $title }}
-        @endisset
-    @endsection
+    <x-title :title=$title></x-title>
 
     <!-- Bagian Berita -->
     <section class="container mx-auto px-4 pt-24 pb-10 sm:px-6 lg:px-4">
@@ -26,8 +22,8 @@
                                     class="text-blue-500 hover:text-blue-800">Selengkapnya...
                                 </a>
                             </div>
-                            <img src="{{ asset('storage/' . $post->image) }}" alt="Gambar Berita"
-                                class="w-24 h-24 object-cover aspect-square rounded-lg ml-auto">
+                            <img src="{{ asset('storage/' . $post->image) }}" alt="Gambar {{ $post->title }}"
+                                class="w-24 h-24 object-cover aspect-square rounded-lg ml-auto border-2">
                         </div>
                         <!-- Pembatas -->
                         <div class="border-b-2 shadow-lg w-1/2 mx-auto"></div>
@@ -38,13 +34,11 @@
                             </div>
                         </div>
                     @endforelse
-                    @if ($posts->count())
-                        <div class="p-6 flex items-start">
-                            <div class="flex-1">
-                                {{ $posts->links() }}
-                            </div>
+                    <div class="p-6 flex items-start">
+                        <div class="flex-1">
+                            {{ $posts->links() }}
                         </div>
-                    @endif
+                    </div>
                 </div>
             </div>
 
@@ -60,7 +54,7 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
             @forelse ($popularPosts as $post)
                 <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                    <img src="{{ asset('storage/' . $post->image) }}" alt="Gambar Berita Populer"
+                    <img src="{{ asset('storage/' . $post->image) }}" alt="Gambar {{ $post->title }}"
                         class="w-full h-48 object-cover">
                     <div class="p-4">
                         <h2 class="text-lg font-semibold">{{ substr($post->title, 0, 30) }}</h2>

@@ -1,11 +1,7 @@
 <x-guest-layout>
 
     <!-- Bagian Title -->
-    @section('title')
-        @isset($title)
-            | {{ $title }}
-        @endisset
-    @endsection
+    <x-title :title=$title></x-title>
 
     <!-- Bagian Pesan Success -->
     @if (session('success'))
@@ -33,8 +29,8 @@
                 <!-- Informasi Laporan (Bagian Kiri) -->
                 <div class="p-6 rounded-md shadow-lg w-full md:w-1/3">
                     <h2 class="text-lg font-semibold">Informasi Laporan</h2>
-                    <p class="mt-4 font-semibold">Nomor Tiket
-                        <span class="block">{{ $report->ticket_number }}</span>
+                    <p class="mt-4 font-semibold">Nomor Tiket:
+                        <span class="block ">{{ $report->ticket_number }}</span>
                     </p>
                     <div class="mt-3 space-y-2">
                         <p class="text-sm">Tanggal Masuk Laporan:
@@ -87,7 +83,7 @@
                     </div>
                 </form>
                 <p class="text-center text-md">
-                    Belum membuat laporan? <a href="{{ route('reports.index') }}" class="font-semibold">Buat Laporan
+                    Belum membuat laporan? <a href="{{ route('reports.create') }}" class="font-semibold">Buat Laporan
                         Sekarang</a>
                 </p>
                 <p class="mt-10 text-center text-sm">
