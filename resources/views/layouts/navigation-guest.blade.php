@@ -64,11 +64,11 @@
 
     <!-- Menu Sidebar -->
     <aside x-show="isSidebarOpen" x-cloak @click.away="isSidebarOpen = false"
-        class="fixed top-0 left-0 h-full w-64 bg-[#DCE8FF] p-4 shadow-lg transition-transform duration-300 z-20"
+        class="fixed top-0 left-0 h-full w-64 bg-[#DCE8FF] py-4 shadow-lg transition-transform duration-300 z-20"
         x-transition:enter="transform transition duration-300" x-transition:enter-start="-translate-x-full"
         x-transition:enter-end="translate-x-0" x-transition:leave="transform transition duration-300"
         x-transition:leave-start="translate-x-0" x-transition:leave-end="-translate-x-full">
-        <div class="flex justify-between items-center mb-4">
+        <div class="flex justify-between items-center mx-4 mb-5">
             <!-- Cari -->
             <form role="search" class="w-full flex items-center">
                 <label for="search" class="sr-only">Cari Informasi</label>
@@ -86,25 +86,32 @@
         </div>
         <!-- Link Navigasi -->
         <nav aria-label="Sidebar Navigation" class="flex flex-col text-[#141652]">
-            <ul class="space-y-2">
-                <li><a href="{{ route('home') }}" class="font-semibold hover:text-[#708CFF]">Beranda</a></li>
-                <li><a href="{{ route('posts.index') }}" class="font-semibold hover:text-[#708CFF]">Berita</a>
+            <ul class="space-y-0">
+                <li><a href="{{ route('home') }}"
+                        class="flex px-6 py-4 w-full font-semibold hover:bg-[#E9F0FF]">Beranda</a>
                 </li>
-                <li><a href="{{ route('status.index') }}" class="font-semibold hover:text-[#708CFF]">Cek Status
+                <li><a href="{{ route('posts.index') }}"
+                        class="flex px-6 py-4 w-full font-semibold hover:bg-[#E9F0FF]">Berita</a>
+                </li>
+                <li><a href="{{ route('status.index') }}"
+                        class="flex px-6 py-4 w-full font-semibold hover:bg-[#E9F0FF]">Cek
+                        Status
                         Laporan</a>
                 </li>
-                <li><a href="#" class="font-semibold hover:text-[#708CFF]">Chat Dengan AI</a></li>
-                <li><a href="{{ route('reports.create') }}" class="font-semibold hover:text-[#708CFF]">Laporkan
+                <li><a href="#" class="flex px-6 py-4 w-full font-semibold hover:bg-[#E9F0FF]">Chat Dengan AI</a>
+                </li>
+                <li><a href="{{ route('reports.create') }}"
+                        class="flex px-6 py-4 w-full font-semibold hover:bg-[#E9F0FF]">Laporkan
                         Kekerasan</a></li>
-                <li>
+                <li class="mx-4">
                     @auth
                         <a href="{{ route('dashboard') }}"
-                            class="inline-block w-full py-1 bg-[#141652] text-white text-center rounded-full font-semibold hover:bg-[#708CFF] duration-300">
+                            class="flex items-center mt-4 justify-center w-full py-2 bg-[#141652] text-white text-center rounded-full font-semibold hover:bg-[#708CFF] duration-300">
                             Dashboard
                         </a>
                     @else
                         <a href="{{ route('login') }}"
-                            class="inline-block w-full py-1 bg-[#141652] text-white text-center rounded-full font-semibold hover:bg-[#708CFF] duration-300">
+                            class="flex items-center mt-4 w-full py-2 bg-[#141652] text-white text-center rounded-full font-semibold hover:bg-[#708CFF] duration-300">
                             Login
                         </a>
                     @endauth

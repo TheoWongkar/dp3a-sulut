@@ -20,7 +20,7 @@ class NewsWidget extends Component
         // Berita Terbaru Aktif
         $this->newPosts = Post::with('employee.user')->where('status', true)
             ->latest()
-            ->take(10)
+            ->take(6)
             ->get();
     }
 

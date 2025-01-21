@@ -60,10 +60,10 @@ class DashboardController extends Controller
     {
         return [
             'totalReports' => Report::count(),
-            'receivedReports' => Report::whereHas('statuses', fn($query) => $query->where('status', 'Diterima'))->count(),
-            'processedReports' => Report::whereHas('statuses', fn($query) => $query->where('status', 'Diproses'))->count(),
-            'completedReports' => Report::whereHas('statuses', fn($query) => $query->where('status', 'Selesai'))->count(),
-            'canceledReports' => Report::whereHas('statuses', fn($query) => $query->where('status', 'Dibatalkan'))->count(),
+            'receivedReports' => Report::whereHas('LatestStatus', fn($query) => $query->where('status', 'Diterima'))->count(),
+            'processedReports' => Report::whereHas('LatestStatus', fn($query) => $query->where('status', 'Diproses'))->count(),
+            'completedReports' => Report::whereHas('LatestStatus', fn($query) => $query->where('status', 'Selesai'))->count(),
+            'canceledReports' => Report::whereHas('LatestStatus', fn($query) => $query->where('status', 'Dibatalkan'))->count(),
         ];
     }
 }

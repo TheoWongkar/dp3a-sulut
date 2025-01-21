@@ -45,7 +45,8 @@
         </div>
         <div>
             <h3 class="px-2 py-1 font-medium text-gray-400">Laporan</h3>
-            <a href="#" class="flex gap-4 px-4 py-1.5 text-white rounded hover:bg-gray-200 hover:text-gray-900">
+            <a href="{{ route('dashboard.reports.create') }}"
+                class="flex gap-4 px-4 py-1.5 text-white rounded hover:bg-gray-200 hover:text-gray-900">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="size-6">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -53,7 +54,8 @@
                 </svg>
                 <span class="inline">Kasus Baru</span>
             </a>
-            <a href="#" class="flex gap-4 px-4 py-1.5 text-white rounded hover:bg-gray-200 hover:text-gray-900">
+            <a href="{{ route('dashboard.reports.index', ['status' => 'diterima']) }}"
+                class="flex gap-4 px-4 py-1.5 text-white rounded hover:bg-gray-200 hover:text-gray-900">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="size-6">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -61,7 +63,8 @@
                 </svg>
                 <span>Laporan Kasus</span>
             </a>
-            <a href="#" class="flex gap-4 px-4 py-1.5 text-white rounded hover:bg-gray-200 hover:text-gray-900">
+            <a href="{{ route('dashboard.reports.index', ['status' => 'diproses']) }}"
+                class="flex gap-4 px-4 py-1.5 text-white rounded hover:bg-gray-200 hover:text-gray-900">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="size-6">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -69,7 +72,8 @@
                 </svg>
                 <span>Laporan Diproses</span>
             </a>
-            <a href="#" class="flex gap-4 px-4 py-1.5 text-white rounded hover:bg-gray-200 hover:text-gray-900">
+            <a href="{{ route('dashboard.reports.index', ['status' => 'selesai']) }}"
+                class="flex gap-4 px-4 py-1.5 text-white rounded hover:bg-gray-200 hover:text-gray-900">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="size-6">
                     <path stroke-linecap="round" stroke-linejoin="round"
