@@ -10,6 +10,7 @@ use App\Models\Perpetrator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class ReportController extends Controller
 {
@@ -159,9 +160,18 @@ class ReportController extends Controller
      */
     public function receivedShow(string $ticket_number)
     {
+        // Ambil Data Berdasarkan Nomor Tiket dan Status 'Diterima'
+        $report = Report::with(['victim', 'perpetrator', 'reporter', 'statuses'])
+            ->where('ticket_number', $ticket_number)
+            ->whereHas('latestStatus', function ($query) {
+                $query->where('status', 'Diterima');
+            })
+            ->firstOrFail();
 
-        // Ambil Data Berdasarkan Nomor Tiket Serta Statusnya
-        $report = Report::with(['victim', 'perpetrator', 'reporter'])->where('ticket_number', $ticket_number)->firstOrFail();
+        // Cek Izin
+        if (! Gate::allows('verification-report', $report)) {
+            abort(403);
+        }
 
         // Judul Halaman
         $title = "Laporan: " . $ticket_number;
@@ -174,14 +184,17 @@ class ReportController extends Controller
      */
     public function receivedVerification(string $ticket_number)
     {
-        // Ambil Data Berdasarkan Nomor Tiket
-        $report = Report::where('ticket_number', $ticket_number)->firstOrFail();
+        // Ambil Data Berdasarkan Nomor Tiket dan Status 'Diterima'
+        $report = Report::with(['victim', 'perpetrator', 'reporter', 'statuses'])
+            ->where('ticket_number', $ticket_number)
+            ->whereHas('latestStatus', function ($query) {
+                $query->where('status', 'Diterima');
+            })
+            ->firstOrFail();
 
-        // Cek apakah laporan sudah memiliki status "Diproses"
-        $existingStatus = $report->statuses()->where('status', 'Diproses')->first();
-        if ($existingStatus) {
-            return redirect()->to(route('dashboard.reports.received-show', $report->ticket_number) . '#status-update')
-                ->with('error', 'Laporan ini sudah diverifikasi sebelumnya.');
+        // Cek Izin
+        if (! Gate::allows('verification-report', $report)) {
+            abort(403);
         }
 
         // Tambahkan Status
@@ -191,8 +204,7 @@ class ReportController extends Controller
             'description' => 'Laporan telah disetujui admin',
         ]);
 
-        return redirect()->to(route('dashboard.reports.received-show', $report->ticket_number) . '#status-update')
-            ->with('success', 'Laporan berhasil diverifikasi dan status diperbarui.');
+        return redirect()->route('dashboard.reports.received')->with('success', 'Laporan telah diverifikasi');
     }
 
     /**
@@ -244,8 +256,13 @@ class ReportController extends Controller
      */
     public function processedShow(string $ticket_number)
     {
-        // Ambil Data Berdasarkan Nomor Tiket Serta Statusnya
-        $report = Report::with(['statuses', 'victim', 'perpetrator', 'reporter'])->where('ticket_number', $ticket_number)->firstOrFail();
+        // Ambil Data Berdasarkan Nomor Tiket dan Status 'Diterima'
+        $report = Report::with(['victim', 'perpetrator', 'reporter', 'statuses'])
+            ->where('ticket_number', $ticket_number)
+            ->whereHas('latestStatus', function ($query) {
+                $query->where('status', 'Diproses');
+            })
+            ->firstOrFail();
 
         // Judul Halaman
         $title = "Laporan: " . $ticket_number;
@@ -264,15 +281,13 @@ class ReportController extends Controller
             'description' => 'required|string|max:255',
         ]);
 
-        // Ambil Data Berdasarkan Nomor Tiket
-        $report = Report::with(['statuses', 'victim', 'perpetrator', 'reporter'])->where('ticket_number', $ticket_number)->firstOrFail();
-
-        // Cek apakah status terakhir adalah "Selesai" atau "Dibatalkan"
-        $lastStatus = $report->statuses->last(); // Mengambil status terakhir
-        if ($lastStatus && in_array($lastStatus->status, ['Selesai', 'Dibatalkan'])) {
-            return redirect()->route('dashboard.reports.processed-show', ['ticket_number' => $ticket_number])
-                ->with('error', 'Status tidak bisa ditambahkan karena laporan sudah selesai atau dibatalkan.');
-        }
+        // Ambil Data Berdasarkan Nomor Tiket dan Status 'Diproses'
+        $report = Report::with(['victim', 'perpetrator', 'reporter', 'statuses'])
+            ->where('ticket_number', $ticket_number)
+            ->whereHas('latestStatus', function ($query) {
+                $query->where('status', 'Diproses');
+            })
+            ->firstOrFail();
 
         // Isi Data Ditangani Oleh
         if (!$report->employee_id) {
@@ -291,8 +306,14 @@ class ReportController extends Controller
             'description' => $validatedData['description'],
         ]);
 
-        return redirect()->to(route('dashboard.reports.processed-show', $report->ticket_number) . '#status-update')
-            ->with('success', 'Status berhasil ditambahkan.');
+        // Return View Berdasarkan Status Yang Dipilih
+        if ($validatedData['status'] === 'Diproses') {
+            return redirect()->to(route('dashboard.reports.processed-show', $report->ticket_number) . '#status-update')
+                ->with('success', 'Status berhasil diperbarui.');
+        }
+
+        return redirect()->route('dashboard.reports.processed')
+            ->with('success', 'Status berhasil diperbarui.');
     }
 
     /**
@@ -351,8 +372,14 @@ class ReportController extends Controller
      */
     public function completedShow(string $ticket_number)
     {
-        // Ambil Data Berdasarkan Nomor Tiket Serta Statusnya
-        $report = Report::with(['victim', 'perpetrator', 'reporter'])->where('ticket_number', $ticket_number)->firstOrFail();
+        // Ambil Data Berdasarkan Nomor Tiket dan Status 'Diterima'
+        $report = Report::with(['victim', 'perpetrator', 'reporter', 'statuses'])
+            ->where('ticket_number', $ticket_number)
+            ->whereHas('latestStatus', function ($query) {
+                $query->where('status', 'Selesai')
+                    ->orWhere('status', 'Dibatalkan');
+            })
+            ->firstOrFail();
 
         // Judul Halaman
         $title = "Laporan: " . $ticket_number;
