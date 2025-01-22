@@ -54,7 +54,7 @@
                 </svg>
                 <span class="inline">Kasus Baru</span>
             </a>
-            <a href="{{ route('dashboard.reports.index', ['status' => 'diterima']) }}"
+            <a href="{{ route('dashboard.reports.received') }}"
                 class="flex gap-4 px-4 py-1.5 text-white rounded hover:bg-gray-200 hover:text-gray-900">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="size-6">
@@ -63,7 +63,7 @@
                 </svg>
                 <span>Laporan Kasus</span>
             </a>
-            <a href="{{ route('dashboard.reports.index', ['status' => 'diproses']) }}"
+            <a href="{{ route('dashboard.reports.processed') }}"
                 class="flex gap-4 px-4 py-1.5 text-white rounded hover:bg-gray-200 hover:text-gray-900">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="size-6">
@@ -72,7 +72,7 @@
                 </svg>
                 <span>Laporan Diproses</span>
             </a>
-            <a href="{{ route('dashboard.reports.index', ['status' => 'selesai']) }}"
+            <a href="{{ route('dashboard.reports.completed') }}"
                 class="flex gap-4 px-4 py-1.5 text-white rounded hover:bg-gray-200 hover:text-gray-900">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="size-6">

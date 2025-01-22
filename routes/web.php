@@ -41,17 +41,6 @@ Route::middleware(['auth', 'auth.session'])->group(function () {
     Route::put('/dashboard/berita/ubah/{slug}', [DashboardPostController::class, 'update'])->name('dashboard.posts.update');
     Route::delete('/dashboard/berita/hapus/{slug}', [DashboardPostController::class, 'destroy'])->name('dashboard.posts.destroy');
 
-    Route::get('/dashboard/laporan/{status}', [DashboardReportController::class, 'index'])
-        ->whereIn('status', ['diterima', 'diproses', 'selesai', 'dibatalkan'])
-        ->name('dashboard.reports.index');
-    Route::get('/dashboard/laporan/{status}/{ticket_number}', [DashboardReportController::class, 'edit'])
-        ->whereIn('status', ['diterima', 'diproses', 'selesai', 'dibatalkan'])
-        ->name('dashboard.reports.edit');
-    Route::get('/dashboard/laporan/tambah', [DashboardReportController::class, 'create'])->name('dashboard.reports.create');
-    Route::post('/dashboard/laporan/tambah', [DashboardReportController::class, 'store'])->name('dashboard.reports.store');
-    Route::post('/dashboard/laporan/ubah/{ticket_number}', [DashboardReportController::class, 'update'])->name('dashboard.reports.update');
-    Route::delete('/dashboard/laporan/hapus/{ticket_number}', [DashboardReportController::class, 'destroy'])->name('dashboard.reports.destroy');
-
     Route::get('/dashboard/karyawan', [DashboardEmployeeController::class, 'index'])->name('dashboard.employees.index');
     Route::get('/dashboard/karyawan/tambah', [DashboardEmployeeController::class, 'create'])->name('dashboard.employees.create');
     Route::post('/dashboard/karyawan/tambah', [DashboardEmployeeController::class, 'store'])->name('dashboard.employees.store');
@@ -60,7 +49,18 @@ Route::middleware(['auth', 'auth.session'])->group(function () {
     Route::put('/dashboard/karyawan/ubah/{nip}', [DashboardEmployeeController::class, 'update'])->name('dashboard.employees.update');
     Route::delete('/dashboard/karyawan/hapus/{nip}', [DashboardEmployeeController::class, 'destroy'])->name('dashboard.employees.destroy');
 
-    Route::get('/dashboard/test', function () {
-        return view('test');
-    });
+    Route::get('/dashboard/laporan/diterima', [DashboardReportController::class, 'received'])->name('dashboard.reports.received');
+    Route::get('/dashboard/laporan/diterima/{ticket_number}', [DashboardReportController::class, 'receivedShow'])->name('dashboard.reports.received-show');
+    Route::post('/dashboard/laporan/diterima/{ticket_number}', [DashboardReportController::class, 'receivedVerification'])->name('dashboard.reports.received-verification');
+
+    Route::get('/dashboard/laporan/diproses', [DashboardReportController::class, 'processed'])->name('dashboard.reports.processed');
+    Route::get('/dashboard/laporan/diproses/{ticket_number}', [DashboardReportController::class, 'processedShow'])->name('dashboard.reports.processed-show');
+    Route::post('/dashboard/laporan/diproses/{ticket_number}', [DashboardReportController::class, 'processedUpdate'])->name('dashboard.reports.processed-update');
+
+    Route::get('/dashboard/laporan/selesai', [DashboardReportController::class, 'completed'])->name('dashboard.reports.completed');
+    Route::get('/dashboard/laporan/selesai/{ticket_number}', [DashboardReportController::class, 'completedShow'])->name('dashboard.reports.completed-show');
+
+    Route::get('/dashboard/laporan/tambah', [DashboardReportController::class, 'create'])->name('dashboard.reports.create');
+    Route::post('/dashboard/laporan/tambah', [DashboardReportController::class, 'store'])->name('dashboard.reports.store');
+    Route::delete('/dashboard/laporan/{ticket_number}/hapus', [DashboardReportController::class, 'destroy'])->name('dashboard.reports.destroy');
 });

@@ -25,8 +25,8 @@
             <form action="{{ route('dashboard.reports.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <!-- Informasi Laporan -->
-                <h2 class="text-lg font-semibold mb-4">Formulir Laporan Kekerasan</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                <h2 class="text-lg font-semibold mb-4 text-black">Formulir Laporan Kekerasan</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 text-black">
                     <div>
                         <label for="violence_category" class="block text-sm font-medium text-gray-700">Jenis Kekerasan
                             <span class="text-red-500">*</span></label>
@@ -83,19 +83,32 @@
                             <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
                         @enderror
                     </div>
-                    <div>
-                        <label for="evidence" class="block text-sm font-medium text-gray-700">Bukti (Opsional)</label>
-                        <input type="file" id="evidence" name="evidence"
-                            class="mt-1 p-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                    <!-- Gambar -->
+                    <div x-data="{ imagePreview: null }">
+                        <label for="evidence" class="block text-sm font-medium">Bukti (Opsional)</label>
+                        <input id="evidence" type="file" name="evidence"
+                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm file:mr-2 file:py-1.5 file:px-4 file:border-0 file:text-sm file:bg-gray-800 file:text-white hover:file:bg-gray-700 transition ease-in-out duration-200"
+                            @change="if ($event.target.files.length) { 
+                                    const file = $event.target.files[0]; 
+                                    const reader = new FileReader(); 
+                                    reader.onload = (e) => { imagePreview = e.target.result; }; 
+                                    reader.readAsDataURL(file); 
+                                } else { imagePreview = null; }">
+                        <!-- Preview Gambar -->
+                        <div class="mt-4" x-show="imagePreview" style="display: none;">
+                            <div class="overflow-auto max-w-full h-64 rounded-md shadow-md border border-gray-300">
+                                <img :src="imagePreview" class="w-full h-auto" alt="Image Preview">
+                            </div>
+                        </div>
                         @error('evidence')
-                            <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
+                            <p class="text-red-500 text-md mt-2">{{ $message }}</p>
                         @enderror
                     </div>
                 </div>
 
                 <!-- Informasi Korban -->
-                <h2 class="text-lg font-semibold mb-4">Informasi Korban</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                <h2 class="text-lg font-semibold mb-4 text-black">Informasi Korban</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 text-black">
                     <div>
                         <label for="victim_name" class="block text-sm font-medium text-gray-700">Nama Korban <span
                                 class="text-red-500">*</span></label>
@@ -163,8 +176,8 @@
                 </div>
 
                 <!-- Informasi Pelaku -->
-                <h2 class="text-lg font-semibold mb-4">Informasi Pelaku</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                <h2 class="text-lg font-semibold mb-4 text-black">Informasi Pelaku</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 text-black">
                     <div>
                         <label for="perpetrator_name" class="block text-sm font-medium text-gray-700">Nama
                             Pelaku</label>
@@ -272,15 +285,14 @@
                     </div>
                 </div>
 
-
                 <!-- Tombol Kembali & Simpan -->
                 <div class="flex justify-end space-x-2">
-                    <a href="{{ route('dashboard.employees.create') }}"
-                        class="bg-gray-700 hover:bg-gray-800 text-white px-6 py-2 rounded-lg transition duration-200">
+                    <a href="{{ route('dashboard.reports.create') }}"
+                        class="bg-gray-700 hover:bg-gray-800 text-white px-6 py-2 rounded-lg transition duration-200 uppercase">
                         Kembali
                     </a>
                     <button type="submit"
-                        class="bg-[#141652] hover:bg-blue-800 text-white px-6 py-2 rounded-lg transition duration-200">
+                        class="bg-green-700 hover:bg-green-800 text-white px-6 py-2 rounded-lg transition duration-200 uppercase">
                         Simpan
                     </button>
                 </div>

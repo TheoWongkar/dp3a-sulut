@@ -37,7 +37,7 @@ class DatabaseSeeder extends Seeder
 
         Post::factory(10)->create();
 
-        Report::factory(5)->create()->each(function ($report) {
+        Report::factory(10)->create()->each(function ($report) {
             Victim::factory()->create([
                 'report_id' => $report->id,
             ]);

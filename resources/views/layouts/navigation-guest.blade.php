@@ -111,7 +111,7 @@
                         </a>
                     @else
                         <a href="{{ route('login') }}"
-                            class="flex items-center mt-4 w-full py-2 bg-[#141652] text-white text-center rounded-full font-semibold hover:bg-[#708CFF] duration-300">
+                            class="flex items-center mt-4 justify-center w-full py-2 bg-[#141652] text-white text-center rounded-full font-semibold hover:bg-[#708CFF] duration-300">
                             Login
                         </a>
                     @endauth

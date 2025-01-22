@@ -128,107 +128,64 @@
             </div>
 
             <!-- Histori Status Laporan -->
-            @if ($status === 'diterima')
-                <!-- Form Tambah Histori Status Laporan -->
-                <form action="{{ route('dashboard.reports.destroy', $report->ticket_number) }}" method="POST"
-                    onsubmit="return confirm('Yakin ingin menghapus?');">
+            <div>
+                <h2 class="text-xl font-medium mt-6">Histori Status
+                    Laporan</h2>
+                <div class="space-y-4">
+                    <!-- List Status -->
+                    @foreach ($report->statuses as $status)
+                        <div
+                            class="bg-white rounded-lg p-5 shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out transform hover:-translate-y-1">
+                            <div class="flex justify-between items-center">
+                                <div class="flex items-center space-x-2">
+                                    <span class="text-green-600">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="size-6" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M9 12l2 2 4-4m-7 8h12a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                        </svg>
+                                    </span>
+                                    <span class="font-medium">Status: {{ $status->status }}</span>
+                                </div>
+                                <span class="text-sm text-gray-500">{{ $status->updated_at->diffForHumans() }}</span>
+                            </div>
+                            <div class="mt-3">
+                                <p class="">{{ $status->description }}</p>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+            <!-- Form Tambah Histori Status Laporan -->
+            <div id="status-update" class="mt-5 bg-white p-5 rounded-lg shadow-lg">
+                <!-- Pesan Berhasil -->
+                @if (session('success'))
+                    <div class="bg-green-100 border border-green-500 text-green-800 px-4 py-3 rounded relative mb-3"
+                        role="alert">
+                        <span>{{ session('success') }}</span>
+                    </div>
+                @elseif (session('error'))
+                    <div class="bg-red-100 border border-red-500 text-red-800 px-4 py-3 rounded relative mb-3"
+                        role="alert">
+                        <span>{{ session('error') }}</span>
+                    </div>
+                @endif
+                <form action="{{ route('dashboard.reports.received-verification', $report->ticket_number) }}"
+                    method="POST">
                     @csrf
-                    @method('DELETE')
                     <!-- Tombol Batal & Tambah -->
                     <div class="mt-2 flex justify-end space-x-2">
-                        <a href="{{ route('dashboard.reports.index', ['status' => 'diterima']) }}"
-                            class="bg-gray-700 hover:bg-gray-800 text-white px-6 py-2 rounded-lg transition duration-200">
+                        <a href="{{ route('dashboard.reports.received') }}"
+                            class="bg-gray-700 hover:bg-gray-800 text-white px-6 py-2 rounded-lg transition duration-200 uppercase">
                             Kembali
                         </a>
                         <button type="submit"
-                            class="bg-red-700 hover:bg-red-800 text-white px-6 py-2 rounded-lg transition duration-200">
-                            Hapus
-                        </button>
-                        <button type="submit"
-                            class="bg-green-700 hover:bg-green-800 text-white px-6 py-2 rounded-lg transition duration-200">
-                            Verifikasi
+                            class="bg-green-700 hover:bg-green-800 text-white px-6 py-2 rounded-lg transition duration-200 uppercase">
+                            VERIFIKASI
                         </button>
                     </div>
                 </form>
-            @elseif ($status === 'diproses')
-                <div>
-                    <h2 class="text-xl font-medium mt-6">Histori Status
-                        Laporan</h2>
-                    <div class="space-y-4">
-                        <!-- Pesan Berhasil -->
-                        @if (session('success'))
-                            <div class="bg-green-100 border border-green-500 text-green-800 px-4 py-3 rounded relative mb-3"
-                                role="alert">
-                                <span>{{ session('success') }}</span>
-                            </div>
-                        @elseif (session('error'))
-                            <div class="bg-red-100 border border-red-500 text-red-800 px-4 py-3 rounded relative mb-3"
-                                role="alert">
-                                <span>{{ session('error') }}</span>
-                            </div>
-                        @endif
-                        <!-- List Status -->
-                        @foreach ($report->statuses as $status)
-                            <div
-                                class="bg-white rounded-lg p-5 shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out transform hover:-translate-y-1">
-                                <div class="flex justify-between items-center">
-                                    <div class="flex items-center space-x-2">
-                                        <span class="text-green-600">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="size-6" fill="none"
-                                                viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M9 12l2 2 4-4m-7 8h12a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                            </svg>
-                                        </span>
-                                        <span class="font-medium">Status: {{ $status->status }}</span>
-                                    </div>
-                                    <span
-                                        class="text-sm text-gray-500">{{ $status->updated_at->diffForHumans() }}</span>
-                                </div>
-                                <div class="mt-3">
-                                    <p class="">{{ $status->description }}</p>
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
-                <!-- Form Tambah Histori Status Laporan -->
-                <div class="mt-5 bg-white p-5 rounded-lg shadow-lg">
-                    <form action="{{ route('dashboard.reports.update', $report->ticket_number) }}" method="POST">
-                        @csrf
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <!-- Pilihan Status -->
-                            <div>
-                                <label for="status" class="block font-medium">Tambah Status</label>
-                                <select name="status" id="status"
-                                    class="mt-1 p-2 w-full border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#141652]">
-                                    <option value="Diproses">Diproses</option>
-                                    <option value="Selesai">Selesai</option>
-                                    <option value="Dibatalkan">Dibatalkan</option>
-                                </select>
-                                <p class="mt-1 text-sm text-gray-500">Ubah status sesuai dengan kenyataan.</p>
-                            </div>
-                            <!-- Deskripsi Status -->
-                            <div>
-                                <label for="description" class="block text-gray-700 font-medium">Deskripsi</label>
-                                <textarea name="description" id="description" rows="4"
-                                    class="mt-1 p-2 w-full border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#141652]"></textarea>
-                            </div>
-                        </div>
-                        <!-- Tombol Batal & Tambah -->
-                        <div class="mt-2 flex justify-end space-x-2">
-                            <a href="{{ route('dashboard.reports.index', ['status' => 'diproses']) }}"
-                                class="bg-gray-700 hover:bg-gray-800 text-white px-6 py-2 rounded-lg transition duration-200">
-                                Kembali
-                            </a>
-                            <button type="submit"
-                                class="bg-[#141652] hover:bg-blue-800 text-white px-6 py-2 rounded-lg transition duration-200">
-                                Tambah
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            @endif
+            </div>
         </div>
     </section>
 

@@ -14,56 +14,6 @@ use Illuminate\Support\Facades\Auth;
 class ReportController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     */
-    public function index(Request $request, $status)
-    {
-        // Validasi Search Form
-        $validated = $request->validate([
-            'start_date' => 'nullable|date',
-            'end_date' => 'nullable|date|after_or_equal:start_date',
-            'search' => 'nullable|string|max:50',
-        ]);
-
-        $status = ucwords(strtolower($status));
-
-        // Ambil Nilai
-        $start_date = $validated['start_date'] ?? null;
-        $end_date = $validated['end_date'] ?? null;
-        $search = $validated['search'] ?? null;
-
-        // Ambil Semua Laporan Berdasarkan Status
-        $reports = Report::with(['latestStatus'])
-            ->whereHas('latestStatus', function ($query) use ($status) {
-                $query->where('status', $status);
-            })
-            ->when($search, function ($query, $search) {
-                return $query->where(function ($query) use ($search) {
-                    $query->where('ticket_number', 'LIKE', "%{$search}%")
-                        ->orWhere('violence_category', 'LIKE', "%{$search}%");
-                });
-            })
-            ->when($start_date, function ($query) use ($start_date) {
-                return $query->whereDate('created_at', '>=', $start_date);
-            })
-            ->when($end_date, function ($query) use ($end_date) {
-                return $query->whereDate('created_at', '<=', $end_date);
-            })
-            ->orderBy('created_at', 'DESC')
-            ->paginate(10);
-
-        // Tentukan Judul Halaman
-        $titles = [
-            'Diterima' => 'Laporan Kasus',
-            'Diproses' => 'Laporan Diproses',
-            'Selesai' => 'Laporan Selesai',
-        ];
-        $title = $titles[$status] ?? 'Laporan';
-
-        return view('dashboard.report.index', compact('title', 'reports', 'start_date', 'end_date', 'search', 'status'));
-    }
-
-    /**
      * Show the form for creating a new resource.
      */
     public function create()
@@ -162,26 +112,151 @@ class ReportController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     */
+    public function received(Request $request)
+    {
+        // Validasi Search Form
+        $validated = $request->validate([
+            'start_date' => 'nullable|date',
+            'end_date' => 'nullable|date|after_or_equal:start_date',
+            'search' => 'nullable|string|max:50',
+        ]);
+
+        // Ambil Nilai
+        $start_date = $validated['start_date'] ?? null;
+        $end_date = $validated['end_date'] ?? null;
+        $search = $validated['search'] ?? null;
+
+        // Ambil Semua Laporan Diterima
+        $reports = Report::with('latestStatus')
+            ->whereHas('latestStatus', function ($query) {
+                $query->where('status', 'Diterima');
+            })
+            ->when($start_date, function ($query, $start_date) {
+                return $query->whereDate('created_at', '>=', $start_date);
+            })
+            ->when($end_date, function ($query, $end_date) {
+                return $query->whereDate('created_at', '<=', $end_date);
+            })
+            ->when($search, function ($query, $search) {
+                return $query->where(function ($query) use ($search) {
+                    $query->where('ticket_number', 'like', "%$search%")
+                        ->orWhere('violence_category', 'like', "%$search%");
+                });
+            })
+            ->orderBy('created_at', 'DESC')
+            ->paginate(10);
+
+        // Judul Halaman
+        $title = 'Diterima';
+
+        return view('dashboard.report.received', compact('title', 'reports', 'start_date', 'end_date', 'search'));
+    }
+
+    /**
      * Display the specified resource.
      */
-    public function edit(string $status, string $ticket_number)
+    public function receivedShow(string $ticket_number)
     {
-        $status = strtolower($status);
 
         // Ambil Data Berdasarkan Nomor Tiket Serta Statusnya
-        $report = Report::with(['statuses', 'victim', 'perpetrator', 'reporter'])->where('ticket_number', $ticket_number)->firstOrFail();
-        $statuses = $report->statuses;
+        $report = Report::with(['victim', 'perpetrator', 'reporter'])->where('ticket_number', $ticket_number)->firstOrFail();
 
         // Judul Halaman
         $title = "Laporan: " . $ticket_number;
 
-        return view('dashboard.report.edit', compact('title', 'report', 'statuses', 'status'));
+        return view('dashboard.report.verification', compact('title', 'report'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function update(Request $request, string $ticket_number)
+    public function receivedVerification(string $ticket_number)
+    {
+        // Ambil Data Berdasarkan Nomor Tiket
+        $report = Report::where('ticket_number', $ticket_number)->firstOrFail();
+
+        // Cek apakah laporan sudah memiliki status "Diproses"
+        $existingStatus = $report->statuses()->where('status', 'Diproses')->first();
+        if ($existingStatus) {
+            return redirect()->to(route('dashboard.reports.received-show', $report->ticket_number) . '#status-update')
+                ->with('error', 'Laporan ini sudah diverifikasi sebelumnya.');
+        }
+
+        // Tambahkan Status
+        $report->statuses()->create([
+            'report_id' => $report->id,
+            'status' => 'Diproses',
+            'description' => 'Laporan telah disetujui admin',
+        ]);
+
+        return redirect()->to(route('dashboard.reports.received-show', $report->ticket_number) . '#status-update')
+            ->with('success', 'Laporan berhasil diverifikasi dan status diperbarui.');
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function processed(Request $request)
+    {
+        // Validasi Search Form
+        $validated = $request->validate([
+            'start_date' => 'nullable|date',
+            'end_date' => 'nullable|date|after_or_equal:start_date',
+            'search' => 'nullable|string|max:50',
+            'status' => 'nullable|string|max:10',
+        ]);
+
+        // Ambil Nilai
+        $start_date = $validated['start_date'] ?? null;
+        $end_date = $validated['end_date'] ?? null;
+        $search = $validated['search'] ?? null;
+
+        // Ambil Semua Laporan Diterima
+        $reports = Report::with('latestStatus')
+            ->whereHas('latestStatus', function ($query) {
+                $query->where('status', 'Diproses');
+            })
+            ->when($start_date, function ($query, $start_date) {
+                return $query->whereDate('created_at', '>=', $start_date);
+            })
+            ->when($end_date, function ($query, $end_date) {
+                return $query->whereDate('created_at', '<=', $end_date);
+            })
+            ->when($search, function ($query, $search) {
+                return $query->where(function ($query) use ($search) {
+                    $query->where('ticket_number', 'like', "%$search%")
+                        ->orWhere('violence_category', 'like', "%$search%");
+                });
+            })
+            ->orderBy('created_at', 'DESC')
+            ->paginate(10);
+
+        // Judul Halaman
+        $title = 'Diproses';
+
+        return view('dashboard.report.processed', compact('title', 'reports', 'start_date', 'end_date', 'search'));
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function processedShow(string $ticket_number)
+    {
+        // Ambil Data Berdasarkan Nomor Tiket Serta Statusnya
+        $report = Report::with(['statuses', 'victim', 'perpetrator', 'reporter'])->where('ticket_number', $ticket_number)->firstOrFail();
+
+        // Judul Halaman
+        $title = "Laporan: " . $ticket_number;
+
+        return view('dashboard.report.status-update', compact('title', 'report'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function processedUpdate(Request $request, string $ticket_number)
     {
         // Validasi Input
         $validatedData = $request->validate([
@@ -192,15 +267,22 @@ class ReportController extends Controller
         // Ambil Data Berdasarkan Nomor Tiket
         $report = Report::with(['statuses', 'victim', 'perpetrator', 'reporter'])->where('ticket_number', $ticket_number)->firstOrFail();
 
-        // // Isi Data Ditangani Oleh
-        // if (!$report->employee_id) {
-        //     $user = Auth::user();
+        // Cek apakah status terakhir adalah "Selesai" atau "Dibatalkan"
+        $lastStatus = $report->statuses->last(); // Mengambil status terakhir
+        if ($lastStatus && in_array($lastStatus->status, ['Selesai', 'Dibatalkan'])) {
+            return redirect()->route('dashboard.reports.processed-show', ['ticket_number' => $ticket_number])
+                ->with('error', 'Status tidak bisa ditambahkan karena laporan sudah selesai atau dibatalkan.');
+        }
 
-        //     if ($user && $user->employee_id) {
-        //         $report->employee_id = $user->employee_id;
-        //         $report->save();
-        //     }
-        // }
+        // Isi Data Ditangani Oleh
+        if (!$report->employee_id) {
+            $user = Auth::user();
+
+            if ($user && $user->employee_id) {
+                $report->employee_id = $user->employee_id;
+                $report->save();
+            }
+        }
 
         // Isi Data Status
         $report->statuses()->create([
@@ -209,10 +291,73 @@ class ReportController extends Controller
             'description' => $validatedData['description'],
         ]);
 
-        $status = "diproses";
-
-        return redirect()->route('dashboard.reports.edit', [$status, $ticket_number])
+        return redirect()->to(route('dashboard.reports.processed-show', $report->ticket_number) . '#status-update')
             ->with('success', 'Status berhasil ditambahkan.');
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function completed(Request $request)
+    {
+        // Validasi Search Form
+        $validated = $request->validate([
+            'start_date' => 'nullable|date',
+            'end_date' => 'nullable|date|after_or_equal:start_date',
+            'search' => 'nullable|string|max:50',
+            'status' => 'nullable|in:Semua,Selesai,Dibatalkan',
+        ]);
+
+        // Ambil Nilai
+        $start_date = $validated['start_date'] ?? null;
+        $end_date = $validated['end_date'] ?? null;
+        $search = $validated['search'] ?? null;
+        $status = $validated['status'] ?? null;
+
+        // Ambil Semua Laporan Diterima
+        $reports = Report::with('latestStatus')
+            ->whereHas('latestStatus', function ($query) use ($status) {
+                $query->where(function ($query) use ($status) {
+                    if ($status) {
+                        $query->where('status', $status); // Filter berdasarkan status jika dipilih
+                    } else {
+                        $query->whereIn('status', ['Selesai', 'Dibatalkan']); // Default filter
+                    }
+                });
+            })
+            ->when($start_date, function ($query, $start_date) {
+                return $query->whereDate('created_at', '>=', $start_date);
+            })
+            ->when($end_date, function ($query, $end_date) {
+                return $query->whereDate('created_at', '<=', $end_date);
+            })
+            ->when($search, function ($query, $search) {
+                return $query->where(function ($query) use ($search) {
+                    $query->where('ticket_number', 'like', "%$search%")
+                        ->orWhere('violence_category', 'like', "%$search%");
+                });
+            })
+            ->orderBy('created_at', 'DESC')
+            ->paginate(10);
+
+        // Judul Halaman
+        $title = 'Selesai';
+
+        return view('dashboard.report.completed', compact('title', 'reports', 'start_date', 'end_date', 'search', 'status'));
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function completedShow(string $ticket_number)
+    {
+        // Ambil Data Berdasarkan Nomor Tiket Serta Statusnya
+        $report = Report::with(['victim', 'perpetrator', 'reporter'])->where('ticket_number', $ticket_number)->firstOrFail();
+
+        // Judul Halaman
+        $title = "Laporan: " . $ticket_number;
+
+        return view('dashboard.report.show', compact('title', 'report'));
     }
 
     /**
@@ -232,7 +377,7 @@ class ReportController extends Controller
         // Hapus Data Laporan
         $report->delete();
 
-        return redirect()->route('dashboard.reports.index', ['status' => 'diterima'])
+        return redirect()->route('dashboard.reports.completed')
             ->with('success', 'Laporan berhasil dihapus.');
     }
 }

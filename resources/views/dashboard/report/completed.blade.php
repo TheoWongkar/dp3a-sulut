@@ -8,8 +8,7 @@
         <div class="bg-white p-6 shadow-lg rounded-lg hover:shadow-xl transition-shadow">
             <!-- Tambah dan Cari -->
             <div class="flex flex-col md:flex-row justify-end items-center mb-4 space-y-2 md:space-y-0">
-                <form action="{{ route('dashboard.reports.index', ['status' => request('status') ?? 'diterima']) }}"
-                    method="GET">
+                <form action="{{ route('dashboard.reports.completed') }}" method="GET">
                     <div x-data="{ showModal: false }" class="relative flex items-center">
                         <!-- Tombol Filter -->
                         <button type="button" @click="showModal = true"
@@ -34,6 +33,18 @@
                             class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" x-cloak>
                             <div class="bg-white rounded-lg shadow-lg p-6 w-72 md:w-96 ">
                                 <h2 class="text-lg font-semibold mb-3">Filter</h2>
+                                <!-- Status -->
+                                <div class="mb-4">
+                                    <label for="start_date" class="block text-sm font-medium">Status</label>
+                                    <select name="status" id="status"
+                                        class="w-full p-1 rounded-md border border-[#141652] focus:ring-none focus:outline-none">
+                                        <option value="" {{ $status === null ? 'selected' : '' }}>Semua</option>
+                                        <option value="Selesai" {{ $status === 'Selesai' ? 'selected' : '' }}>Selesai
+                                        </option>
+                                        <option value="Dibatalkan" {{ $status === 'Dibatalkan' ? 'selected' : '' }}>
+                                            Dibatalkan</option>
+                                    </select>
+                                </div>
                                 <!-- Tanggal Awal -->
                                 <div class="mb-4">
                                     <label for="start_date" class="block text-sm font-medium">Tanggal
@@ -101,8 +112,8 @@
                                 <td class="py-3 px-2">{{ Str::limit($report->scene, 20) }}</td>
                                 <td class="py-4 px-2 text-center">
                                     <span
-                                        class="{{ $report->latestStatus->status === 'Diterima' ? 'bg-blue-500 hover:bg-blue-600' : '' }}
-                                        {{ $report->latestStatus->status === 'Diproses' ? 'bg-yellow-500 hover:bg-yellow-600' : '' }}
+                                        class="
+                                         {{ $report->latestStatus->status === 'Dibatalkan' ? 'bg-red-500 hover:bg-red-600' : '' }}
                                          {{ $report->latestStatus->status === 'Selesai' ? 'bg-green-500 hover:bg-green-600' : '' }}
                                         inline-block px-3 py-1 rounded-full text-xs shadow-md text-white transition duration-200">
                                         {{ $report->latestStatus->status }}
@@ -113,23 +124,10 @@
                                     {{ $report->created_at->format('d M Y') }}</td>
                                 <td class="py-1 px-2 text-center whitespace-nowrap">
                                     <div class="flex justify-center items-center space-x-1">
-                                        <!-- Kondisi Berdasarkan Status -->
-                                        @if ($status === 'Diterima')
-                                            <a href="{{ route('dashboard.reports.edit', ['status' => 'diterima', $report->ticket_number]) }}"
-                                                class="bg-blue-600 hover:bg-blue-500 text-white p-2 rounded-md text-xs shadow-md">
-                                                Verifikasi
-                                            </a>
-                                        @elseif ($status === 'Diproses')
-                                            <a href="{{ route('dashboard.reports.edit', ['status' => 'diproses', $report->ticket_number]) }}"
-                                                class="bg-yellow-600 hover:bg-yellow-500 text-white p-2 rounded-md text-xs shadow-md">
-                                                Tindak Lanjut
-                                            </a>
-                                        @elseif ($status === 'Selesai' || $status === 'Dibatalkan')
-                                            <a href="{{ route('dashboard.reports.edit', ['status' => 'selesai', $report->ticket_number]) }}"
-                                                class="bg-green-600 hover:bg-green-500 text-white p-2 rounded-md text-xs shadow-md">
-                                                Lihat Detail
-                                            </a>
-                                        @endif
+                                        <a href="{{ route('dashboard.reports.completed-show', $report->ticket_number) }}"
+                                            class="bg-green-700 hover:bg-green-800 text-white p-2 rounded-md text-xs font-medium shadow-md uppercase">
+                                            Lihat
+                                        </a>
                                     </div>
                                 </td>
                             </tr>
