@@ -39,6 +39,9 @@
     @include('layouts.navigation-guest')
 
     <main>
+        <!-- Chat Container -->
+        <x-chatbot></x-chatbot>
+
         {{ $slot }}
     </main>
 

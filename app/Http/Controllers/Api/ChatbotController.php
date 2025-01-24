@@ -22,7 +22,7 @@ class ChatbotController extends Controller
     {
         // Validasi Input
         $validated = $request->validate([
-            'message' => 'required|string|max:100',
+            'message' => 'required|string|max:100|regex:/^[a-zA-Z0-9\s?!.,]+$/',
         ]);
 
         // Ambil Pesan Dari Pengguna
@@ -30,7 +30,7 @@ class ChatbotController extends Controller
         $userMessage = strip_tags($validated['message']);
 
         // URL Rasa
-        $rasaUrl = 'http://localhost:5005/webhooks/rest/webhook';
+        $rasaUrl = env('RASA_URL');
 
         // Kirim pesan ke Rasa menggunakan HTTP facade
         try {
@@ -43,13 +43,13 @@ class ChatbotController extends Controller
 
             // Ambil respons sebagai array
             $botMessages = $response->json();
-            $botResponse = collect($botMessages)->pluck('text')->join(' ');
+            $botResponse = $botMessages ? collect($botMessages)->pluck('text')->join(' ') : 'Maaf, tidak ada respons dari chatbot.';
 
             // Kembalikan respons ke klien
             return response()->json([
                 'user_message' => $userMessage,
                 'bot_response' => $botResponse ?: 'Maaf, saya tidak mengerti.',
-            ]);
+            ], 200);
         } catch (\Exception $e) {
             return response()->json([
                 'error' => 'Terjadi kesalahan saat menghubungi chatbot.',

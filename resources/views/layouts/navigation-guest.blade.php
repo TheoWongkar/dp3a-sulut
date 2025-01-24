@@ -49,10 +49,10 @@
                     </li>
                 </ul>
                 <div class="flex space-x-4">
-                    <a href="#" @click="open = true"
+                    <button @click="$dispatch('open-chat')"
                         class="border border-white text-white px-4 py-1 rounded-full hover:bg-white hover:text-[#141652] duration-300">
-                        Chat Dengan AI
-                    </a>
+                        Chatbot
+                    </button>
                     <a href="{{ route('reports.create') }}"
                         class="border border-white text-white px-4 py-1 rounded-full hover:bg-white hover:text-[#141652] duration-300">
                         Laporkan Kekerasan
@@ -98,7 +98,8 @@
                         Status
                         Laporan</a>
                 </li>
-                <li><a href="#" class="flex px-6 py-4 w-full font-semibold hover:bg-[#E9F0FF]">Chat Dengan AI</a>
+                <li><button @click="$dispatch('open-chat'), isSidebarOpen = false"
+                        class="flex px-6 py-4 w-full font-semibold hover:bg-[#E9F0FF]">Chatbot</button>
                 </li>
                 <li><a href="{{ route('reports.create') }}"
                         class="flex px-6 py-4 w-full font-semibold hover:bg-[#E9F0FF]">Laporkan
