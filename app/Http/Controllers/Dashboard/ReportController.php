@@ -8,6 +8,7 @@ use App\Models\Victim;
 use App\Models\Reporter;
 use App\Models\Perpetrator;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -406,5 +407,17 @@ class ReportController extends Controller
 
         return redirect()->route('dashboard.reports.completed')
             ->with('success', 'Laporan berhasil dihapus.');
+    }
+
+    public function printPDF($ticket_number)
+    {
+        // Ambil data laporan berdasarkan nomor tiket
+        $report = Report::with(['victim', 'perpetrator', 'reporter', 'statuses'])->where('ticket_number', $ticket_number)->firstOrFail();
+
+        // Generate PDF menggunakan view
+        $pdf = Pdf::loadView('dashboard.report.pdf', compact('report'));
+
+        // Mengunduh PDF
+        return $pdf->stream("Laporan_{$ticket_number}.pdf");
     }
 }

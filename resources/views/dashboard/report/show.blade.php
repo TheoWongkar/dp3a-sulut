@@ -185,10 +185,10 @@
                             Hapus Permanen
                         </button>
                     </form>
-                    <button type="button"
+                    <a href="{{ route('dashboard.reports.print', $report->ticket_number) }}" target="_blank"
                         class="bg-green-700 hover:bg-green-800 text-white px-6 py-2 rounded-lg transition duration-200 uppercase">
                         Cetak
-                    </button>
+                    </a>
                 </div>
             </div>
         </div>

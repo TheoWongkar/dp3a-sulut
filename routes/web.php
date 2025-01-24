@@ -63,4 +63,6 @@ Route::middleware(['auth', 'auth.session'])->group(function () {
     Route::get('/dashboard/laporan/tambah', [DashboardReportController::class, 'create'])->name('dashboard.reports.create');
     Route::post('/dashboard/laporan/tambah', [DashboardReportController::class, 'store'])->name('dashboard.reports.store');
     Route::delete('/dashboard/laporan/{ticket_number}/hapus', [DashboardReportController::class, 'destroy'])->name('dashboard.reports.destroy');
+
+    Route::get('/dashboard/laporan/{ticket_number}/print', [DashboardReportController::class, 'printPDF'])->name('dashboard.reports.print');
 });
