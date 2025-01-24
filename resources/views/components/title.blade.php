@@ -8,6 +8,6 @@
 <!-- Bagian Judul Halaman -->
 @section('pageTitle')
     @isset($title)
-        {{ Str::limit($title, 15) }}
+        {{ Str::limit($title, 100) }}
     @endisset
 @endsection

@@ -8,7 +8,9 @@
                 <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16m-7 6h7"></path>
             </svg>
         </button>
-        <h2 class="text-xl font-bold">@yield('pageTitle')</h2>
+        <div class="w-32 md:w-56 lg:w-64 overflow-hidden whitespace-nowrap text-ellipsis">
+            <h2 class="text-md md:text-lg lg:text-xl font-bold">@yield('pageTitle')</h2>
+        </div>
     </div>
     <!-- Profil User -->
     <div x-data="{ open: false }" class="relative flex items-center">
