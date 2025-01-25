@@ -78,12 +78,22 @@ class DashboardController extends Controller
             $monthlyReports[] = $totalReportsPerMonth[$i] ?? 0;
         }
 
+        $currentYear = Carbon::now()->year;
+
         return [
-            'totalReports' => Report::count(),
-            'receivedReports' => Report::whereHas('LatestStatus', fn($query) => $query->where('status', 'Diterima'))->count(),
-            'processedReports' => Report::whereHas('LatestStatus', fn($query) => $query->where('status', 'Diproses'))->count(),
-            'completedReports' => Report::whereHas('LatestStatus', fn($query) => $query->where('status', 'Selesai'))->count(),
-            'canceledReports' => Report::whereHas('LatestStatus', fn($query) => $query->where('status', 'Dibatalkan'))->count(),
+            'totalReports' => Report::whereYear('created_at', $currentYear)->count(),
+            'receivedReports' => Report::whereYear('created_at', $currentYear)
+                ->whereHas('LatestStatus', fn($query) => $query->where('status', 'Diterima'))
+                ->count(),
+            'processedReports' => Report::whereYear('created_at', $currentYear)
+                ->whereHas('LatestStatus', fn($query) => $query->where('status', 'Diproses'))
+                ->count(),
+            'completedReports' => Report::whereYear('created_at', $currentYear)
+                ->whereHas('LatestStatus', fn($query) => $query->where('status', 'Selesai'))
+                ->count(),
+            'canceledReports' => Report::whereYear('created_at', $currentYear)
+                ->whereHas('LatestStatus', fn($query) => $query->where('status', 'Dibatalkan'))
+                ->count(),
 
             'totalReportsPerMonth' => $monthlyReports,
             'totalMaleVictims' => Victim::where('gender', 'Pria')->whereYear('created_at', date('Y'))->count(),
