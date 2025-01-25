@@ -92,6 +92,20 @@
                     </div>
                 </div>
             </div>
+            <div class="mt-5 grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Report Chart -->
+                <div class="col-span-2 bg-white shadow-lg rounded-lg p-6">
+                    <div class="w-full p-4">
+                        <canvas id="reportChart"></canvas>
+                    </div>
+                </div>
+                <!-- Gender Chart -->
+                <div class="bg-white shadow-lg rounded-lg p-6">
+                    <div class="w-full p-4">
+                        <canvas id="genderChart"></canvas>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Statistik Berita & Karyawan -->
@@ -310,5 +324,53 @@
             </div>
         </div>
     </section>
+
+    <script>
+        // Report Chart
+        const reportCtx = document.getElementById('reportChart');
+        new Chart(reportCtx, {
+            type: 'line',
+            data: {
+                labels: [
+                    'Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun',
+                    'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'
+                ],
+                datasets: [{
+                    label: 'Total Kasus Tahun Ini',
+                    data: @json($totalReportsPerMonth),
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // Gender Chart
+        const genderCtx = document.getElementById('genderChart');
+        new Chart(genderCtx, {
+            type: 'pie',
+            data: {
+                labels: ['Pria', 'Wanita'],
+                datasets: [{
+                    label: 'Total',
+                    data: [{{ $totalMaleVictims }}, {{ $totalFemaleVictims }}],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
 
 </x-app-layout>

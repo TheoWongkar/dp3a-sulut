@@ -11,7 +11,7 @@
         /* Atur ukuran kertas dan margin */
         @page {
             size: A4;
-            margin: 25mm;
+            margin: 20mm;
         }
 
         body {
@@ -23,20 +23,19 @@
         }
 
         .kop {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
+            overflow: hidden;
         }
 
         .kop img {
-            width: 100px;
-            height: auto;
-            margin-right: 15px;
+            float: left;
+            width: 90px;
+            height: 80px;
+            margin-right: 20px;
+            margin-bottom: 20px
         }
 
         .kop-text {
-            flex-grow: 1;
+            overflow: hidden;
         }
 
         .kop-text h1 {
@@ -58,6 +57,7 @@
         h1,
         h2 {
             font-size: 14px;
+            font-weight: bold;
             text-align: center;
             margin: 10px 0;
         }
@@ -84,7 +84,7 @@
 <body>
     <!-- Bagian Kop Laporan -->
     <div class="kop">
-        <img src="{{ asset('img/kop.jpg') }}" alt="">
+        <img src="img/kop.jpg" alt="Kop Surat">
         <div class="kop-text">
             <h1>Dinas Pemberdayaan Perempuan dan Perlindungan Anak</h1>
             <p>Jl. Balaikota No.01, Tikala Ares, Manado 95012</p>

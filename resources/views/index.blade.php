@@ -75,7 +75,7 @@
                     mendapatkan lebih banyak informasi secara real-time dan mendukung keselamatan mereka.
                 </p>
                 <div>
-                    <a href="#"
+                    <a href="https://kekerasan.kemenpppa.go.id/ringkasan"
                         class="inline-block px-6 py-3 text-white bg-[#141652] rounded-md hover:bg-blue-900 transition duration-300">
                         SELENGKAPNYA
                     </a>
@@ -84,7 +84,11 @@
 
             <!-- Bingkai Kanan -->
             <div class="flex items-center justify-center">
-                <div class="w-full h-72 bg-gray-300 border-2 border-gray-800 rounded-md"></div>
+                <div class="w-full h-72 bg-white border-2 border-gray-800 rounded-md m-5">
+                    <div>
+                        <canvas id="reportChart"></canvas>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -144,5 +148,32 @@
             </div>
         </section>
     @endif
+
+    <script>
+        // Report Chart
+        const reportCtx = document.getElementById('reportChart');
+        new Chart(reportCtx, {
+            type: 'line',
+            data: {
+                labels: [
+                    'Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun',
+                    'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'
+                ],
+                datasets: [{
+                    label: 'Total Kasus Tahun Ini',
+                    data: @json($totalReportsPerMonth),
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
 
 </x-guest-layout>
