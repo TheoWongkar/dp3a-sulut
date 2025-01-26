@@ -84,8 +84,8 @@
 
             <!-- Bingkai Kanan -->
             <div class="flex items-center justify-center">
-                <div class="w-full h-72 bg-white border-2 border-gray-800 rounded-md m-5">
-                    <div>
+                <div class="w-full h-72 bg-white border-2 border-gray-800 rounded-md p-5">
+                    <div class="h-full w-full relative">
                         <canvas id="reportChart"></canvas>
                     </div>
                 </div>
@@ -162,14 +162,33 @@
                 datasets: [{
                     label: 'Total Kasus Tahun Ini',
                     data: @json($totalReportsPerMonth),
-                    borderWidth: 1
+                    borderWidth: 2,
+                    borderColor: '#1d4ed8',
+                    backgroundColor: 'rgba(29, 78, 216, 0.2)',
+                    tension: 0.4 // Membuat garis lebih halus
                 }]
             },
             options: {
                 responsive: true,
+                maintainAspectRatio: false,
                 scales: {
                     y: {
-                        beginAtZero: true
+                        beginAtZero: true,
+                        grid: {
+                            drawBorder: false,
+                            color: 'rgba(200, 200, 200, 0.2)'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top'
                     }
                 }
             }

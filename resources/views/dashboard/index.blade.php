@@ -96,13 +96,19 @@
                 <!-- Report Chart -->
                 <div class="col-span-2 bg-white shadow-lg rounded-lg p-6">
                     <div class="w-full p-4">
-                        <canvas id="reportChart"></canvas>
+                        <!-- Canvas Container -->
+                        <div class="relative h-72">
+                            <canvas id="reportChart"></canvas>
+                        </div>
                     </div>
                 </div>
                 <!-- Gender Chart -->
                 <div class="bg-white shadow-lg rounded-lg p-6">
                     <div class="w-full p-4">
-                        <canvas id="genderChart"></canvas>
+                        <!-- Canvas Container -->
+                        <div class="relative h-72">
+                            <canvas id="genderChart"></canvas>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -338,14 +344,33 @@
                 datasets: [{
                     label: 'Total Kasus Tahun Ini',
                     data: @json($totalReportsPerMonth),
-                    borderWidth: 1
+                    borderColor: '#3b82f6',
+                    backgroundColor: 'rgba(59, 130, 246, 0.2)',
+                    borderWidth: 2,
+                    tension: 0.4 // Membuat garis lebih halus
                 }]
             },
             options: {
                 responsive: true,
+                maintainAspectRatio: false, // Menghilangkan pengaturan rasio tetap
                 scales: {
                     y: {
-                        beginAtZero: true
+                        beginAtZero: true,
+                        grid: {
+                            drawBorder: false,
+                            color: 'rgba(200, 200, 200, 0.2)' // Warna grid ringan
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false // Menyembunyikan garis grid di sumbu X
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top' // Posisi legenda di atas
                     }
                 }
             }
@@ -360,13 +385,24 @@
                 datasets: [{
                     label: 'Total',
                     data: [{{ $totalMaleVictims }}, {{ $totalFemaleVictims }}],
-                    borderWidth: 1
+                    backgroundColor: [
+                        '#3b82f6', // Warna untuk Pria
+                        '#f87171' // Warna untuk Wanita
+                    ],
+                    borderColor: [
+                        '#1d4ed8', // Border untuk Pria
+                        '#b91c1c' // Border untuk Wanita
+                    ],
+                    borderWidth: 2
                 }]
             },
             options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
+                responsive: true,
+                maintainAspectRatio: false, // Membuat chart responsif tanpa rasio tetap
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top' // Posisi legenda di atas chart
                     }
                 }
             }

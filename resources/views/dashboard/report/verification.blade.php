@@ -170,21 +170,30 @@
                         <span>{{ session('error') }}</span>
                     </div>
                 @endif
-                <form action="{{ route('dashboard.reports.received-verification', $report->ticket_number) }}"
-                    method="POST">
-                    @csrf
-                    <!-- Tombol Batal & Tambah -->
-                    <div class="mt-2 flex justify-end space-x-2">
-                        <a href="{{ route('dashboard.reports.received') }}"
-                            class="bg-gray-700 hover:bg-gray-800 text-white px-6 py-2 rounded-lg transition duration-200 uppercase">
-                            Kembali
-                        </a>
+                <!-- Tombol Batal & Tambah -->
+                <div class="mt-2 flex justify-end space-x-2">
+                    <a href="{{ route('dashboard.reports.received') }}"
+                        class="bg-gray-700 hover:bg-gray-800 text-white px-6 py-2 rounded-lg transition duration-200 uppercase">
+                        Kembali
+                    </a>
+                    <form action="{{ route('dashboard.reports.received-destroy', $report->ticket_number) }}"
+                        method="POST" onsubmit="return confirm('Laporan dihapus permanen dari database?');">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit"
+                            class="bg-red-700 hover:bg-red-800 text-white px-6 py-2 rounded-lg transition duration-200 uppercase">
+                            Hapus Permanen
+                        </button>
+                    </form>
+                    <form action="{{ route('dashboard.reports.received-verification', $report->ticket_number) }}"
+                        method="POST">
+                        @csrf
                         <button type="submit"
                             class="bg-green-700 hover:bg-green-800 text-white px-6 py-2 rounded-lg transition duration-200 uppercase">
                             VERIFIKASI
                         </button>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
     </section>

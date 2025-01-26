@@ -176,8 +176,8 @@
                         class="bg-gray-700 hover:bg-gray-800 text-white px-6 py-2 rounded-lg transition duration-200 uppercase">
                         Kembali
                     </a>
-                    <form action="{{ route('dashboard.reports.destroy', $report->ticket_number) }}" method="POST"
-                        onsubmit="return confirm('Laporan dihapus permanen dari database?');">
+                    <form action="{{ route('dashboard.reports.completed-destroy', $report->ticket_number) }}"
+                        method="POST" onsubmit="return confirm('Laporan dihapus permanen dari database?');">
                         @csrf
                         @method('DELETE')
                         <button type="submit"

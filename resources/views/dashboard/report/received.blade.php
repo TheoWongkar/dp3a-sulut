@@ -104,7 +104,6 @@
                                         inline-block px-3 py-1 rounded-full text-xs shadow-md text-white transition duration-200">
                                         {{ $report->latestStatus->status }}
                                     </span>
-
                                 </td>
                                 <td class="py-3 px-2 text-center whitespace-nowrap">
                                     {{ $report->created_at->format('d M Y') }}</td>
@@ -115,10 +114,26 @@
                                                 class="bg-green-700 hover:bg-green-800 text-white p-2 rounded-md text-xs font-medium shadow-md uppercase">
                                                 Verifikasi
                                             </a>
+                                            <form
+                                                action="{{ route('dashboard.reports.received-destroy', $report->ticket_number) }}"
+                                                method="POST"
+                                                onsubmit="return confirm('Laporan dihapus permanen dari database?');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit"
+                                                    class="bg-red-700 hover:bg-red-800 text-white p-2 rounded-md text-xs font-medium shadow-md uppercase">
+                                                    Hapus
+                                                </button>
+                                            </form>
                                         @else
                                             <button onclick="alert('Akun anda tidak diizinkan untuk verifikasi data');"
-                                                class="bg-green-700 hover:bg-green-800 text-white p-2 rounded-md text-xs font-medium shadow-md uppercase">
+                                                class="bg-green-700 hover:bg-green-800 text-white p-2 rounded-md text-xs font-medium shadow-md uppercase opacity-50">
                                                 Verifikasi
+                                            </button>
+                                            <button type="submit"
+                                                onclick="alert('Akun anda tidak diizinkan untuk menghapus data yang belum diverifikasi');"
+                                                class="bg-red-700 hover:bg-red-800 text-white p-2 rounded-md text-xs font-medium shadow-md uppercase opacity-50">
+                                                Hapus
                                             </button>
                                         @endcan
                                     </div>

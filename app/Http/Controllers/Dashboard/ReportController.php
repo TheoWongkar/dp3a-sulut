@@ -157,6 +157,32 @@ class ReportController extends Controller
     }
 
     /**
+     * Remove the specified resource from storage.
+     */
+    public function receivedDestroy(string $ticket_number)
+    {
+        // Ambil Data Berdasarkan Nomor Tiket
+        $report = Report::where('ticket_number', $ticket_number)->firstOrFail();
+
+        // Cek Izin
+        if (! Gate::allows('verification-report', $report)) {
+            abort(403);
+        }
+
+        // Laporan Tidak Ditemukan
+        if (!$report) {
+            return redirect()->route('dashboard.reports.received')
+                ->with('error', 'Laporan tidak ditemukan.');
+        }
+
+        // Hapus Data Laporan
+        $report->delete();
+
+        return redirect()->route('dashboard.reports.received')
+            ->with('success', 'Laporan berhasil dihapus.');
+    }
+
+    /**
      * Display the specified resource.
      */
     public function receivedShow(string $ticket_number)
@@ -205,7 +231,7 @@ class ReportController extends Controller
             'description' => 'Laporan telah disetujui admin',
         ]);
 
-        return redirect()->route('dashboard.reports.received')->with('success', 'Laporan telah diverifikasi');
+        return redirect()->route('dashboard.reports.received')->with('success', 'Laporan berhasil diverifikasi');
     }
 
     /**
@@ -391,14 +417,14 @@ class ReportController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $ticket_number)
+    public function completedDestroy(string $ticket_number)
     {
         // Ambil Data Berdasarkan Nomor Tiket
         $report = Report::where('ticket_number', $ticket_number)->firstOrFail();
 
         // Laporan Tidak Ditemukan
         if (!$report) {
-            return redirect()->route('dashboard.reports.index')
+            return redirect()->route('dashboard.reports.completed')
                 ->with('error', 'Laporan tidak ditemukan.');
         }
 
