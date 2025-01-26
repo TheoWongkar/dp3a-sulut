@@ -43,9 +43,15 @@
             <!-- Link Navigasi -->
             <nav class="hidden lg:flex items-center space-x-6 text-sm font-normal" aria-label="Main Navigation">
                 <ul class="flex space-x-6 text-white">
-                    <li><a href="{{ route('home') }}" class="hover:border-b border-white">Beranda</a></li>
-                    <li><a href="{{ route('posts.index') }}" class="hover:border-b border-white">Berita</a></li>
-                    <li><a href="{{ route('status.index') }}" class="hover:border-b border-white">Cek Status Laporan</a>
+                    <li><a href="{{ route('home') }}"
+                            class="{{ Request::routeIs('home') ? 'animate-pulse' : 'animate-none' }} hover:border-b border-white">Beranda</a>
+                    </li>
+                    <li><a href="{{ route('posts.index') }}"
+                            class="{{ Request::routeIs('posts.*') ? 'animate-pulse' : 'animate-none' }} hover:border-b border-white">Berita</a>
+                    </li>
+                    <li><a href="{{ route('status.index') }}"
+                            class="{{ Request::routeIs('status.index') ? 'animate-pulse' : 'animate-none' }} hover:border-b border-white">Cek
+                            Status Laporan</a>
                     </li>
                 </ul>
                 <div class="flex space-x-4">
@@ -54,7 +60,7 @@
                         Chatbot
                     </button>
                     <a href="{{ route('reports.create') }}"
-                        class="border border-white text-white px-4 py-1 rounded-full hover:bg-white hover:text-[#141652] duration-300">
+                        class="{{ Request::routeIs('reports.create') ? 'animate-pulse' : 'animate-none' }} border border-white text-white px-4 py-1 rounded-full hover:bg-white hover:text-[#141652] duration-300">
                         Laporkan Kekerasan
                     </a>
                 </div>

@@ -96,8 +96,17 @@ class DashboardController extends Controller
                 ->count(),
 
             'totalReportsPerMonth' => $monthlyReports,
-            'totalMaleVictims' => Victim::where('gender', 'Pria')->whereYear('created_at', date('Y'))->count(),
-            'totalFemaleVictims' => Victim::where('gender', 'Wanita')->whereYear('created_at', date('Y'))->count(),
+            'totalMaleVictims' => Victim::where('gender', 'Pria')
+                ->whereHas('report', function ($query) {
+                    $query->whereYear('created_at', date('Y'));
+                })
+                ->count(),
+
+            'totalFemaleVictims' => Victim::where('gender', 'Wanita')
+                ->whereHas('report', function ($query) {
+                    $query->whereYear('created_at', date('Y'));
+                })
+                ->count(),
         ];
     }
 }
