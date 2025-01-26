@@ -71,15 +71,16 @@
                 </p>
                 <form action="{{ route('status.index') }}" method="GET">
                     <div class="flex items-center border-2 border-[#141652] rounded-3xl p-2 mb-4 bg-white">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                        </svg>
+                        <button type="submit">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hover:text-green-500" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
+                        </button>
                         <input type="text" name="search" value="{{ $search }}"
                             placeholder="Masukkan nomor tiket laporan" autofocus autocomplete="off"
                             class="ml-2 md:ml-3 w-full bg-white border-none focus:outline-none focus:ring-0 text-gray-700">
-                        <button type="submit"></button>
                     </div>
                 </form>
                 <p class="text-center text-md">

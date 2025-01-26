@@ -24,7 +24,7 @@
                     <input id="email" type="email" name="email" required autofocus
                         class="mt-1 block w-full text-xs px-2 py-2 border border-gray-300 rounded-md shadow-xs focus:ring-blue-500 focus:border-blue-500">
                     @error('message')
-                        <div class="text-red-500">{{ $message }}</div>
+                        <div class="text-xs text-red-500">{{ $message }}</div>
                     @enderror
                 </div>
                 <!-- Password -->
@@ -46,10 +46,12 @@
                 <div class="space-y-2">
                     <!-- Google reCAPTCHA v2 -->
                     <div>
-                        <div class="g-recaptcha" data-sitekey="{{ env('RECAPTCHA_SITE_KEY') }}"></div>
-                        @error('g-recaptcha-response')
-                            <div class="text-red-500 text-xs">{{ $message }}</div>
-                        @enderror
+                        @if (env('RECAPTCHA_ENABLED', false))
+                            <div class="g-recaptcha" data-sitekey="{{ env('RECAPTCHA_SITE_KEY') }}"></div>
+                            @error('g-recaptcha-response')
+                                <div class="text-red-500 text-xs">{{ $message }}</div>
+                            @enderror
+                        @endif
                     </div>
                     <!-- Login Button -->
                     <div>

@@ -24,21 +24,21 @@ class LoginController extends Controller
         $request->validate([
             'email' => 'required|email',
             'password' => 'required',
-            'g-recaptcha-response' => 'required',
         ]);
 
-        $recaptchaResponse = $request->input('g-recaptcha-response');
-        $secretKey = env('RECAPTCHA_SECRET_KEY');
-        $recaptchaVerify = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
-            'secret' => $secretKey,
-            'response' => $recaptchaResponse,
-        ])->json();
+        if (env('RECAPTCHA_ENABLED', false)) {
+            $recaptchaResponse = $request->input('g-recaptcha-response');
+            $secretKey = env('RECAPTCHA_SECRET_KEY');
+            $recaptchaVerify = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
+                'secret' => $secretKey,
+                'response' => $recaptchaResponse,
+            ])->json();
 
-        if (!$recaptchaVerify['success']) {
-
-            return back()->withErrors([
-                'g-recaptcha-response' => __('Captcha verification failed, please try again.'),
-            ])->onlyInput('email');
+            if (!$recaptchaVerify['success']) {
+                return back()->withErrors([
+                    'g-recaptcha-response' => __('gagal verifikasi captcha, coba lagi.'),
+                ])->onlyInput('email');
+            }
         }
 
         $credentials = $request->only('email', 'password');
