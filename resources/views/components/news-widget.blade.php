@@ -8,7 +8,7 @@
                     class="w-16 h-16 object-cover rounded-lg mr-4 aspect-square border-2">
                 <div>
                     <h4 class="text-md font-semibold">{{ substr($post->title, 0, 15) }}</h4>
-                    <p>{{ Str::limit($post->excerpt, 50) }}</p>
+                    <p>{{ substr($post->excerpt, 0, 50) }}</p>
                 </div>
             </a>
         @empty
