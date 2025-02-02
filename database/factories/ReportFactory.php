@@ -24,7 +24,7 @@ class ReportFactory extends Factory
             'chronology' => fake()->paragraph(1, true),
             'date' => fake()->date(),
             'scene' => fake()->address(),
-            'evidence' => null,
+            'evidence' => 'evidences/image-placeholder.jpg',
         ];
     }
 }

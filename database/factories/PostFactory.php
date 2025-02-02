@@ -26,7 +26,7 @@ class PostFactory extends Factory
             'slug' => Str::slug($title),
             'excerpt' => fake()->text(100),
             'body' => fake()->paragraphs(2, true),
-            'image' => fake()->imageUrl(640, 480, 'posts', true, 'Post Image'),
+            'image' => 'posts/image-placeholder.jpg',
             'status' => fake()->boolean(90),
             'views' => rand(1, 3),
         ];

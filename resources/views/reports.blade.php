@@ -146,7 +146,7 @@
                                 No. Telepon Korban <span class="text-red-500">*</span>
                             </label>
                             <div class="md:col-span-2">
-                                <input type="text" id="victim_phone" name="victim_phone"
+                                <input type="number" id="victim_phone" name="victim_phone"
                                     value="{{ old('victim_phone') }}" placeholder="08XXXXXXXXXX"
                                     class="w-full p-2 bg-[#DCE8FF] rounded-lg border-[#DCE8FF] focus:border-blue-400">
                             </div>
@@ -261,7 +261,7 @@
                                 No. Telepon
                             </label>
                             <div class="md:col-span-2">
-                                <input type="text" id="reporter_phone" name="reporter_phone"
+                                <input type="number" id="reporter_phone" name="reporter_phone"
                                     value="{{ old('reporter_phone') }}" placeholder="08XXXXXXXXXX"
                                     class="w-full p-2 bg-[#DCE8FF] rounded-lg border-[#DCE8FF] focus:border-blue-400">
                             </div>
