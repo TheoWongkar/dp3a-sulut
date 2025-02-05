@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
+use Exception;
 use App\Models\Report;
 use App\Models\Status;
 use App\Models\Victim;
 use App\Models\Reporter;
 use App\Models\Perpetrator;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Http;
 
@@ -21,38 +21,33 @@ class ChatbotController extends Controller
     {
         // Validasi Input
         $validated = $request->validate([
-            'message' => 'required|string|max:100|regex:/^[a-zA-Z0-9\s?!.,]+$/',
+            'message' => 'required|string|max:1000|regex:/^[a-zA-Z0-9\s?!.,]+$/',
         ]);
 
-        // Ambil Pesan Dari Pengguna
-        $sender = session()->getId();
+        // Respon Pengguna
+        $sessionId = $request->cookie('chatbot_session_id');
         $userMessage = strip_tags($validated['message']);
 
-        // URL Rasa
-        $rasaUrl = env('RASA_URL');
+        $chatbotUrl = env('CHATBOT_URL');
 
-        // Kirim pesan ke Rasa menggunakan HTTP facade
         try {
-            $response = Http::withHeaders([
-                'Authorization' => 'Bearer ' . env('RASA_API_TOKEN'),
-            ])->timeout(10)->post($rasaUrl, [
-                'sender' => $sender,
+            // Kirim pesan ke chatbot dengan session_id
+            $response = Http::timeout(10)->retry(3, 200)->post($chatbotUrl, [
+                'session_id' => $sessionId,
                 'message' => $userMessage,
             ]);
 
-            // Ambil respons sebagai array
-            $botMessages = $response->json();
-            $botResponse = $botMessages ? collect($botMessages)->pluck('text')->join(' ') : 'Maaf, tidak ada respons dari chatbot.';
+            $botResponse = $response->json();
+            $botMessage = $botResponse['response'] ?? 'Maaf, saya tidak mengerti.';
+            $newSessionId = $botResponse['session_id'] ?? $sessionId;
 
-            // Kembalikan respons ke klien
             return response()->json([
-                'user_message' => $userMessage,
-                'bot_response' => $botResponse ?: 'Maaf, saya tidak mengerti.',
-            ], 200);
-        } catch (\Exception $e) {
+                'bot_message' => $botMessage,
+            ])->cookie('chatbot_session_id', $newSessionId, 1440);
+        } catch (Exception $e) {
             return response()->json([
-                'error' => 'Terjadi kesalahan saat menghubungi chatbot.',
-                'details' => $e->getMessage(),
+                'bot_message' => 'Maaf, terjadi kesalahan saat menghubungi chatbot.',
+                'error' => $e->getMessage(),
             ], 500);
         }
     }
@@ -119,7 +114,7 @@ class ChatbotController extends Controller
             ]);
 
             // Simpan Data Korban
-            $victim = Victim::create([
+            Victim::create([
                 'report_id' => $report->id,
                 'name' => $validated['victim_name'],
                 'phone' => $validated['victim_phone'],
@@ -152,20 +147,12 @@ class ChatbotController extends Controller
                 'report_id' => $report->id,
             ]);
 
-            // Logging laporan baru
-            Log::info('Laporan baru dibuat', ['ticket_number' => $ticket_number]);
-
             return response()->json([
                 'success' => true,
                 'message' => 'Laporan berhasil dibuat.',
                 'ticket_number' => $ticket_number,
             ], 201);
-        } catch (\Exception $e) {
-            // Tangkap semua error tak terduga
-            Log::error('Terjadi kesalahan saat menyimpan laporan', [
-                'error' => $e->getMessage(),
-            ]);
-
+        } catch (Exception $e) {
             return response()->json([
                 'success' => false,
                 'message' => 'Terjadi kesalahan saat menyimpan laporan.',

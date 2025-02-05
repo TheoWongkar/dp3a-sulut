@@ -6,7 +6,6 @@ use App\Models\User;
 use App\Models\Employee;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class UserSeeder extends Seeder
 {
@@ -17,7 +16,7 @@ class UserSeeder extends Seeder
     {
         $employees = [
             [
-                'nip' => '999999999999999',
+                'nip' => '210211060067',
                 'name' => 'Theoterra Wongkar',
                 'gender' => 'Pria',
                 'position' => 'Developer',
@@ -28,39 +27,39 @@ class UserSeeder extends Seeder
                 'status' => true,
                 'user' => [
                     'email' => 'theoterra@dp3asulut.com',
-                    'password' => Hash::make('dp3asulut@developer190803'),
+                    'password' => Hash::make('developer@dp3asulut'),
                     'role' => 'Developer',
                 ],
             ],
             [
-                'nip' => '989898989898989898',
-                'name' => 'Marcel Siregar',
+                'nip' => '111111111111111111',
+                'name' => 'Marcel',
                 'gender' => 'Pria',
                 'position' => 'Kepala UPTD',
-                'date_of_birth' => '1990-05-20',
+                'date_of_birth' => '2025-01-01',
                 'address' => 'Jl. Melati No. 456',
-                'phone' => '081298765432',
+                'phone' => '082100000000',
                 'picture' => null,
                 'status' => true,
                 'user' => [
-                    'email' => 'kepala_bagian@dp3asulut.com',
-                    'password' => Hash::make('dp3asulut@admin0128'),
+                    'email' => 'kepala_uptd@dp3asulut.com',
+                    'password' => Hash::make('kepalauptd@dp3asulut'),
                     'role' => 'Admin',
                 ],
             ],
             [
-                'nip' => '525252525252525252',
-                'name' => 'Alice Brown',
+                'nip' => '222222222222222222',
+                'name' => 'Maria',
                 'gender' => 'Wanita',
-                'position' => 'Staff',
-                'date_of_birth' => '1995-08-10',
+                'position' => 'Petugas',
+                'date_of_birth' => '2025-01-01',
                 'address' => 'Jl. Anggrek No. 789',
-                'phone' => '081345678901',
+                'phone' => '082100000000',
                 'picture' => null,
                 'status' => true,
                 'user' => [
-                    'email' => 'staff@dp3asulut.com',
-                    'password' => Hash::make('dp3asulut@petugas0132'),
+                    'email' => 'petugas@dp3asulut.com',
+                    'password' => Hash::make('petugas@dp3asulut'),
                     'role' => 'Petugas',
                 ],
             ],

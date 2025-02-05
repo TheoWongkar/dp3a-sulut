@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('employee_id')->nullable()->constrained('employees')->onDelete('cascade');
             $table->string('ticket_number')->unique();
             $table->string('violence_category');
-            $table->string('chronology');
+            $table->text('chronology');
             $table->date('date');
             $table->string('scene');
             $table->string('evidence')->nullable();

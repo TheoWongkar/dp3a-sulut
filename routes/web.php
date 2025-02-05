@@ -17,7 +17,7 @@ Route::get('/berita', [PostController::class, 'index'])->name('posts.index');
 Route::get('/berita/{slug}', [PostController::class, 'show'])->name('posts.show');
 Route::get('/cek-status', CheckStatusController::class)->name('status.index');
 Route::get('/laporkan', [ReportController::class, 'create'])->name('reports.create');
-Route::post('/laporkan', [ReportController::class, 'store'])->name('reports.store');
+Route::post('/laporkan', [ReportController::class, 'store'])->name('reports.store')->middleware('throttle:1,10');
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', [LoginController::class, 'login'])->name('login');

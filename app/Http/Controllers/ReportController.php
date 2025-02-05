@@ -30,7 +30,7 @@ class ReportController extends Controller
         // Validasi Input
         $validated = $request->validate([
             'violence_category' => 'required|string|max:255',
-            'chronology' => 'required|string|max:255',
+            'chronology' => 'required|string|max:10000',
             'date' => 'required|date',
             'scene' => 'required|string|max:255',
             'evidence' => 'nullable|image|mimes:jpg,jpeg,png|max:3072',
@@ -53,6 +53,19 @@ class ReportController extends Controller
             'reporter_relationship_between' => 'required|string|max:255',
         ]);
 
+        // Cek Laporan Serupa
+        $existingReport = Report::where('chronology', $validated['chronology'])
+            ->where('date', $validated['date'])
+            ->where('scene', $validated['scene'])
+            ->first();
+
+        if ($existingReport) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Laporan serupa sudah ada.',
+            ], 409);
+        }
+
         // Simpan Data Evidence
         if ($request->hasFile('evidence')) {
             $filePath = $request->file('evidence')->store('evidences', 'public');
@@ -73,7 +86,7 @@ class ReportController extends Controller
         ]);
 
         // Simpan Data Korban
-        $victim = Victim::create([
+        Victim::create([
             'report_id' => $report->id,
             'name' => $validated['victim_name'],
             'phone' => $validated['victim_phone'],

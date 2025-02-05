@@ -18,9 +18,13 @@
             <ul class="space-y-2 text-center md:text-left">
                 <li><a href="{{ route('home') }}" class="hover:underline">Beranda</a></li>
                 <li><a href="{{ route('posts.index') }}" class="hover:underline">Berita</a></li>
-                <li><a href="{{ route('status.index') }}" class="hover:underline">Cek Status</a></li>
-                <li><a href="#" class="hover:underline">Kebijakan Privasi</a></li>
-                <li><a href="#" class="hover:underline">Bantuan</a></li>
+                <li><a href="https://kekerasan.kemenpppa.go.id/ringkasan" target="_blank" rel="noopener noreferrer"
+                        class="hover:underline">KemenPPPA.go.id</a>
+                </li>
+                <li><a href="https://sulutprov.go.id/" target="_blank" rel="noopener noreferrer"
+                        class="hover:underline">SulutProv.go.id</a></li>
+                <li><a href="https://revolusimental.go.id/" target="_blank" rel="noopener noreferrer"
+                        class="hover:underline">RevolusiMental.go.id</a></li>
             </ul>
         </nav>
 

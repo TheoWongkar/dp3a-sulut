@@ -12,7 +12,7 @@
             <div class="mb-5 lg:mb-8 flex justify-center">
                 <x-application-logo class=" size-32" />
             </div>
-            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight tracking-wider">
+            <h1 class="text-3xl lg:text-5xl font-bold leading-tight tracking-wider">
                 JANGAN TAKUT LAPORKAN KEKERASAN PADA ANAK
             </h1>
             <p class="mt-4 text-lg sm:text-xl lg:text-2xl">
@@ -128,13 +128,13 @@
                 <!-- Prev Button -->
                 <button @click="activeSlide = activeSlide === 0 ? slides.length - 1 : activeSlide - 1"
                     @focus="stopAutoplay" @blur="startAutoplay" aria-label="Previous Slide"
-                    class="absolute left-0 top-1/2 transform -translate-y-1/2 text-2xl bg-white rounded-full shadow-lg p-2 focus:outline-none">
+                    class="absolute left-5 top-1/2 transform -translate-y-1/2 text-2xl focus:outline-none">
                     &#10094;
                 </button>
                 <!-- Next Button -->
                 <button @click="activeSlide = activeSlide === slides.length - 1 ? 0 : activeSlide + 1"
                     @focus="stopAutoplay" @blur="startAutoplay" aria-label="Next Slide"
-                    class="absolute right-0 top-1/2 transform -translate-y-1/2 text-2xl bg-white rounded-full shadow-lg p-2 focus:outline-none">
+                    class="absolute right-5 top-1/2 transform -translate-y-1/2 text-2xl focus:outline-none">
                     &#10095;
                 </button>
                 <!-- Dots Indicator -->
@@ -142,6 +142,7 @@
                     <template x-for="(slide, index) in slides" :key="index">
                         <button @click="activeSlide = index"
                             :class="{ 'bg-blue-600': activeSlide === index, 'bg-gray-300': activeSlide !== index }"
+                            :aria-label="`Pindah ke slide ${index + 1}`"
                             class="w-3 h-3 rounded-full transition duration-300 ease-in-out"></button>
                     </template>
                 </div>

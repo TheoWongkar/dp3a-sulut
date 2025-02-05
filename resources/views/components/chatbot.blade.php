@@ -34,3 +34,152 @@
         </form>
     </div>
 </div>
+
+<script>
+    $(document).ready(function() {
+        const chatContainer = $('#chat-container');
+        const chatForm = $('#chat-form');
+        const messageInput = $('#message');
+
+        function scrollToBottom() {
+            chatContainer.scrollTop(chatContainer[0].scrollHeight);
+        }
+
+        // Fungsi escape untuk mencegah XSS
+        function escapeHTML(str) {
+            return $('<div>').text(str).html();
+        }
+
+        // Fungsi untuk mendapatkan cookie
+        function getCookie(name) {
+            let cookieArr = document.cookie.split(";");
+
+            for (let i = 0; i < cookieArr.length; i++) {
+                let cookie = cookieArr[i].trim();
+
+                if (cookie.startsWith(name + "=")) {
+                    return cookie.substring(name.length + 1);
+                }
+            }
+            return null;
+        }
+
+        // Fungsi untuk set cookie
+        function setCookie(name, value, seconds) {
+            let expires = "";
+            if (seconds) {
+                const date = new Date();
+                date.setTime(date.getTime() + (seconds * 1000));
+                expires = "; expires=" + date.toUTCString();
+            }
+            document.cookie = name + "=" + (value || "") + expires + "; path=/";
+        }
+
+        // Fungsi untuk memuat riwayat chat dari cookie
+        function loadChatHistory() {
+            const chatHistory = JSON.parse(getCookie('chatHistory')) || [];
+            chatHistory.forEach(chat => {
+                chatContainer.append(`
+                <div class="${chat.isUser ? 'text-right' : 'text-left'}">
+                    <div class="inline-block ${chat.isUser ? 'bg-blue-600 text-white' : 'bg-gray-200'}  text-sm px-4 py-2 rounded-lg">
+                        ${escapeHTML(chat.message)}
+                    </div>
+                </div>
+            `);
+            });
+            scrollToBottom();
+        }
+
+        // Memuat riwayat chat saat halaman dimuat
+        loadChatHistory();
+
+        // Tangani Enter untuk kirim pesan
+        messageInput.on('keydown', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                chatForm.submit();
+            }
+        });
+
+        chatForm.on('submit', function(e) {
+            e.preventDefault();
+            const message = messageInput.val().trim();
+            if (!message) return;
+
+            // Ambil session_id dari cookie
+            const sessionId = getCookie('chatbot_session_id');
+
+            // Tambah pesan pengguna ke cookie
+            const chatHistory = JSON.parse(getCookie('chatHistory')) || [];
+            chatHistory.push({
+                message: message,
+                isUser: true
+            });
+            setCookie('chatHistory', JSON.stringify(chatHistory), 86400);
+
+            // Tambah pesan pengguna ke UI
+            chatContainer.append(`
+            <div class="text-right">
+                <div class="inline-block bg-blue-600 text-white text-sm px-4 py-2 rounded-lg">
+                    ${escapeHTML(message)}
+                </div>
+            </div>
+        `);
+
+            messageInput.val('');
+            scrollToBottom();
+
+            // Indikator Loading
+            const loadingIndicator = $(`
+            <div class="text-left" id="loading-indicator">
+                <div class="inline-block bg-gray-200 text-sm px-4 py-2 rounded-lg">
+                    ...
+                </div>
+            </div>
+        `);
+            chatContainer.append(loadingIndicator);
+            scrollToBottom();
+
+            $.ajax({
+                url: "{{ route('chatbot.send') }}",
+                method: "POST",
+                data: {
+                    message: message,
+                    session_id: sessionId,
+                    _token: "{{ csrf_token() }}"
+                },
+                success: function(response) {
+                    loadingIndicator.remove();
+
+                    // Tambah pesan bot ke cookie
+                    const chatHistory = JSON.parse(getCookie('chatHistory')) || [];
+                    chatHistory.push({
+                        message: response.bot_message,
+                        isUser: false
+                    });
+                    setCookie('chatHistory', JSON.stringify(chatHistory), 86400);
+
+                    chatContainer.append(`
+                    <div class="text-left">
+                        <div class="inline-block bg-gray-200 text-sm px-4 py-2 rounded-lg">
+                            ${escapeHTML(response.bot_message)}
+                        </div>
+                    </div>
+                `);
+                    scrollToBottom();
+                },
+                error: function(response) {
+                    loadingIndicator.remove();
+                    chatContainer.append(`
+                    <div class="text-left">
+                        <div class="inline-block bg-red-200 text-red-600 text-sm px-4 py-2 rounded-lg">
+                            Maaf, terjadi kesalahan saat menghubungi chatbot.
+                        </div>
+                    </div>
+                `);
+                    scrollToBottom();
+                }
+            });
+        });
+    });
+</script>
