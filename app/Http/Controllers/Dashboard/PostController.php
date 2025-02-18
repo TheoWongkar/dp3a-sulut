@@ -191,6 +191,11 @@ class PostController extends Controller
                 ->with('error', 'Berita tidak ditemukan.');
         }
 
+        // Hapus Gambar
+        if ($post->image) {
+            Storage::disk('public')->delete($post->image);
+        }
+
         //Hapus Berita
         $post->delete();
 

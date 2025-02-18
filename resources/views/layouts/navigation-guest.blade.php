@@ -1,4 +1,4 @@
-<!-- Bagian Navigasi -->
+<!-- Navigasi -->
 <div x-data="{
     @if (request()->routeIs('home')) isNavbarVisible: false,
         isSidebarOpen: false,

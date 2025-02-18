@@ -18,27 +18,27 @@
         @method('PUT')
         <!-- Nama -->
         <div>
-            <label for="name" class="block font-medium text-sm">Name</label>
+            <label for="name" class="text-sm font-medium text-gray-800">Name</label>
             <input id="name" name="name" type="text" value="{{ old('name', $user->name) }}" required
-                class="mt-1 p-2 w-full border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#141652]">
+                class="mt-1 p-1 w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring">
             @error('name')
-                <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                <div class="text-red-500 text-xs mt-1">{{ $message }}</div>
             @enderror
         </div>
         <!-- Email -->
         <div>
-            <label for="email" class="block font-medium text-sm">Email</label>
+            <label for="email" class="text-sm font-medium text-gray-800">Email</label>
             <input id="email" name="email" type="text" value="{{ old('email', $user->email) }}"
-                class="mt-1 p-2 w-full border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#141652]">
+                class="mt-1 p-1 w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring">
             @error('email')
-                <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                <div class="text-red-500 text-xs mt-1">{{ $message }}</div>
             @enderror
         </div>
         <!-- Gambar -->
         <div x-data="{ imagePreview: '{{ $user->employee->picture ? asset('storage/' . $user->employee->picture) : asset('img/profile-placeholder.jpg') }}' }">
             <label for="picture" class="block text-sm font-medium">Foto Profil</label>
             <input id="picture" type="file" name="picture"
-                class="mt-1 w-full border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#141652] file:mr-4 file:py-2.5 file:px-4 file:font-medium file:border-0 file:text-sm file:bg-[#141652] file:text-white hover:file:bg-blue-800 transition ease-in-out duration-200"
+                class="mt-1 w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring file:mr-4 file:py-2.5 file:px-4 file:font-medium file:border-0 file:text-sm file:bg-[#141652] file:text-white hover:file:bg-blue-800 transition ease-in-out duration-200"
                 @change="if ($event.target.files.length) { 
                     const file = $event.target.files[0]; 
                     const reader = new FileReader(); 
@@ -47,12 +47,12 @@
                 } else { imagePreview = null; }">
             <!-- Preview Gambar -->
             <div class="mt-4" x-show="imagePreview" style="display: none;">
-                <div class="overflow-auto max-w-full h-64 rounded-md shadow-md border border-gray-300">
+                <div class="overflow-auto max-w-full h-64 rounded-md border border-gray-300">
                     <img :src="imagePreview" class="w-full h-auto" alt="Image Preview">
                 </div>
             </div>
             @error('picture')
-                <p class="text-red-500 text-md mt-2">{{ $message }}</p>
+                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
             @enderror
         </div>
 

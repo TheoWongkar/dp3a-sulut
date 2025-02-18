@@ -1,4 +1,4 @@
-<!-- Chat Bot -->
+<!-- Bagian Chat Bot -->
 <div x-data="{ open: false }" @open-chat.window="open = true" class="fixed bottom-4 right-4 z-20">
     <!-- Chat Icon -->
     <div x-show="!open" @click="open = true"

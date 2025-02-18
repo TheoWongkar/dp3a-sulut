@@ -1,2 +1,2 @@
 <!-- Logo Aplikasi -->
-<img src="{{ asset('img/app-logo.svg') }}" alt="Logo Pemprov Sulut" {{ $attributes }}>
+<img src="{{ asset('img/application-logo.svg') }}" alt="Logo Pemprov Sulut" {{ $attributes }}>

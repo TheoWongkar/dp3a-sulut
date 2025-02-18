@@ -1,7 +1,7 @@
 <x-guest-layout>
 
-    <!-- Bagian Title -->
-    <x-title :title=$title></x-title>
+    <!-- Judul Halaman -->
+    <x-slot name="title">{{ $title }}</x-slot>
 
     <!-- Bagian Login -->
     <section class="min-h-screen flex items-center justify-center">
@@ -21,8 +21,8 @@
                 <!-- Email Address -->
                 <div class="mb-4">
                     <label for="email" class="block text-xs font-medium text-gray-700">Email</label>
-                    <input id="email" type="email" name="email" required autofocus
-                        class="mt-1 block w-full text-xs px-2 py-2 border border-gray-300 rounded-md shadow-xs focus:ring-blue-500 focus:border-blue-500">
+                    <input id="email" type="email" name="email" autofocus
+                        class="mt-1 p-2 w-full bg-white text-xs border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring">
                     @error('message')
                         <div class="text-xs text-red-500">{{ $message }}</div>
                     @enderror
@@ -30,8 +30,8 @@
                 <!-- Password -->
                 <div class="mb-2">
                     <label for="password" class="block text-xs font-medium text-gray-700">Password</label>
-                    <input id="password" type="password" name="password" required
-                        class="mt-1 block w-full text-xs px-2 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                    <input id="password" type="password" name="password"
+                        class="mt-1 p-2 w-full bg-white text-xs border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring">
                 </div>
                 <!-- Remember Me -->
                 <div class="flex items-center justify-between mb-2">
@@ -46,12 +46,10 @@
                 <div class="space-y-2">
                     <!-- Google reCAPTCHA v2 -->
                     <div>
-                        @if (env('RECAPTCHA_ENABLED', false))
-                            <div class="g-recaptcha" data-sitekey="{{ env('RECAPTCHA_SITE_KEY') }}"></div>
-                            @error('g-recaptcha-response')
-                                <div class="text-red-500 text-xs">{{ $message }}</div>
-                            @enderror
-                        @endif
+                        <div class="g-recaptcha" data-sitekey="{{ env('RECAPTCHA_SITE_KEY') }}"></div>
+                        @error('g-recaptcha-response')
+                            <div class="text-red-500 text-xs">{{ $message }}</div>
+                        @enderror
                     </div>
                     <!-- Login Button -->
                     <div>

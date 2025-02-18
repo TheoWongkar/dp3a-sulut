@@ -1,4 +1,4 @@
-<!-- Bagian Footer -->
+<!-- Footer -->
 <footer class="bg-[#141652] text-white py-8">
     <div class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8">
         <!-- Logo dan Deskripsi -->

@@ -133,6 +133,13 @@
         <p><strong>Alamat:</strong> {{ $report->reporter->addres }}</p>
         <p><strong>Hubungan Dengan Korban:</strong> {{ $report->reporter->relationship_between }}</p>
     </div>
+
+    <!-- Tempat Tanda Tangan -->
+    <div style="margin-top: 50px; text-align: right;">
+        <p>Manado, {{ \Carbon\Carbon::now()->locale('id')->isoFormat('D MMMM YYYY') }}</p>
+        <p style="margin-bottom: 70px;">Kepala Dinas,</p>
+        <p><strong>Marcel</strong></p>
+    </div>
 </body>
 
 </html>

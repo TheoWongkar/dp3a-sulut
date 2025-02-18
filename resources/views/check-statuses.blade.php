@@ -1,7 +1,7 @@
 <x-guest-layout>
 
-    <!-- Bagian Title -->
-    <x-title :title=$title></x-title>
+    <!-- Judul Halaman -->
+    <x-slot name="title">{{ $title }}</x-slot>
 
     <!-- Bagian Pesan Success -->
     @if (session('success'))
@@ -60,7 +60,7 @@
         <!-- Bagian Cek Status -->
         <section class="min-h-screen flex items-center justify-center px-4">
             <div
-                class="bg-[#DCE8FF] px-8 py-6 sm:px-10 sm:py-8 lg:px-15 lg:py-10 rounded-lg shadow-xl max-w-2xl w-full">
+                class="bg-[#DCE8FF] px-8 py-6 sm:px-10 sm:py-8 lg:px-10 lg:py-10 rounded-lg shadow-xl max-w-2xl w-full">
                 <h1 class="text-2xl lg:text-3xl font-bold mb-4 text-center">
                     Masukkan Nomor Tiket Laporan Anda
                 </h1>

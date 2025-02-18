@@ -1,9 +1,14 @@
-<!-- Sidebar -->
-<div x-show="sidebarOpen" class="fixed inset-0 z-20 bg-black bg-opacity-50 lg:hidden" @click="sidebarOpen = false">
+<!-- Sidebar Overlay -->
+<div x-show="sidebarOpen" class="fixed inset-0 z-20 lg:hidden" style="background: rgba(0, 0, 0, 0.842);"
+    @click="sidebarOpen = false">
 </div>
+
+<!-- Sidebar -->
 <aside
     class="fixed inset-y-0 z-30 w-64 bg-[#141652] shadow-md lg:static lg:shadow-none lg:translate-x-0 transform transition-transform duration-300"
     :class="{ '-translate-x-full': !sidebarOpen, 'translate-x-0': sidebarOpen }">
+
+    <!-- Logo dan Judul -->
     <div class="px-6 py-4 flex items-center gap-2">
         <x-application-logo class="size-12"></x-application-logo>
         <div>
@@ -12,9 +17,15 @@
             </h1>
         </div>
     </div>
+
+    <!-- Navigasi Utama -->
     <nav class="flex-1 p-4 space-y-2 font-light">
+
+        <!-- Menu Utama -->
         <div>
-            <h3 class="px-2 py-1 font-medium text-gray-400">Menu</h3>
+            <h2 class="px-2 py-1 font-medium text-gray-400">Menu</h2>
+
+            <!-- Dashboard Link -->
             <a href="{{ route('dashboard') }}"
                 class="{{ Request::routeIs('dashboard') ? 'animate-pulse' : 'animate-none' }} flex gap-4 px-4 py-1.5 text-white rounded hover:bg-gray-200 hover:text-gray-900">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -24,6 +35,8 @@
                 </svg>
                 <span class="inline">Dashboard</span>
             </a>
+
+            <!-- Berita Link -->
             <a href="{{ route('dashboard.posts.index') }}"
                 class="{{ Request::routeIs('dashboard.posts.*') ? 'animate-pulse' : 'animate-none' }} flex gap-4 px-4 py-1.5 text-white rounded hover:bg-gray-200 hover:text-gray-900">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -33,6 +46,8 @@
                 </svg>
                 <span>Berita</span>
             </a>
+
+            <!-- Data Karyawan Link -->
             <a href="{{ route('dashboard.employees.index') }}"
                 class="{{ Request::routeIs('dashboard.employees.*') ? 'animate-pulse' : 'animate-none' }} flex gap-4 px-4 py-1.5 text-white rounded hover:bg-gray-200 hover:text-gray-900">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -43,8 +58,12 @@
                 <span>Data Karyawan</span>
             </a>
         </div>
+
+        <!-- Laporan -->
         <div>
-            <h3 class="px-2 py-1 font-medium text-gray-400">Laporan</h3>
+            <h2 class="px-2 py-1 font-medium text-gray-400">Laporan</h2>
+
+            <!-- Kasus Baru Link -->
             <a href="{{ route('dashboard.reports.create') }}"
                 class="{{ Request::routeIs('dashboard.reports.create') ? 'animate-pulse' : 'animate-none' }} flex gap-4 px-4 py-1.5 text-white rounded hover:bg-gray-200 hover:text-gray-900">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -54,6 +73,8 @@
                 </svg>
                 <span class="inline">Kasus Baru</span>
             </a>
+
+            <!-- Laporan Kasus Link -->
             <a href="{{ route('dashboard.reports.received') }}"
                 class="{{ Request::routeIs('dashboard.reports.received') ? 'animate-pulse' : 'animate-none' }} flex gap-4 px-4 py-1.5 text-white rounded hover:bg-gray-200 hover:text-gray-900">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -63,6 +84,8 @@
                 </svg>
                 <span>Laporan Kasus</span>
             </a>
+
+            <!-- Laporan Diproses Link -->
             <a href="{{ route('dashboard.reports.processed') }}"
                 class="{{ Request::routeIs('dashboard.reports.processed') ? 'animate-pulse' : 'animate-none' }} flex gap-4 px-4 py-1.5 text-white rounded hover:bg-gray-200 hover:text-gray-900">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -72,6 +95,8 @@
                 </svg>
                 <span>Laporan Diproses</span>
             </a>
+
+            <!-- Laporan Selesai Link -->
             <a href="{{ route('dashboard.reports.completed') }}"
                 class="{{ Request::routeIs('dashboard.reports.completed') ? 'animate-pulse' : 'animate-none' }} flex gap-4 px-4 py-1.5 text-white rounded hover:bg-gray-200 hover:text-gray-900">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -82,8 +107,12 @@
                 <span>Laporan Selesai</span>
             </a>
         </div>
+
+        <!-- Lainnya -->
         <div>
-            <h3 class="px-2 py-1 font-medium text-gray-400">Lainnya</h3>
+            <h2 class="px-2 py-1 font-medium text-gray-400">Lainnya</h2>
+
+            <!-- Beranda Link -->
             <a href="{{ route('home') }}"
                 class="{{ Request::routeIs('home') ? 'animate-pulse' : 'animate-none' }} flex gap-4 px-4 py-1.5 text-white rounded hover:bg-gray-200 hover:text-gray-900">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -93,8 +122,10 @@
                 </svg>
                 <span class="inline">Beranda</span>
             </a>
-            <a href="{{ route('dashboard.employees.show', auth()->user()->employee->nip) }}"
-                class="{{ Request::routeIs('dashboard.employees.show') ? 'animate-pulse' : 'animate-none' }} flex gap-4 px-4 py-1.5 text-white rounded hover:bg-gray-200 hover:text-gray-900">
+
+            <!-- Data Anda Link -->
+            <a href="{{ route('profile.show') }}"
+                class="{{ Request::routeIs('profile.show') ? 'animate-pulse' : 'animate-none' }} flex gap-4 px-4 py-1.5 text-white rounded hover:bg-gray-200 hover:text-gray-900">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="size-6">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -102,15 +133,17 @@
                 </svg>
                 <span class="inline">Data Anda</span>
             </a>
+
+            <!-- Logout Button -->
             <form action="{{ route('logout') }}" method="POST">
                 @csrf
                 <button class="flex w-full gap-4 px-4 py-1.5 text-white rounded hover:bg-gray-200 hover:text-gray-900">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="size-6">
                         <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15" />
+                            d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15M12 12h7.5M12 12v7.5M12 12H4.5" />
                     </svg>
-                    <span>Keluar</span>
+                    <span>Logout</span>
                 </button>
             </form>
         </div>

@@ -1,7 +1,7 @@
 <x-guest-layout>
 
-    <!-- Bagian Title -->
-    <x-title :title=$title></x-title>
+    <!-- Judul Halaman -->
+    <x-slot name="title">{{ $title }}</x-slot>
 
     <!-- Bagian Laporkan -->
     <section

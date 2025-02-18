@@ -26,7 +26,8 @@ class UserSeeder extends Seeder
                 'picture' => null,
                 'status' => true,
                 'user' => [
-                    'email' => 'theoterra@dp3asulut.com',
+                    'name' => 'Theoterra',
+                    'email' => 'developer@dp3asulut.com',
                     'password' => Hash::make('developer@dp3asulut'),
                     'role' => 'Developer',
                 ],

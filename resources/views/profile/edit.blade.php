@@ -1,7 +1,7 @@
 <x-app-layout>
 
     <!-- Judul Halaman -->
-    <x-title :title=$title></x-title>
+    <x-slot name="title">{{ $title }}</x-slot>
 
     <!-- Bagian Profil -->
     <section>

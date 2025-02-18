@@ -1,12 +1,12 @@
 <x-guest-layout>
 
-    <!-- Bagian Title -->
-    <x-title :title=$title></x-title>
+    <!-- Judul Halaman -->
+    <x-slot name="title">{{ $title }}</x-slot>
 
     <!-- Bagian Hero -->
     <section class="relative flex items-center justify-center h-screen bg-cover bg-center"
-        style="background-image: url('img/hero-image.jpg');">
-        <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+        style="background-image: url('{{ asset('img/hero-image.jpg') }}');">
+        <div class="absolute inset-0 bg-opacity-50" style="background: rgba(0, 0, 0, 0.466);"></div>
         <!-- Konten -->
         <div class="relative z-10 text-center text-white max-w-3xl mx-auto">
             <div class="mb-5 lg:mb-8 flex justify-center">
@@ -30,7 +30,7 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <!-- Bingkai Kiri -->
             <div class="md:col-span-2">
-                <div class="bg-white rounded-lg shadow-lg border-2 overflow-hidden">
+                <div class="bg-white rounded-lg shadow-lg border overflow-hidden">
                     @if ($post)
                         <img src="{{ asset('storage/' . $post->image) }}" alt="Gambar {{ $post->title }}"
                             class="w-full h-64 md:h-80 object-cover">
@@ -44,7 +44,7 @@
                             </div>
                             <p class="font-normal">{{ $post->excerpt }}</p>
                             <a href="{{ route('posts.show', $post->slug) }}"
-                                class="text-blue-500 hover:text-blue-800">Selengkapnya...
+                                class="text-blue-700 hover:text-blue-800">Selengkapnya...
                             </a>
                         </div>
                     @else

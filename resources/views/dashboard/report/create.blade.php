@@ -1,7 +1,7 @@
 <x-app-layout>
 
     <!-- Judul Halaman -->
-    <x-title :title=$title></x-title>
+    <x-slot name="title">{{ $title }}</x-slot>
 
     <section>
         <div class="bg-white p-6 shadow-lg rounded-lg hover:shadow-xl transition-shadow">

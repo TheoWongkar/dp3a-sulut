@@ -2,35 +2,30 @@
 <header class="flex items-center justify-between px-4 py-2 bg-white shadow">
     <!-- Judul Halaman -->
     <div class="flex items-center space-x-2">
-        <button @click="sidebarOpen = !sidebarOpen" aria-label="humberger button" class="lg:hidden focus:outline-none">
+        <!-- Tombol Toggle Sidebar untuk versi mobile -->
+        <button @click="sidebarOpen = !sidebarOpen" aria-label="hamburger button" class="lg:hidden focus:outline-none">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
                 xmlns="http://www.w3.org/2000/svg">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16m-7 6h7"></path>
             </svg>
         </button>
-        <div class="w-32 md:w-56 lg:w-64 overflow-hidden whitespace-nowrap text-ellipsis">
-            <h2 class="text-md md:text-lg lg:text-xl font-bold">@yield('pageTitle')</h2>
-        </div>
+        <!-- Judul Halaman yang dibatasi panjangnya -->
+        <h2 class="text-md md:text-lg lg:text-xl font-bold">{{ Str::limit($title, 20) }}</h2>
     </div>
+
     <!-- Profil User -->
     <div x-data="{ open: false }" class="relative flex items-center">
-        <!-- Trigger (Nama, Jabatan, Gambar, dan Ikon) -->
+        <!-- Klik untuk membuka dropdown -->
         <div @click="open = !open" class="flex items-center space-x-1 cursor-pointer">
-            <!-- Nama dan Jabatan -->
+            <!-- Nama dan Jabatan User -->
             <div class="text-right mr-1 hidden md:block">
-                <h1 class="text-sm font-bold">
-                    {{ auth()->user()->employee->name }}
-                </h1>
-                <p class="text-xs text-gray-500 leading-none">
-                    {{ auth()->user()->role }}
-                </p>
+                <h1 class="text-sm font-bold">{{ auth()->user()->employee->name }}</h1>
+                <p class="text-xs text-gray-800 leading-none">{{ auth()->user()->role }}</p>
             </div>
-
-            <!-- Gambar Profil -->
-            <img src="{{ auth()->user()->employee->image ? asset('storage/' . auth()->user()->employee->image) : asset('img/profile-placeholder.jpg') }}"
+            <!-- Gambar Profil User -->
+            <img src="{{ auth()->user()->employee->image ? asset('storage/' . auth()->user()->employee->image) : asset('img/profile-placeholder.webp') }}"
                 alt="Profile" class="size-12 rounded-full border-2">
-
-            <!-- Dropdown Icon -->
+            <!-- Icon Dropdown untuk membuka menu -->
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                 stroke="currentColor" class="size-5">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
@@ -40,6 +35,7 @@
         <!-- Dropdown Menu -->
         <div x-cloak x-show="open" @click.outside="open = false" x-transition
             class="absolute top-full mt-1 right-0 w-48 bg-white border-2 border-gray-200 rounded-lg shadow-lg z-50">
+            <!-- Link ke Beranda -->
             <a href="{{ route('home') }}"
                 class="flex items-center gap-1 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -49,6 +45,7 @@
                 </svg>
                 <span>Beranda</span>
             </a>
+            <!-- Link ke Profil Saya -->
             <a href="{{ route('profile.edit') }}"
                 class="flex items-center gap-1 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -58,6 +55,7 @@
                 </svg>
                 <span>Profil Saya</span>
             </a>
+            <!-- Form untuk Logout -->
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
                 <button type="submit"
@@ -72,5 +70,4 @@
             </form>
         </div>
     </div>
-
 </header>

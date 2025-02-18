@@ -21,11 +21,12 @@ Route::post('/laporkan', [ReportController::class, 'store'])->name('reports.stor
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', [LoginController::class, 'login'])->name('login');
-    Route::post('/login', [LoginController::class, 'authenticate'])->middleware('throttle:5,1');
+    Route::post('/login', [LoginController::class, 'authenticate'])->middleware('throttle:5,5');
 });
 
 Route::middleware(['auth', 'auth.session', 'employee.status.check'])->group(function () {
     Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+    Route::get('profile-saya', [ProfileController::class, 'show'])->name('profile.show');
     Route::get('profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('profile/ubah', [ProfileController::class, 'updateProfile'])->name('profile.update');
     Route::put('profile/ubah-password', [ProfileController::class, 'updatePassword'])->name('profile.updatePassword');
@@ -37,17 +38,17 @@ Route::middleware(['auth', 'auth.session', 'employee.status.check'])->group(func
     Route::get('/dashboard/berita/tambah', [DashboardPostController::class, 'create'])->name('dashboard.posts.create');
     Route::post('/dashboard/berita/tambah', [DashboardPostController::class, 'store'])->name('dashboard.posts.store');
     Route::get('/dashboard/berita/{slug}', [DashboardPostController::class, 'show'])->name('dashboard.posts.show');
-    Route::get('/dashboard/berita/ubah/{slug}', [DashboardPostController::class, 'edit'])->name('dashboard.posts.edit');
-    Route::put('/dashboard/berita/ubah/{slug}', [DashboardPostController::class, 'update'])->name('dashboard.posts.update');
-    Route::delete('/dashboard/berita/hapus/{slug}', [DashboardPostController::class, 'destroy'])->name('dashboard.posts.destroy');
+    Route::get('/dashboard/berita/{slug}/ubah', [DashboardPostController::class, 'edit'])->name('dashboard.posts.edit');
+    Route::put('/dashboard/berita/{slug}/ubah', [DashboardPostController::class, 'update'])->name('dashboard.posts.update');
+    Route::delete('/dashboard/berita/{slug}/hapus', [DashboardPostController::class, 'destroy'])->name('dashboard.posts.destroy');
 
     Route::get('/dashboard/karyawan', [DashboardEmployeeController::class, 'index'])->name('dashboard.employees.index');
     Route::get('/dashboard/karyawan/tambah', [DashboardEmployeeController::class, 'create'])->name('dashboard.employees.create');
     Route::post('/dashboard/karyawan/tambah', [DashboardEmployeeController::class, 'store'])->name('dashboard.employees.store');
     Route::get('/dashboard/karyawan/{nip}', [DashboardEmployeeController::class, 'show'])->name('dashboard.employees.show');
-    Route::get('/dashboard/karyawan/ubah/{nip}', [DashboardEmployeeController::class, 'edit'])->name('dashboard.employees.edit');
-    Route::put('/dashboard/karyawan/ubah/{nip}', [DashboardEmployeeController::class, 'update'])->name('dashboard.employees.update');
-    Route::delete('/dashboard/karyawan/hapus/{nip}', [DashboardEmployeeController::class, 'destroy'])->name('dashboard.employees.destroy');
+    Route::get('/dashboard/karyawan/{nip}/ubah', [DashboardEmployeeController::class, 'edit'])->name('dashboard.employees.edit');
+    Route::put('/dashboard/karyawan/{nip}/ubah', [DashboardEmployeeController::class, 'update'])->name('dashboard.employees.update');
+    Route::delete('/dashboard/karyawan/{nip}/hapus', [DashboardEmployeeController::class, 'destroy'])->name('dashboard.employees.destroy');
 
     Route::get('/dashboard/laporan/diterima', [DashboardReportController::class, 'received'])->name('dashboard.reports.received');
     Route::delete('/dashboard/laporan/diterima/{ticket_number}/hapus', [DashboardReportController::class, 'receivedDestroy'])->name('dashboard.reports.received-destroy');

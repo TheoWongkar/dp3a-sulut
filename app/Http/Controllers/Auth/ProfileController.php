@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Models\Employee;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -10,6 +11,22 @@ use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
+
+    /**
+     * Display the user's profile form.
+     */
+    public function show()
+    {
+        // Ambil Data Pengguna
+        $user = Auth::user();
+        $employee = $user->employee;
+
+        // Judul Halaman
+        $title = "Karyawan: " . $employee->name;
+
+        return view('dashboard.employee.show', compact('title', 'employee'));
+    }
+
     /**
      * Display the user's profile form.
      */

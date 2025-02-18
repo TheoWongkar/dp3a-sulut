@@ -110,8 +110,8 @@ class EmployeeController extends Controller
 
         // Simpan Gambar (jika ada)
         if ($request->hasFile('picture')) {
-            $imagePath = $request->file('picture')->store('employees', 'public');
-            $validated['picture'] = $imagePath;
+            $filePath = $request->file('picture')->store('employees', 'public');
+            $validated['picture'] = $filePath;
         } else {
             $validated['picture'] = null;
         }
@@ -266,6 +266,11 @@ class EmployeeController extends Controller
         // Cek Izin
         if (! Gate::allows('update_delete-employee', $employee)) {
             abort(403);
+        }
+
+        // Hapus Gambar
+        if ($employee->picture) {
+            Storage::disk('public')->delete($employee->picture);
         }
 
         // Hapus Data Karyawan

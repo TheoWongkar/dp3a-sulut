@@ -21,35 +21,34 @@ class LoginController extends Controller
 
     public function authenticate(Request $request): RedirectResponse
     {
+        // Validasi Input
         $request->validate([
             'email' => 'required|email',
             'password' => 'required',
         ]);
 
-        if (env('RECAPTCHA_ENABLED', false)) {
-            $recaptchaResponse = $request->input('g-recaptcha-response');
-            $secretKey = env('RECAPTCHA_SECRET_KEY');
-            $recaptchaVerify = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
-                'secret' => $secretKey,
-                'response' => $recaptchaResponse,
-            ])->json();
-
-            if (!$recaptchaVerify['success']) {
-                return back()->withErrors([
-                    'g-recaptcha-response' => __('gagal verifikasi captcha, coba lagi.'),
-                ])->onlyInput('email');
-            }
+        // Google ReCAPTCHA
+        $recaptchaResponse = $request->input('g-recaptcha-response');
+        $secretKey = env('RECAPTCHA_SECRET_KEY');
+        $recaptchaVerify = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
+            'secret' => $secretKey,
+            'response' => $recaptchaResponse,
+        ])->json();
+        if (!$recaptchaVerify['success']) {
+            return back()->withErrors([
+                'g-recaptcha-response' => __('gagal verifikasi captcha, coba lagi.'),
+            ])->onlyInput('email');
         }
 
+        // Inisialisasi
         $credentials = $request->only('email', 'password');
         $remember = $request->has('remember');
 
+        // Attempt
         if (Auth::attempt($credentials, $remember)) {
             $request->session()->regenerate();
-
             return redirect()->intended('/dashboard');
         }
-
         return back()->withErrors([
             'message' => __('auth.failed'),
         ])->onlyInput('email');
@@ -57,6 +56,7 @@ class LoginController extends Controller
 
     public function logout(Request $request): RedirectResponse
     {
+        // Logout
         Auth::logout();
 
         $request->session()->invalidate();

@@ -8,7 +8,6 @@ use App\Models\Report;
 use App\Models\Victim;
 use App\Models\Employee;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
 class DashboardController extends Controller
@@ -72,7 +71,7 @@ class DashboardController extends Controller
             ->pluck('count', 'month')
             ->toArray();
 
-        // Membuat array untuk jumlah laporan tiap bulan, jika ada bulan yang kosong, diisi 0
+        // Membuat array untuk jumlah laporan tiap bulan
         $monthlyReports = [];
         for ($i = 1; $i <= 12; $i++) {
             $monthlyReports[] = $totalReportsPerMonth[$i] ?? 0;

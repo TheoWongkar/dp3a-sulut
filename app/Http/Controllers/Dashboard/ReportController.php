@@ -12,6 +12,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
 
 class ReportController extends Controller
 {
@@ -186,6 +187,11 @@ class ReportController extends Controller
         if (!$report) {
             return redirect()->route('dashboard.reports.received')
                 ->with('error', 'Laporan tidak ditemukan.');
+        }
+
+        // Hapus Evidence Jika Ada
+        if ($report->evidence) {
+            Storage::disk('public')->delete($report->evidence);
         }
 
         // Hapus Data Laporan
@@ -439,6 +445,11 @@ class ReportController extends Controller
         if (!$report) {
             return redirect()->route('dashboard.reports.completed')
                 ->with('error', 'Laporan tidak ditemukan.');
+        }
+
+        // Hapus Gambar
+        if ($report->evidence) {
+            Storage::disk('public')->delete($report->evidence);
         }
 
         // Hapus Data Laporan
