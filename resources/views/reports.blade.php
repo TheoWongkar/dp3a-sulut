@@ -280,7 +280,7 @@
                             <div class="md:col-span-2">
                                 <select id="reporter_relationship_between" name="reporter_relationship_between"
                                     class="w-full p-2 bg-[#DCE8FF] rounded-lg border-[#DCE8FF] focus:border-blue-400">
-                                    <option selected disabled>Pilih hubungan pelaku dengan korban</option>
+                                    <option selected disabled>Pilih hubungan pelapor dengan korban</option>
                                     <option value="Orang Tua"
                                         {{ old('reporter_relationship_between') == 'Orang Tua' ? 'selected' : '' }}>
                                         Orang Tua

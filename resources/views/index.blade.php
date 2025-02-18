@@ -30,7 +30,7 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <!-- Bingkai Kiri -->
             <div class="md:col-span-2">
-                <div class="bg-white rounded-lg shadow-lg border overflow-hidden">
+                <div class="bg-white rounded-lg shadow-lg border border-gray-300 overflow-hidden">
                     @if ($post)
                         <img src="{{ asset('storage/' . $post->image) }}" alt="Gambar {{ $post->title }}"
                             class="w-full h-64 md:h-80 object-cover">

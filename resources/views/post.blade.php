@@ -8,7 +8,7 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <!-- Detail Berita -->
             <div class="md:col-span-2 space-y-8">
-                <div class="bg-white rounded-lg shadow-lg border-2 p-6">
+                <div class="bg-white rounded-lg shadow-lg border border-gray-300 p-6">
                     <div class="mb-3">
                         <a href="{{ route('posts.index') }}"
                             class="inline-block px-6 py-2 text-white bg-[#141652] rounded-lg shadow-lg hover:bg-blue-600 transition">
