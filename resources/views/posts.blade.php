@@ -8,7 +8,7 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <!-- Semua Berita -->
             <div class="md:col-span-2 space-y-8">
-                <div class="bg-white rounded-lg shadow-lg border overflow-hidden">
+                <div class="bg-white rounded-lg shadow-lg border border-gray-300 overflow-hidden">
                     @forelse ($posts as $post)
                         <div class="p-6 flex items-start">
                             <div class="flex-1">
@@ -23,10 +23,10 @@
                                 </a>
                             </div>
                             <img src="{{ asset('storage/' . $post->image) }}" alt="Gambar {{ $post->title }}"
-                                class="w-24 h-24 object-cover aspect-square rounded-lg ml-auto border">
+                                class="w-24 h-24 object-cover aspect-square rounded-lg ml-auto border border-gray-300">
                         </div>
                         <!-- Pembatas -->
-                        <div class="border-b-2 shadow-lg w-1/2 mx-auto"></div>
+                        <div class="border border-gray-300 shadow-lg w-1/2 mx-auto"></div>
                     @empty
                         <div class="p-6 flex items-start">
                             <div class="flex-1">
@@ -53,7 +53,7 @@
         <h1 class="text-2xl font-bold mb-4">Berita Populer</h1>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
             @forelse ($popularPosts as $post)
-                <div class="bg-white border rounded-lg shadow-md overflow-hidden">
+                <div class="bg-white border border-gray-300 rounded-lg shadow-md overflow-hidden">
                     <img src="{{ asset('storage/' . $post->image) }}" alt="Gambar {{ $post->title }}"
                         class="w-full h-48 object-cover">
                     <div class="p-4">
