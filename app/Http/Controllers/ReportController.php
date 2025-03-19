@@ -7,6 +7,7 @@ use App\Models\Status;
 use App\Models\Victim;
 use App\Models\Reporter;
 use App\Models\Perpetrator;
+use App\Models\Suspect;
 use Illuminate\Http\Request;
 
 class ReportController extends Controller
@@ -25,6 +26,8 @@ class ReportController extends Controller
         $validated = $request->validate([
             'violence_category' => 'required|string|max:255',
             'date' => 'required|date',
+            'regency' => 'required|integer',
+            'district' => 'required|integer',
             'scene' => 'required|string|min:3|max:255',
             'evidence' => 'nullable|image|mimes:jpg,jpeg,png|max:3072',
 
@@ -33,9 +36,9 @@ class ReportController extends Controller
             'victim_gender' => 'required|string|in:Pria,Wanita',
             'victim_description' => 'nullable|string|max:255',
 
-            'perpetrator_name' => 'nullable|string|min:3|max:255',
-            'perpetrator_gender' => 'required|string|in:Pria,Wanita',
-            'perpetrator_description' => 'nullable|string|max:255',
+            'suspect_name' => 'nullable|string|min:3|max:255',
+            'suspect_gender' => 'required|string|in:Pria,Wanita',
+            'suspect_description' => 'nullable|string|max:255',
 
             'reporter_name' => 'required|string|min:3|max:255',
             'reporter_phone' => 'required|numeric|digits_between:10,13',
@@ -73,6 +76,8 @@ class ReportController extends Controller
             'ticket_number' => $ticket_number,
             'violence_category' => $validated['violence_category'],
             'date' => $validated['date'],
+            'regency' => $validated['regency'],
+            'district' => $validated['district'],
             'scene' => $validated['scene'],
             'evidence' => $validated['evidence'],
         ]);
@@ -87,11 +92,11 @@ class ReportController extends Controller
         ]);
 
         // Simpan Data Pelaku
-        Perpetrator::create([
+        Suspect::create([
             'report_id' => $report->id,
-            'name' => $validated['perpetrator_name'] ?? null,
-            'gender' => $validated['perpetrator_gender'],
-            'description' => $validated['perpetrator_description'] ?? null,
+            'name' => $validated['suspect_name'] ?? null,
+            'gender' => $validated['suspect_gender'],
+            'description' => $validated['suspect_description'] ?? null,
         ]);
 
         // Simpan Data Pelapor

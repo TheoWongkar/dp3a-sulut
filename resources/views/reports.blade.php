@@ -3,22 +3,34 @@
     <!-- Judul Halaman -->
     <x-slot name="title">{{ $title }}</x-slot>
 
+    <!-- Script Tambahan -->
+    <x-slot name="script">
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    </x-slot>
+
     <!-- Bagian Pesan Success -->
     <div x-data="{ open: @json(session('success') ? true : false) }">
         <div x-show="open" x-cloak class="fixed inset-0 bg-black/50 flex justify-center items-center z-10">
             <!-- Modal Content -->
             <div class="bg-white p-6 rounded-lg shadow-lg max-w-sm text-center">
                 <h2 class="text-xl font-bold">Laporan Berhasil Dikirim!</h2>
-                <h3 class="mt-4 mb-1 text-md">Nomor tiket Anda:</h3>
+                <h3 class="mt-4 mb-1 text-md">Nomor tiket Anda</h3>
                 <input type="text" value="{{ session('success') }}" readonly
                     class="p-1 bg-[#E9F0FF] border rounded-lg text-center focus:outline-none">
                 <p class="text-sm mt-4">Simpan nomor ini untuk memeriksa status laporan Anda.</p>
 
                 <!-- Tombol Tutup -->
                 <button @click="open = false"
-                    class="mt-4 px-4 py-2 bg-green-700 text-white rounded-md hover:bg-green-800">
+                    class="mt-4 px-4 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-800">
                     Tutup
                 </button>
+
+                <!-- Tombol Cek Status -->
+                <a href="{{ route('status.index') }}"
+                    class="mt-4 px-4 py-2 bg-green-700 text-white rounded-md hover:bg-green-800">
+                    Cek Status
+                </a>
             </div>
         </div>
     </div>
@@ -70,6 +82,36 @@
                                 @error('date')
                                     <p class="text-red-500 text-sm">{{ $message }}</p>
                                 @enderror
+                            </div>
+
+                            <!-- Tempat Kejadian -->
+                            <label for="regency" class="block text-sm font-medium text-left">
+                                Tempat Kejadian <span class="text-red-500">*</span>
+                            </label>
+                            <div class="md:col-span-2">
+                                <div class="grid grid-cols-1 md:grid-cols-2 items-center gap-5">
+                                    <div>
+                                        <!-- Kabupaten/Kota -->
+                                        <select id="regency" name="regency"
+                                            class="w-full p-2 bg-[#DCE8FF] rounded-lg border-[#DCE8FF]">
+                                            <option selected disabled>Pilih Kota/Kabupaten</option>
+                                        </select>
+                                        @error('regency')
+                                            <p class="text-red-500 text-sm">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+
+                                    <!-- Kecamatan -->
+                                    <div>
+                                        <select id="district" name="district"
+                                            class="w-full p-2 bg-[#DCE8FF] rounded-lg border-[#DCE8FF]">
+                                            <option selected disabled>Pilih Kecamatan</option>
+                                        </select>
+                                        @error('district')
+                                            <p class="text-red-500 text-sm">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                </div>
                             </div>
 
                             <!-- Detail Tempat Kejadian -->
@@ -185,46 +227,46 @@
                         </div>
                     </div>
 
-                    <!-- Step 3: Data Pelaku -->
+                    <!-- Step 3: Data Terduga -->
                     <div x-cloak x-show="step === 3">
-                        <h2 class="text-lg font-bold mb-6">Formulir Data Pelaku</h2>
+                        <h2 class="text-lg font-bold mb-6">Formulir Data Terduga</h2>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
-                            <!-- Nama Pelaku -->
-                            <label for="perpetrator_name" class="block text-sm font-medium text-left">Nama
-                                Pelaku</label>
+                            <!-- Nama Terduga -->
+                            <label for="suspect_name" class="block text-sm font-medium text-left">Nama
+                                Terduga</label>
                             <div class="md:col-span-2">
-                                <input type="text" id="perpetrator_name" name="perpetrator_name"
-                                    value="{{ old('perpetrator_name') }}" placeholder="Masukkan nama pelaku"
+                                <input type="text" id="suspect_name" name="suspect_name"
+                                    value="{{ old('suspect_name') }}" placeholder="Masukkan nama terduga"
                                     class="w-full p-2 bg-[#DCE8FF] rounded-lg border-[#DCE8FF]">
-                                @error('perpetrator_name')
+                                @error('suspect_name')
                                     <p class="text-red-500 text-sm">{{ $message }}</p>
                                 @enderror
                             </div>
 
-                            <!-- Jenis Kelamin Pelaku -->
-                            <label for="perpetrator_gender" class="block text-sm font-medium text-left">Jenis Kelamin
-                                Pelaku <span class="text-red-500">*</span></label>
+                            <!-- Jenis Kelamin Terduga -->
+                            <label for="suspect_gender" class="block text-sm font-medium text-left">Jenis Kelamin
+                                Terduga <span class="text-red-500">*</span></label>
                             <div class="md:col-span-2">
-                                <select id="perpetrator_gender" name="perpetrator_gender"
+                                <select id="suspect_gender" name="suspect_gender"
                                     class="w-full p-2 bg-[#DCE8FF] rounded-lg border-[#DCE8FF]">
-                                    <option selected disabled>Pilih jenis kelamin pelaku</option>
-                                    <option value="Pria"
-                                        {{ old('perpetrator_gender') == 'Pria' ? 'selected' : '' }}>Pria</option>
-                                    <option value="Wanita"
-                                        {{ old('perpetrator_gender') == 'Wanita' ? 'selected' : '' }}>Wanita</option>
+                                    <option selected disabled>Pilih jenis kelamin terduga</option>
+                                    <option value="Pria" {{ old('suspect_gender') == 'Pria' ? 'selected' : '' }}>
+                                        Pria</option>
+                                    <option value="Wanita" {{ old('suspect_gender') == 'Wanita' ? 'selected' : '' }}>
+                                        Wanita</option>
                                 </select>
-                                @error('perpetrator_gender')
+                                @error('suspect_gender')
                                     <p class="text-red-500 text-sm">{{ $message }}</p>
                                 @enderror
                             </div>
 
-                            <!-- Deskripsi Tambahan Mengenai Pelaku -->
-                            <label for="perpetrator_description" class="block text-sm font-medium text-left">Deskripsi
-                                Tambahan Mengenai Pelaku</label>
+                            <!-- Deskripsi Tambahan Mengenai Terduga -->
+                            <label for="suspect_description" class="block text-sm font-medium text-left">Deskripsi
+                                Tambahan Mengenai Terduga</label>
                             <div class="md:col-span-2">
-                                <textarea id="perpetrator_description" name="perpetrator_description" rows="4"
-                                    class="w-full p-2 bg-[#DCE8FF] rounded-lg border-[#DCE8FF]">{{ old('perpetrator_description') }}</textarea>
-                                @error('perpetrator_description')
+                                <textarea id="suspect_description" name="suspect_description" rows="4"
+                                    class="w-full p-2 bg-[#DCE8FF] rounded-lg border-[#DCE8FF]">{{ old('suspect_description') }}</textarea>
+                                @error('suspect_description')
                                     <p class="text-red-500 text-sm">{{ $message }}</p>
                                 @enderror
                             </div>
@@ -316,19 +358,19 @@
                     <div class="flex justify-between mt-6 text-sm">
                         <button type="button" x-cloak x-show="step > 1 && step <= 4" @click="step--"
                             aria-label="Tombol Kembali"
-                            class="bg-gray-800 text-white py-2 px-6 rounded-md font-semibold hover:bg-gray-700 transition">
+                            class="bg-gray-700 text-white py-2 px-6 rounded-md font-semibold hover:bg-gray-800 transition">
                             KEMBALI
                         </button>
 
                         <button type="button" x-cloak x-show="step <= 4" @click="step++"
                             aria-label="Tombol Kembali"
-                            class="bg-[#141652] text-white py-2 px-6 rounded-md font-semibold hover:bg-blue-900 transition">
+                            class="bg-[#141652] text-white py-2 px-6 rounded-md font-semibold hover:bg-blue-800 transition">
                             SELANJUTNYA
                         </button>
                     </div>
                     <div class="flex items-center justify-center text-sm">
                         <button type="submit" x-cloak x-show="step === 5"
-                            class="bg-[#141652] text-white py-2 px-6 rounded-md font-semibold hover:bg-blue-900 transition">
+                            class="bg-[#141652] text-white py-2 px-6 rounded-md font-semibold hover:bg-blue-800 transition">
                             KIRIM LAPORAN
                         </button>
                     </div>
@@ -339,5 +381,54 @@
             </div>
         </div>
     </section>
+
+    <script>
+        $(document).ready(function() {
+            let oldRegency = "{{ old('regency') }}";
+            let oldDistrict = "{{ old('district') }}";
+
+            // Load Kabupaten/Kota
+            $.getJSON("https://ibnux.github.io/data-indonesia/kabupaten/71.json", function(data) {
+                // Urutkan data berdasarkan nama
+                data.sort((a, b) => a.nama.localeCompare(b.nama));
+
+                $.each(data, function(index, item) {
+                    let formattedName = capitalizeEachWord(item.nama);
+                    let selected = item.id == oldRegency ? "selected" : "";
+                    $("#regency").append(
+                        `<option value="${item.id}" ${selected}>${formattedName}</option>`);
+                });
+
+                if (oldRegency) {
+                    $("#regency").trigger("change");
+                }
+            });
+
+            // Load Kecamatan
+            $("#regency").change(function() {
+                var regencyId = $(this).val();
+                $("#district").empty().append(`<option selected disabled>Pilih Kecamatan</option>`);
+
+                $.getJSON(`https://ibnux.github.io/data-indonesia/kecamatan/${regencyId}.json`, function(
+                    data) {
+                    // Urutkan data berdasarkan nama
+                    data.sort((a, b) => a.nama.localeCompare(b.nama));
+
+                    $.each(data, function(index, item) {
+                        let formattedName = capitalizeEachWord(item.nama);
+                        let selected = item.id == oldDistrict ? "selected" : "";
+                        $("#district").append(
+                            `<option value="${item.id}" ${selected}>${formattedName}</option>`
+                        );
+                    });
+                });
+            });
+
+            // Ubah teks menjadi Capital Each Word
+            function capitalizeEachWord(text) {
+                return text.toLowerCase().replace(/\b\w/g, char => char.toUpperCase());
+            }
+        });
+    </script>
 
 </x-guest-layout>

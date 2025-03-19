@@ -281,6 +281,8 @@ return [
 
         'violence_category' => 'kategori kekerasan',
         'date' => 'tanggal',
+        'regency' => 'kota/kabupaten',
+        'district' => 'kecamatan',
         'scene' => 'tempat kejadian',
         'evidence' => 'bukti',
 
@@ -292,13 +294,13 @@ return [
         'victim_gender' => 'jenis kelamin korban',
         'victim_description' => 'deskripsi korban',
 
-        'perpetrator_nik' => 'NIK pelaku',
-        'perpetrator_name' => 'nama pelaku',
-        'perpetrator_phone' => 'nomor telepon pelaku',
-        'perpetrator_address' => 'alamat pelaku',
-        'perpetrator_age' => 'usia pelaku',
-        'perpetrator_gender' => 'jenis kelamin pelaku',
-        'perpetrator_description' => 'deskripsi pelaku',
+        'suspect_nik' => 'NIK terduga',
+        'suspect_name' => 'nama terduga',
+        'suspect_phone' => 'nomor telepon terduga',
+        'suspect_address' => 'alamat terduga',
+        'suspect_age' => 'usia terduga',
+        'suspect_gender' => 'jenis kelamin terduga',
+        'suspect_description' => 'deskripsi terduga',
 
         'reporter_nik' => 'NIK pelapor',
         'reporter_name' => 'nama pelapor',

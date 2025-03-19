@@ -10,7 +10,7 @@ use App\Models\Status;
 use App\Models\Victim;
 use App\Models\Employee;
 use App\Models\Reporter;
-use App\Models\Perpetrator;
+use App\Models\Suspect;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -56,7 +56,7 @@ class DatabaseSeeder extends Seeder
             Victim::factory()->create([
                 'report_id' => $report->id,
             ]);
-            Perpetrator::factory()->create([
+            Suspect::factory()->create([
                 'report_id' => $report->id,
             ]);
             Reporter::factory()->create([

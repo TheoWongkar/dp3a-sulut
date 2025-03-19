@@ -3,8 +3,6 @@
 namespace Database\Factories;
 
 use App\Models\User;
-use App\Models\Village;
-use Illuminate\Support\Facades\Crypt;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**

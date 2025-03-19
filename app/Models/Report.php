@@ -15,6 +15,8 @@ class Report extends Model
         'ticket_number',
         'violence_category',
         'chronology',
+        'regency',
+        'district',
         'date',
         'scene',
         'evidence',
@@ -39,9 +41,9 @@ class Report extends Model
         return $this->hasOne(Victim::class);
     }
 
-    public function perpetrator()
+    public function suspect()
     {
-        return $this->hasOne(Perpetrator::class);
+        return $this->hasOne(Suspect::class);
     }
 
     public function reporter()

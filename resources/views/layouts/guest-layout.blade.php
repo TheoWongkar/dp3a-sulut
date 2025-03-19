@@ -52,7 +52,7 @@
 
     <div class="flex flex-col min-h-screen">
         <!-- Navigasi -->
-        @include('layouts.guest-navbar')
+        @include('layouts.guest-navigation')
 
         <!-- Layout Utama -->
         <main class="flex-grow">

@@ -11,7 +11,7 @@
                 <div class="bg-white rounded-lg shadow-lg border border-gray-200 p-6">
                     <div class="mb-3">
                         <a href="{{ route('posts.index') }}"
-                            class="inline-block px-6 py-2 text-white bg-[#141652] rounded-lg hover:bg-blue-800 transition">
+                            class="inline-block px-6 py-2 text-white bg-gray-700 rounded-lg hover:bg-gray-800 transition">
                             Kembali
                         </a>
                     </div>

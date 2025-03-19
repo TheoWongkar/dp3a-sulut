@@ -6,9 +6,9 @@ use App\Models\Report;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Perpetrator>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Suspect>
  */
-class PerpetratorFactory extends Factory
+class SuspectFactory extends Factory
 {
     /**
      * Define the model's default state.

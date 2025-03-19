@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('violence_category');
             $table->text('chronology')->nullable();
             $table->date('date');
+            $table->string('regency');
+            $table->string('district');
             $table->string('scene');
             $table->string('evidence')->nullable();
             $table->timestamps();
@@ -36,7 +38,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::create('perpetrators', function (Blueprint $table) {
+        Schema::create('suspects', function (Blueprint $table) {
             $table->id();
             $table->foreignId('report_id')->constrained('reports')->onDelete('cascade');
             $table->text('nik')->nullable();

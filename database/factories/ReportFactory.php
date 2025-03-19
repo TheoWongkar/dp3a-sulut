@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use App\Models\User;
-use App\Models\Village;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -23,6 +22,8 @@ class ReportFactory extends Factory
             'ticket_number' => 'TKT-' . rand(1000, 9999) . now()->format('dmy'),
             'violence_category' => fake()->word(),
             'chronology' => fake()->optional()->paragraph(),
+            'regency' => "7102",
+            'district' => "710213",
             'date' => fake()->date(),
             'scene' => fake()->address(),
             'evidence' => null,

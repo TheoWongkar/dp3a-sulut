@@ -6,9 +6,9 @@ use Illuminate\Support\Facades\Crypt;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Perpetrator extends Model
+class Suspect extends Model
 {
-    /** @use HasFactory<\Database\Factories\PerpetratorFactory> */
+    /** @use HasFactory<\Database\Factories\SuspectFactory> */
     use HasFactory;
 
     protected $fillable = [
