@@ -21,11 +21,10 @@ class ReporterFactory extends Factory
             'report_id' => Report::inRandomOrder()->first()->id,
             'nik' => fake()->numerify('################'),
             'name' => fake()->name(),
-            'phone' => fake()->optional()->numerify('08###########'),
+            'phone' => fake()->numerify('08###########'),
             'address' => fake()->address(),
             'age' => fake()->numberBetween(5, 80),
             'gender' => fake()->randomElement(['Pria', 'Wanita']),
-            'description' => fake()->optional()->sentence(),
             'relationship_between' => fake()->randomElement(['Orang Tua', 'Saudara', 'Guru', 'Teman', 'Lainnya']),
         ];
     }

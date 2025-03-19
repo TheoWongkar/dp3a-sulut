@@ -22,10 +22,10 @@ class ReportFactory extends Factory
             'handled_id' => User::inRandomOrder()->first()->id,
             'ticket_number' => 'TKT-' . rand(1000, 9999) . now()->format('dmy'),
             'violence_category' => fake()->word(),
-            'chronology' => fake()->paragraph(),
+            'chronology' => fake()->optional()->paragraph(),
             'date' => fake()->date(),
             'scene' => fake()->address(),
-            'evidence' => fake()->sentence(),
+            'evidence' => null,
         ];
     }
 }

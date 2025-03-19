@@ -19,7 +19,6 @@ class Reporter extends Model
         'address',
         'age',
         'gender',
-        'description',
         'relationship_between',
     ];
 

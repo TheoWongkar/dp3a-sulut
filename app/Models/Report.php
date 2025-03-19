@@ -20,6 +20,15 @@ class Report extends Model
         'evidence',
     ];
 
+    public static function generateTicketNumber()
+    {
+        do {
+            $ticket_number = 'TKT-' . rand(1000, 9999) . now()->format('dmy');
+        } while (self::where('ticket_number', $ticket_number)->exists());
+
+        return $ticket_number;
+    }
+
     public function handler()
     {
         return $this->belongsTo(User::class, 'handled_id');
@@ -43,5 +52,10 @@ class Report extends Model
     public function statuses()
     {
         return $this->hasMany(Status::class);
+    }
+
+    public function latestStatus()
+    {
+        return $this->hasOne(Status::class)->latestOfMany();
     }
 }
