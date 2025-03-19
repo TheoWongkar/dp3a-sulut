@@ -114,7 +114,7 @@
                             Dashboard
                         </a>
                     @else
-                        <a href="#"
+                        <a href="{{ route('login') }}"
                             class="flex items-center mt-4 justify-center w-full py-2 bg-[#141652] text-white text-center rounded-full font-medium hover:bg-blue-800 duration-300">
                             Login
                         </a>
