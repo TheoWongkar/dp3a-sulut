@@ -37,7 +37,7 @@
             </a>
 
             <!-- Berita -->
-            <a href="#"
+            <a href="{{ route('dashboard.posts.index') }}"
                 class="{{ Request::routeIs('dashboard.posts.*') ? 'animate-pulse' : 'animate-none' }} flex gap-4 px-4 py-1.5 text-white rounded hover:bg-gray-200 hover:text-gray-900">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="size-6">

@@ -223,7 +223,7 @@
                             </svg>
                         </div>
                         <div class="flex-1">
-                            <a href="#"
+                            <a href="{{ route('dashboard.posts.show', $post->slug) }}"
                                 class="block text-base font-semibold text-gray-800 hover:underline hover:text-blue-600 transition-colors">
                                 {{ Str::limit($post->title, 40) }}
                             </a>

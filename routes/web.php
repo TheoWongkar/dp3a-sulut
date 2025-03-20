@@ -8,6 +8,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CheckStatusController;
 use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\Dashboard\DashboardController;
+use App\Http\Controllers\Dashboard\PostController as DashboardPostController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/berita', [PostController::class, 'index'])->name('posts.index');
@@ -29,4 +30,12 @@ Route::middleware('auth')->group(function () {
     Route::put('profil-saya/ubah-password', [ProfileController::class, 'updatePassword'])->name('profile.updatePassword');
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    Route::get('/dashboard/berita', [DashboardPostController::class, 'index'])->name('dashboard.posts.index');
+    Route::get('/dashboard/berita/tambah', [DashboardPostController::class, 'create'])->name('dashboard.posts.create');
+    Route::post('/dashboard/berita/tambah', [DashboardPostController::class, 'store'])->name('dashboard.posts.store');
+    Route::get('/dashboard/berita/{slug}', [DashboardPostController::class, 'show'])->name('dashboard.posts.show');
+    Route::get('/dashboard/berita/{slug}/ubah', [DashboardPostController::class, 'edit'])->name('dashboard.posts.edit');
+    Route::put('/dashboard/berita/{slug}/ubah', [DashboardPostController::class, 'update'])->name('dashboard.posts.update');
+    Route::delete('/dashboard/berita/{slug}/hapus', [DashboardPostController::class, 'destroy'])->name('dashboard.posts.destroy');
 });
