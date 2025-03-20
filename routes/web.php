@@ -8,6 +8,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CheckStatusController;
 use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\Dashboard\DashboardController;
+use App\Http\Controllers\Dashboard\EmployeeController as DashboardEmployeeController;
 use App\Http\Controllers\Dashboard\PostController as DashboardPostController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -38,4 +39,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard/berita/{slug}/ubah', [DashboardPostController::class, 'edit'])->name('dashboard.posts.edit');
     Route::put('/dashboard/berita/{slug}/ubah', [DashboardPostController::class, 'update'])->name('dashboard.posts.update');
     Route::delete('/dashboard/berita/{slug}/hapus', [DashboardPostController::class, 'destroy'])->name('dashboard.posts.destroy');
+
+    Route::get('/dashboard/karyawan', [DashboardEmployeeController::class, 'index'])->name('dashboard.employees.index');
+    Route::get('/dashboard/karyawan/tambah', [DashboardEmployeeController::class, 'create'])->name('dashboard.employees.create');
+    Route::post('/dashboard/karyawan/tambah', [DashboardEmployeeController::class, 'store'])->name('dashboard.employees.store');
+    Route::get('/dashboard/karyawan/{nip}', [DashboardEmployeeController::class, 'show'])->name('dashboard.employees.show');
+    Route::get('/dashboard/karyawan/{nip}/ubah', [DashboardEmployeeController::class, 'edit'])->name('dashboard.employees.edit');
+    Route::put('/dashboard/karyawan/{nip}/ubah', [DashboardEmployeeController::class, 'update'])->name('dashboard.employees.update');
+    Route::delete('/dashboard/karyawan/{nip}/hapus', [DashboardEmployeeController::class, 'destroy'])->name('dashboard.employees.destroy');
 });

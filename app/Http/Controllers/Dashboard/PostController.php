@@ -134,7 +134,7 @@ class PostController extends Controller
         $post->update($validated);
 
         return redirect()->route('dashboard.posts.index')
-            ->with('success', 'Berita berhasil diubah.');
+            ->with('success', 'Berita berhasil diperbarui.');
     }
 
     public function destroy(string $slug)
