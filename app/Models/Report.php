@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Report extends Model
 {
@@ -29,6 +30,34 @@ class Report extends Model
         } while (self::where('ticket_number', $ticket_number)->exists());
 
         return $ticket_number;
+    }
+
+    public function getRegencyNameAttribute()
+    {
+        static $regencyNames = null;
+
+        if ($regencyNames === null) {
+            $response = Http::get('https://ibnux.github.io/data-indonesia/kabupaten/71.json');
+            $regencyNames = collect($response->json())->keyBy('id')->map->nama;
+        }
+
+        return $regencyNames[$this->regency] ?? 'Tidak Diketahui';
+    }
+
+    public function getDistrictNameAttribute()
+    {
+        static $districtNames = null;
+
+        if ($districtNames === null) {
+            $response = Http::get('https://ibnux.github.io/data-indonesia/kecamatan.json');
+            $districts = collect($response->json());
+
+            $districtNames = $districts->filter(fn($item) => str_starts_with($item['id'], '71'))
+                ->keyBy('id')
+                ->map->nama;
+        }
+
+        return $districtNames[$this->district] ?? 'Tidak Diketahui';
     }
 
     public function handler()

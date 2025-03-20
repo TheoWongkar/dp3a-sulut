@@ -5,10 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Report;
 use App\Models\Status;
 use App\Models\Victim;
+use App\Models\Suspect;
 use App\Models\Reporter;
 use App\Models\Perpetrator;
-use App\Models\Suspect;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class ReportController extends Controller
 {
@@ -46,6 +47,25 @@ class ReportController extends Controller
             'reporter_relationship_between' => 'required|string|in:Orang Tua,Saudara,Guru,Teman,Lainnya',
         ]);
 
+        // Ambil Nama Kabupaten/Kota
+        $regencyId = $validated['regency'];
+        $districtId = $validated['district'];
+
+        $regencyData = Http::get("https://ibnux.github.io/data-indonesia/kabupaten/71.json")->json();
+        $districtData = Http::get("https://ibnux.github.io/data-indonesia/kecamatan/$regencyId.json")->json();
+
+        // Cari nama berdasarkan ID
+        $regencyName = collect($regencyData)->firstWhere('id', $regencyId)['nama'] ?? null;
+        $districtName = collect($districtData)->firstWhere('id', $districtId)['nama'] ?? null;
+
+        if (!$regencyName || !$districtName) {
+            return back()->withErrors(['error' => 'Data wilayah tidak ditemukan']);
+        }
+
+        // Format Capital Each Word sebelum menyimpan
+        $regencyName = ucwords(strtolower($regencyName));
+        $districtName = ucwords(strtolower($districtName));
+
         // Cek Laporan Serupa
         $existingReport = Report::where('violence_category', $validated['violence_category'])
             ->where('date', $validated['date'])
@@ -76,8 +96,8 @@ class ReportController extends Controller
             'ticket_number' => $ticket_number,
             'violence_category' => $validated['violence_category'],
             'date' => $validated['date'],
-            'regency' => $validated['regency'],
-            'district' => $validated['district'],
+            'regency' => $regencyName,
+            'district' => $districtName,
             'scene' => $validated['scene'],
             'evidence' => $validated['evidence'],
         ]);

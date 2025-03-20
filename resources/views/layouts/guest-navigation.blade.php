@@ -109,7 +109,7 @@
                 </li>
                 <li class="mx-4">
                     @auth
-                        <a href="#"
+                        <a href="{{ route('dashboard') }}"
                             class="flex items-center mt-4 justify-center w-full py-2 bg-[#141652] text-white text-center rounded-full font-medium hover:bg-blue-800 duration-300">
                             Dashboard
                         </a>
