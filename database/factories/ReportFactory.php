@@ -20,7 +20,7 @@ class ReportFactory extends Factory
         return [
             'handled_id' => User::inRandomOrder()->first()->id,
             'ticket_number' => 'TKT-' . rand(1000, 9999) . now()->format('dmy'),
-            'violence_category' => fake()->word(),
+            'violence_category' => fake()->randomElement(['Kekerasan Fisik', 'Kekerasan Seksual', 'Eksploitasi Anak']),
             'chronology' => fake()->optional()->paragraph(),
             'regency' => fake()->randomElement(['Kota Manado', 'Kab. Minahasa', 'Kab. Minahasa Utara']),
             'district' => fake()->randomElement(['Sario', 'Malalayang', 'Pineleng', 'Tondano', 'Airmadidi', 'Dimembe']),

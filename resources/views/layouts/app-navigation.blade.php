@@ -64,7 +64,7 @@
             <h2 class="px-2 py-1 font-medium text-gray-400">Laporan</h2>
 
             <!-- Kasus Baru -->
-            <a href="#"
+            <a href="{{ route('dashboard.reports.create') }}"
                 class="{{ Request::routeIs('dashboard.reports.create') ? 'animate-pulse' : 'animate-none' }} flex gap-4 px-4 py-1.5 text-white rounded hover:bg-gray-200 hover:text-gray-900">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="size-6">
@@ -75,7 +75,7 @@
             </a>
 
             <!-- Laporan Kasus -->
-            <a href="#"
+            <a href="{{ route('dashboard.reports.index', 'diterima') }}"
                 class="{{ Request::routeIs('dashboard.reports.received') ? 'animate-pulse' : 'animate-none' }} flex gap-4 px-4 py-1.5 text-white rounded hover:bg-gray-200 hover:text-gray-900">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="size-6">
@@ -86,7 +86,7 @@
             </a>
 
             <!-- Laporan Diproses -->
-            <a href="#"
+            <a href="{{ route('dashboard.reports.index', 'diproses') }}"
                 class="{{ Request::routeIs('dashboard.reports.processed') ? 'animate-pulse' : 'animate-none' }} flex gap-4 px-4 py-1.5 text-white rounded hover:bg-gray-200 hover:text-gray-900">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="size-6">
@@ -97,7 +97,7 @@
             </a>
 
             <!-- Laporan Selesai -->
-            <a href="#"
+            <a href="{{ route('dashboard.reports.index', 'selesai') }}"
                 class="{{ Request::routeIs('dashboard.reports.completed') ? 'animate-pulse' : 'animate-none' }} flex gap-4 px-4 py-1.5 text-white rounded hover:bg-gray-200 hover:text-gray-900">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="size-6">

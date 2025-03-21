@@ -280,6 +280,7 @@ return [
         'year'                     => 'tahun',
 
         'violence_category' => 'kategori kekerasan',
+        'chronology' => 'kronologi',
         'date' => 'tanggal',
         'regency' => 'kota/kabupaten',
         'district' => 'kecamatan',

@@ -7,7 +7,6 @@ use App\Models\Status;
 use App\Models\Victim;
 use App\Models\Suspect;
 use App\Models\Reporter;
-use App\Models\Perpetrator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
