@@ -6,6 +6,7 @@ use App\Models\Post;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
@@ -102,6 +103,11 @@ class PostController extends Controller
         // Ambil Data Berdasarkan Slug
         $post = Post::where('slug', $slug)->firstOrFail();
 
+        // Cek Izin
+        if (! Gate::allows('update-post', $post)) {
+            abort(403);
+        }
+
         // Judul Halaman
         $title = "Berita: " . $post->title;
 
@@ -120,6 +126,11 @@ class PostController extends Controller
 
         // Ambil Data Berdasarkan Slug
         $post = Post::where('slug', $slug)->firstOrFail();
+
+        // Cek Izin
+        if (! Gate::allows('update-post', $post)) {
+            abort(403);
+        }
 
         // Simpan Gambar
         if ($request->hasFile('image')) {
@@ -141,6 +152,11 @@ class PostController extends Controller
     {
         // Ambil Data Berdasarkan Slug
         $post = Post::where('slug', $slug)->firstOrFail();
+
+        // Cek Izin
+        if (! Gate::allows('delete-post', $post)) {
+            abort(403);
+        }
 
         // Hapus Gambar
         if ($post->image) {

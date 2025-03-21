@@ -140,7 +140,7 @@
                                     </svg>
                                 </a>
                                 <form action="{{ route('dashboard.employees.destroy', $employee->nip) }}"
-                                    method="POST" onsubmit="return confirm('Yakin ingin menghapus?');">
+                                    method="POST" onsubmit="return confirm('Yakin ingin menghapus karyawan?');">
                                     @csrf
                                     @method('DELETE')
                                     <button

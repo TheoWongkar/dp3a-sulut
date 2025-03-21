@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
@@ -48,6 +49,11 @@ class EmployeeController extends Controller
             ->orderBy('name', 'ASC')
             ->paginate(10);
 
+        // Cek Izin
+        if (! Gate::allows('crud-employee', $employees)) {
+            abort(403);
+        }
+
         // Judul Halaman
         $title = "Karyawan";
 
@@ -58,6 +64,11 @@ class EmployeeController extends Controller
     {
         // Judul Halaman
         $title = "Tambah Karyawan";
+
+        // Cek Izin
+        if (! Gate::allows('crud-employee', $employee)) {
+            abort(403);
+        }
 
         return view('dashboard.employee.create', compact('title'));
     }
@@ -123,6 +134,11 @@ class EmployeeController extends Controller
         // Ambil Data Karyawan Berdasarkan NIP
         $employee = Employee::with(['user', 'user.posts', 'user.reports'])->where('nip', $nip)->firstOrFail();
 
+        // Cek Izin
+        if (! Gate::allows('crud-employee', $employee)) {
+            abort(403);
+        }
+
         // Judul Halaman
         $title = "Karyawan: " . $employee->name;
 
@@ -134,6 +150,11 @@ class EmployeeController extends Controller
         // Ambil Data Karyawan Berdasarkan NIP
         $employee = Employee::with('user')->where('nip', $nip)->firstOrFail();
 
+        // Cek Izin
+        if (! Gate::allows('crud-employee', $employee)) {
+            abort(403);
+        }
+
         // Judul Halaman
         $title = "Ubah Karyawan: " . $employee->name;
 
@@ -144,6 +165,11 @@ class EmployeeController extends Controller
     {
         // Ambil Data Karyawan Berdasarkan NIP
         $employee = Employee::where('nip', $nip)->firstOrFail();
+
+        // Cek Izin
+        if (! Gate::allows('crud-employee', $employee)) {
+            abort(403);
+        }
 
         // Validasi Input
         $validated = $request->validate([
@@ -217,6 +243,11 @@ class EmployeeController extends Controller
     {
         // Ambil Data Karyawan Berdasarkan NIP
         $employee = Employee::where('nip', $nip)->firstOrFail();
+
+        // Cek Izin
+        if (! Gate::allows('crud-employee', $employee)) {
+            abort(403);
+        }
 
         // Hapus Gambar Jika Ada
         if ($employee->avatar) {

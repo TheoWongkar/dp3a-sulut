@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 
@@ -359,6 +360,11 @@ class ReportController extends Controller
                 $query->where('status', 'Diterima');
             })
             ->firstOrFail();
+
+        // Cek Izin
+        if (! Gate::allows('verification-report', $report)) {
+            abort(403);
+        }
 
         // Tambah Status
         $report->statuses()->create([

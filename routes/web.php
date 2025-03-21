@@ -24,7 +24,7 @@ Route::middleware('guest')->group(function () {
     Route::post('/login', [LoginController::class, 'authenticate'])->middleware('throttle:5,5');
 });
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'employee.status.check'])->group(function () {
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
     Route::get('profil-saya', [ProfileController::class, 'show'])->name('profile.show');
     Route::get('profil-saya/ubah', [ProfileController::class, 'edit'])->name('profile.edit');

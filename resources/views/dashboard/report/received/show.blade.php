@@ -194,19 +194,21 @@
                 @method('DELETE')
                 <button type="submit"
                     class="bg-red-700 text-white py-2 px-6 rounded-md hover:bg-red-800 w-full md:w-auto text-center"
-                    onclick="return confirm('Laporan dihapus permanen dari database?');">
+                    onclick="return confirm('Yakin ingin menghapus laporan?');">
                     Hapus
                 </button>
             </form>
-            <form
-                action="{{ route('dashboard.reports.received.update', ['status' => 'diterima', 'ticket_number' => $report->ticket_number]) }}"
-                method="POST" class="w-full md:w-auto">
-                @csrf
-                <button type="submit"
-                    class="bg-green-700 text-white py-2 px-6 rounded-md hover:bg-green-800 w-full md:w-auto text-center">
-                    Verifikasi
-                </button>
-            </form>
+            @can('verification-report', $report)
+                <form
+                    action="{{ route('dashboard.reports.received.update', ['status' => 'diterima', 'ticket_number' => $report->ticket_number]) }}"
+                    method="POST" class="w-full md:w-auto">
+                    @csrf
+                    <button type="submit"
+                        class="bg-green-700 text-white py-2 px-6 rounded-md hover:bg-green-800 w-full md:w-auto text-center">
+                        Verifikasi
+                    </button>
+                </form>
+            @endcan
         </div>
     </section>
 
