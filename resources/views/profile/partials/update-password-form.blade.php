@@ -1,5 +1,6 @@
 <section>
 
+    <!-- Header -->
     <header>
         <h2 class="text-lg font-medium text-gray-900">
             Perbarui Kata Sandi
@@ -12,6 +13,7 @@
     <form method="POST" action="{{ route('profile.updatePassword') }}" class="mt-6 space-y-6">
         @csrf
         @method('PUT')
+
         <!-- Kata Sandi Saat Ini -->
         <div>
             <label for="update_password_current_password" class="text-sm font-medium text-gray-800">Kata Sandi Saat
@@ -22,6 +24,7 @@
                 <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
             @enderror
         </div>
+
         <!-- Kata Sandi Baru -->
         <div>
             <label for="update_password_password" class="text-sm font-medium text-gray-800">Kata Sandi
@@ -32,6 +35,7 @@
                 <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
             @enderror
         </div>
+
         <!-- Konfirmasi Kata Sandi Baru -->
         <div>
             <label for="update_password_password_confirmation" class="text-sm font-medium text-gray-800">Konfirmasi Kata
@@ -43,6 +47,7 @@
                 <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
             @enderror
         </div>
+
         <!-- Tombol Simpan -->
         <div class="flex items-center gap-4">
             <button type="submit"
