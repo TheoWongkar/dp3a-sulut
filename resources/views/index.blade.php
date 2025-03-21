@@ -96,6 +96,7 @@
         </div>
     </section>
 
+    <!-- Bagian Carousel Berita -->
     @if ($newPosts->count())
         <section class="py-12">
             <div x-data="{

@@ -1,6 +1,7 @@
 <!-- Footer -->
 <footer class="bg-[#141652] text-white py-8">
     <div class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8">
+
         <!-- Logo dan Deskripsi -->
         <section class="flex flex-col items-center md:items-start text-center md:text-left">
             <img src="{{ asset('img/application-logo.svg') }}" alt="Logo Aplikasi" class="w-24 h-24 mb-4">

@@ -14,14 +14,18 @@
             </a>
         </div>
 
-        <!-- Gambar Berita -->
-        <img src="{{ $post->image ? asset('storage/' . $post->image) : asset('img/placeholder-image.webp') }}"
-            alt="Gambar {{ $post->title }}" class="w-full h-96 object-cover rounded-lg mb-6">
+        <!-- Gambar dan Views -->
+        <div class="relative">
+            <img src="{{ $post->image ? asset('storage/' . $post->image) : asset('img/placeholder-image.webp') }}"
+                alt="Gambar {{ $post->title }}" class="w-full h-96 object-cover rounded-lg mb-6">
+
+            <span class="absolute top-4 right-4 bg-[#141652] text-white text-xs px-2 py-1 rounded">
+                {{ $post->views }}x dilihat
+            </span>
+        </div>
 
         <!-- Isi Berita -->
-        <h2 class="text-xl font-semibold">{{ $post->title }} <span
-                class="bg-[#141652] text-white text-xs ml-2 px-2 py-1 rounded-full">
-                {{ $post->views }}x dilihat</span></h2>
+        <h2 class="text-xl font-semibold">{{ $post->title }}</h2>
         <div class="font-medium mb-2 text-gray-600">
             <h3 class="inline">{{ $post->author->username }}</h3> &bull;
             <span>{{ $post->created_at->diffForHumans() }}</span>

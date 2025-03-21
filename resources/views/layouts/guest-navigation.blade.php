@@ -17,6 +17,7 @@
         x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 -translate-y-full">
         <div class="container mx-auto px-4 py-4 flex justify-between items-center">
             <div class="flex items-center gap-2">
+
                 <!-- Tombol Menu Mobile -->
                 <button @click="isSidebarOpen = true" aria-label="Buka Sidebar"
                     class="focus:outline-none hover:cursor-pointer">
@@ -26,6 +27,7 @@
                             d="M4 6h16M4 12h16M4 18h16" />
                     </svg>
                 </button>
+
                 <!-- Logo -->
                 <a href="{{ route('home') }}" class="flex items-center gap-2">
                     <img src="{{ asset('img/application-logo.svg') }}" alt="Logo Aplikasi" class="w-10 h-10">
@@ -36,6 +38,7 @@
                     </h1>
                 </a>
             </div>
+
             <!-- Link Navigasi -->
             <nav class="hidden lg:flex items-center space-x-6 text-sm" aria-label="Main Navigation">
                 <ul class="flex space-x-6">
@@ -69,12 +72,14 @@
         x-transition:enter-end="translate-x-0" x-transition:leave="transform transition duration-300"
         x-transition:leave-start="translate-x-0" x-transition:leave-end="-translate-x-full">
         <div class="flex justify-between items-center mx-4 mb-5 gap-2">
+
             <!-- Cari -->
             <form role="search" class="w-full flex items-center">
                 <label for="search" class="sr-only">Cari Informasi</label>
                 <input id="search" type="text" placeholder="Cari Informasi..."
                     class="w-full py-1.5 px-4 bg-white rounded-full border focus:outline-none">
             </form>
+
             <!-- Tombol Tutup -->
             <button @click="isSidebarOpen = false" class="text-[#141652] focus:outline-none hover:cursor-pointer"
                 aria-label="Tutup Sidebar">
@@ -84,6 +89,7 @@
                 </svg>
             </button>
         </div>
+
         <!-- Link Navigasi -->
         <nav aria-label="Sidebar Navigation" class="flex flex-col text-black">
             <ul class="space-y-0">

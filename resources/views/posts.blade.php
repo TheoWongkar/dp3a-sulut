@@ -10,9 +10,10 @@
             <div class="md:col-span-2 space-y-8">
                 <div class="bg-white rounded-lg border border-gray-200 shadow-lg">
                     @forelse ($posts as $post)
-                        <!-- Pembatas -->
                         <div class="p-6 flex flex-col md:flex-row justify-between items-start gap-4">
-                            <div class="w-full md:w-auto">
+
+                            <!-- Konten -->
+                            <div class="w-full max-w-120 xl:max-w-160">
                                 <h2 class="text-xl font-semibold truncate">{{ $post->title }}</h2>
                                 <div class="font-medium mb-2 text-gray-600">
                                     <h3 class="inline">{{ $post->author->username }}</h3> &bull;
@@ -24,11 +25,14 @@
                                     Selengkapnya...
                                 </a>
                             </div>
+
+                            <!-- Gambar -->
                             <img src="{{ $post->image ? asset('storage/' . $post->image) : asset('img/placeholder-image.webp') }}"
                                 alt="Gambar {{ $post->title }}"
-                                class="hidden md:block w-24 h-24 object-cover rounded-lg border border-gray-300">
+                                class="hidden lg:block w-24 h-24 object-cover rounded-lg border border-gray-300">
                         </div>
                     @empty
+                        <!-- Konten -->
                         <div class="p-6 text-center">
                             <h2 class="text-xl font-bold">Belum ada berita.</h2>
                         </div>
@@ -50,19 +54,30 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             @forelse ($popularPosts as $post)
                 <a href="{{ route('posts.show', $post->slug) }}"
-                    class="bg-white border border-gray-200 hover:bg-gray-100 rounded-lg shadow-md overflow-hidden">
+                    class="relative bg-white border border-gray-200 hover:bg-gray-100 rounded-lg shadow-md overflow-hidden">
+
+                    <!-- Views -->
+                    <span class="absolute top-4 right-4 bg-[#141652] text-white text-xs px-2 py-1 rounded">
+                        {{ $post->views }}x dilihat
+                    </span>
+
+                    <!-- Gambar -->
                     <img src="{{ $post->image ? asset('storage/' . $post->image) : asset('img/placeholder-image.webp') }}"
                         alt="Gambar {{ $post->title }}" class="w-full h-48 object-cover">
+
+                    <!-- Konten -->
                     <div class="p-4">
                         <h2 class="font-semibold truncate">{{ $post->title }}</h2>
                         <p class="text-sm line-clamp-3 text-justify">{{ strip_tags($post->content) }}</p>
                     </div>
                 </a>
             @empty
+                <!-- Konten -->
                 <div class="bg-white border border-gray-300 rounded-lg shadow-md p-4 text-center">
                     <h2 class="text-xl font-semibold">Belum ada berita.</h2>
                 </div>
             @endforelse
         </div>
     </section>
+
 </x-guest-layout>

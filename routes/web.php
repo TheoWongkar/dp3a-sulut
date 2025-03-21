@@ -35,11 +35,11 @@ Route::middleware(['auth', 'employee.status.check'])->group(function () {
 
     Route::get('/dashboard/berita', [DashboardPostController::class, 'index'])->name('dashboard.posts.index');
     Route::get('/dashboard/berita/tambah', [DashboardPostController::class, 'create'])->name('dashboard.posts.create');
-    Route::post('/dashboard/berita/tambah', [DashboardPostController::class, 'store'])->name('dashboard.posts.store');
+    Route::post('/dashboard/berita/tambah', [DashboardPostController::class, 'store'])->middleware('throttle:10,5')->name('dashboard.posts.store');
     Route::get('/dashboard/berita/{slug}', [DashboardPostController::class, 'show'])->name('dashboard.posts.show');
     Route::get('/dashboard/berita/{slug}/ubah', [DashboardPostController::class, 'edit'])->name('dashboard.posts.edit');
-    Route::put('/dashboard/berita/{slug}/ubah', [DashboardPostController::class, 'update'])->name('dashboard.posts.update');
-    Route::delete('/dashboard/berita/{slug}/hapus', [DashboardPostController::class, 'destroy'])->name('dashboard.posts.destroy');
+    Route::put('/dashboard/berita/{slug}/ubah', [DashboardPostController::class, 'update'])->middleware('throttle:10,5')->name('dashboard.posts.update');
+    Route::delete('/dashboard/berita/{slug}/hapus', [DashboardPostController::class, 'destroy'])->middleware('throttle:10,5')->name('dashboard.posts.destroy');
 
     Route::get('/dashboard/karyawan', [DashboardEmployeeController::class, 'index'])->name('dashboard.employees.index');
     Route::get('/dashboard/karyawan/tambah', [DashboardEmployeeController::class, 'create'])->name('dashboard.employees.create');

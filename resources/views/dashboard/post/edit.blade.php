@@ -37,6 +37,7 @@
                     <label for="status" class="text-sm font-medium text-black">Status</label>
                     <select id="status" name="status"
                         class="mt-1 p-2 w-full bg-white text-sm border border-gray-200 rounded-md shadow-sm focus:outline-black">
+                        <option value="" disabled>Pilih Status</option>
                         <option value="Terbit" {{ old('status', $post->status) == 'Terbit' ? 'selected' : '' }}>Terbit
                         </option>
                         <option value="Arsip" {{ old('status', $post->status) == 'Arsip' ? 'selected' : '' }}>Arsip

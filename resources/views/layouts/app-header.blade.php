@@ -2,6 +2,7 @@
 <header class="flex items-center justify-between px-4 py-2 bg-white shadow">
     <!-- Judul Halaman -->
     <div class="flex items-center space-x-2">
+
         <!-- Tombol Toggle Sidebar untuk versi mobile -->
         <button @click="sidebarOpen = !sidebarOpen" aria-label="Tombol Sidebar" class="xl:hidden focus:outline-none">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
@@ -9,6 +10,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16m-7 6h7"></path>
             </svg>
         </button>
+
         <!-- Judul Halaman -->
         <h2 class="text-md md:text-lg lg:text-xl font-bold">{{ Str::limit($title, 20) }}</h2>
     </div>
@@ -17,14 +19,17 @@
     <div x-data="{ open: false }" class="relative flex items-center">
         <!-- Klik untuk membuka dropdown -->
         <div @click="open = !open" class="flex items-center space-x-1 cursor-pointer">
+
             <!-- Nama dan Jabatan User -->
             <div class="text-right mr-2 hidden md:block">
                 <h1 class="text-sm font-bold">{{ auth()->user()->employee->name }}</h1>
                 <p class="text-xs text-gray-800 leading-none">{{ auth()->user()->employee->position }}</p>
             </div>
+
             <!-- Gambar Profil User -->
             <img src="{{ auth()->user()->employee->avatar ? asset('storage/' . auth()->user()->employee->avatar) : asset('img/placeholder-profile.webp') }}"
                 alt="Profile" class="size-12 rounded-full border-2">
+
             <!-- Icon Dropdown untuk membuka menu -->
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                 stroke="currentColor" class="size-5">
@@ -45,6 +50,7 @@
                 </svg>
                 <span>Beranda</span>
             </a>
+
             <!-- Link ke Profil Saya -->
             <a href="{{ route('profile.show') }}"
                 class="flex items-center gap-1 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
@@ -55,6 +61,7 @@
                 </svg>
                 <span>Profil Saya</span>
             </a>
+
             <!-- Form untuk Logout -->
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
