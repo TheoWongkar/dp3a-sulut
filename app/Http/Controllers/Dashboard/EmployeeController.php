@@ -100,6 +100,7 @@ class EmployeeController extends Controller
             'password.regex' => 'Kata sandi harus mengandung setidaknya satu angka.',
         ]);
 
+        // Simpan User
         $user = User::create([
             'username' => $validated['username'],
             'email' => $validated['email'],
@@ -114,6 +115,7 @@ class EmployeeController extends Controller
             $filePath = null;
         }
 
+        // Simpan Karyawan
         Employee::create([
             'user_id' => $user->id,
             'nip' => $validated['nip'],

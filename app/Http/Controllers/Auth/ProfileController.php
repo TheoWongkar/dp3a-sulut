@@ -36,15 +36,17 @@ class ProfileController extends Controller
 
     public function updateProfile(Request $request)
     {
+        // Ambil Data Pengguna
         $user = Auth::user();
 
+        // Validasi Input
         $validated = $request->validate([
             'username' => 'required|string|min:3|max:255',
             'email' => 'required|email|min:3|max:255|unique:users,email,' . $user->id,
             'avatar' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
-        // Handle avatar upload
+        // Simpan Gambar (jika ada perubahan)
         if ($request->hasFile('avatar')) {
             if ($user->employee && $user->employee->avatar) {
                 Storage::disk('public')->delete($user->employee->avatar);
@@ -59,7 +61,7 @@ class ProfileController extends Controller
             'email' => $validated['email'],
         ]);
 
-        // Update employee profile (if exists)
+        // Update employee profile (jika ada)
         if ($user->employee) {
             $user->employee->update([
                 'avatar' => $validated['avatar'] ?? $user->employee->avatar,
@@ -71,8 +73,10 @@ class ProfileController extends Controller
 
     public function updatePassword(Request $request)
     {
+        // Ambil Data Pengguna
         $user = Auth::user();
 
+        // Validasi Input
         $validated = $request->validate(
             [
                 'current_password' => 'required|string|max:255',

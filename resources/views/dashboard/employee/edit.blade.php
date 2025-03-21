@@ -30,6 +30,7 @@
                                 <div class="text-red-500 text-xs mt-1">{{ $message }}</div>
                             @enderror
                         </div>
+
                         <!-- Nama -->
                         <div>
                             <label for="name" class="text-sm font-medium text-black">Nama</label>
@@ -40,12 +41,13 @@
                                 <div class="text-red-500 text-xs mt-1">{{ $message }}</div>
                             @enderror
                         </div>
+
                         <!-- Jenis Kelamin -->
                         <div>
                             <label for="gender" class="text-sm font-medium text-black">Jenis Kelamin</label>
                             <select id="gender" name="gender"
                                 class="mt-1 p-2 w-full bg-white text-sm border border-gray-200 rounded-md shadow-sm focus:outline-black">
-                                <option value="" disabled selected>Pilih</option>
+                                <option value="" disabled selected>Pilih jenis kelamin</option>
                                 <option value="Pria"
                                     {{ old('gender', $employee->gender) == 'Pria' ? 'selected' : '' }}>Pria</option>
                                 <option value="Wanita"
@@ -56,6 +58,7 @@
                                 <div class="text-red-500 text-xs mt-1">{{ $message }}</div>
                             @enderror
                         </div>
+
                         <!-- Jabatan -->
                         <div>
                             <label for="position" class="text-sm font-medium text-black">Jabatan</label>
@@ -66,6 +69,7 @@
                                 <div class="text-red-500 text-xs mt-1">{{ $message }}</div>
                             @enderror
                         </div>
+
                         <!-- Tanggal Lahir -->
                         <div>
                             <label for="date_of_birth" class="text-sm font-medium text-black">Tanggal Lahir</label>
@@ -76,12 +80,13 @@
                                 <div class="text-red-500 text-xs mt-1">{{ $message }}</div>
                             @enderror
                         </div>
+
                         <!-- Status -->
                         <div>
                             <label for="status" class="text-sm font-medium text-black">Status</label>
                             <select id="status" name="status"
                                 class="mt-1 p-2 w-full bg-white text-sm border border-gray-200 rounded-md shadow-sm focus:outline-black">
-                                <option value="" disabled selected>Pilih</option>
+                                <option value="" disabled selected>Pilih status</option>
                                 <option value="Aktif"
                                     {{ old('status', $employee->status) == 'Aktif' ? 'selected' : '' }}>Aktif</option>
                                 <option value="Nonaktif"
@@ -101,12 +106,13 @@
                         <!-- Alamat -->
                         <div>
                             <label for="address" class="text-sm font-medium text-black">Alamat</label>
-                            <textarea id="address" name="address" rows="4"
+                            <textarea id="address" name="address" rows="4" placeholder="Masukkan alamat"
                                 class="mt-1 p-2 w-full bg-white text-sm border border-gray-200 rounded-md shadow-sm focus:outline-black">{{ old('address', $employee->address) }}</textarea>
                             @error('address')
                                 <div class="text-red-500 text-xs mt-1">{{ $message }}</div>
                             @enderror
                         </div>
+
                         <!-- Telepon -->
                         <div>
                             <label for="phone" class="text-sm font-medium text-black">No. Telepon</label>
@@ -117,6 +123,7 @@
                                 <div class="text-red-500 text-xs mt-1">{{ $message }}</div>
                             @enderror
                         </div>
+
                         <!-- Gambar -->
                         <div x-data="{
                             imagePreview: null,
@@ -176,6 +183,7 @@
                                 <div class="text-red-500 text-xs mt-1">{{ $message }}</div>
                             @enderror
                         </div>
+
                         <!-- Username -->
                         <div>
                             <label for="username" class="text-sm font-medium text-black">Username</label>
@@ -187,6 +195,7 @@
                                 <div class="text-red-500 text-xs mt-1">{{ $message }}</div>
                             @enderror
                         </div>
+
                         <!-- Email -->
                         <div>
                             <label for="email" class="text-sm font-medium text-black">Email</label>
@@ -210,6 +219,7 @@
                                 <div class="text-red-500 text-xs mt-1">{{ $message }}</div>
                             @enderror
                         </div>
+
                         <!-- Konfirmasi Password -->
                         <div>
                             <label for="password_confirmation" class="text-sm font-medium text-black">Konfirmasi

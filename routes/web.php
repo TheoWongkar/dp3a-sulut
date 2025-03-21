@@ -28,8 +28,8 @@ Route::middleware(['auth', 'employee.status.check'])->group(function () {
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
     Route::get('profil-saya', [ProfileController::class, 'show'])->name('profile.show');
     Route::get('profil-saya/ubah', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::put('profil-saya/ubah', [ProfileController::class, 'updateProfile'])->name('profile.update');
-    Route::put('profil-saya/ubah-password', [ProfileController::class, 'updatePassword'])->name('profile.updatePassword');
+    Route::put('profil-saya/ubah', [ProfileController::class, 'updateProfile'])->middleware('throttle:10,5')->name('profile.update');
+    Route::put('profil-saya/ubah-password', [ProfileController::class, 'updatePassword'])->middleware('throttle:10,5')->name('profile.updatePassword');
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
@@ -43,11 +43,11 @@ Route::middleware(['auth', 'employee.status.check'])->group(function () {
 
     Route::get('/dashboard/karyawan', [DashboardEmployeeController::class, 'index'])->name('dashboard.employees.index');
     Route::get('/dashboard/karyawan/tambah', [DashboardEmployeeController::class, 'create'])->name('dashboard.employees.create');
-    Route::post('/dashboard/karyawan/tambah', [DashboardEmployeeController::class, 'store'])->name('dashboard.employees.store');
+    Route::post('/dashboard/karyawan/tambah', [DashboardEmployeeController::class, 'store'])->middleware('throttle:10,5')->name('dashboard.employees.store');
     Route::get('/dashboard/karyawan/{nip}', [DashboardEmployeeController::class, 'show'])->name('dashboard.employees.show');
     Route::get('/dashboard/karyawan/{nip}/ubah', [DashboardEmployeeController::class, 'edit'])->name('dashboard.employees.edit');
-    Route::put('/dashboard/karyawan/{nip}/ubah', [DashboardEmployeeController::class, 'update'])->name('dashboard.employees.update');
-    Route::delete('/dashboard/karyawan/{nip}/hapus', [DashboardEmployeeController::class, 'destroy'])->name('dashboard.employees.destroy');
+    Route::put('/dashboard/karyawan/{nip}/ubah', [DashboardEmployeeController::class, 'update'])->middleware('throttle:10,5')->name('dashboard.employees.update');
+    Route::delete('/dashboard/karyawan/{nip}/hapus', [DashboardEmployeeController::class, 'destroy'])->middleware('throttle:10,5')->name('dashboard.employees.destroy');
 
     Route::get('/dashboard/laporan/tambah', [DashboardReportController::class, 'create'])->name('dashboard.reports.create');
     Route::post('/dashboard/laporan/tambah', [DashboardReportController::class, 'store'])->name('dashboard.reports.store');

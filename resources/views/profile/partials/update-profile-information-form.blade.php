@@ -1,5 +1,6 @@
 <section>
 
+    <!-- Header -->
     <header>
         <h2 class="text-lg font-medium text-gray-900">
             Informasi Profil
@@ -16,6 +17,7 @@
     <form action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data" class="mt-6 space-y-6">
         @csrf
         @method('PUT')
+
         <!-- Nama -->
         <div>
             <label for="username" class="text-sm font-medium text-gray-800">Username</label>
@@ -26,6 +28,7 @@
                 <div class="text-red-500 text-xs mt-1">{{ $message }}</div>
             @enderror
         </div>
+
         <!-- Email -->
         <div>
             <label for="email" class="text-sm font-medium text-gray-800">Email</label>
@@ -35,10 +38,11 @@
                 <div class="text-red-500 text-xs mt-1">{{ $message }}</div>
             @enderror
         </div>
+
         <!-- Gambar -->
         <div x-data="{ imagePreview: '{{ $employee->avatar ? asset('storage/' . $employee->avatar) : asset('img/placeholder-profile.webp') }}' }">
-            <label for="picture" class="text-sm font-medium text-gray-800">Foto Profil</label>
-            <input id="picture" type="file" name="picture"
+            <label for="avatar" class="text-sm font-medium text-gray-800">Foto Profil</label>
+            <input id="avatar" type="file" name="avatar" accept="image/jpeg, image/png"
                 class="mt-1 w-full border border-gray-200 rounded-md shadow-sm focus:outline-black file:mr-4 file:py-2 file:px-4 file:text-sm file:bg-gray-700 file:text-white hover:file:bg-gray-800"
                 @change="if ($event.target.files.length) { 
                     const file = $event.target.files[0]; 
@@ -52,7 +56,7 @@
                     <img :src="imagePreview" class="w-full h-auto" alt="Image Preview">
                 </div>
             </div>
-            @error('picture')
+            @error('avatar')
                 <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
             @enderror
         </div>
