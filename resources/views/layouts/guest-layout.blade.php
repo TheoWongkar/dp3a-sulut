@@ -56,6 +56,9 @@
 
         <!-- Layout Utama -->
         <main class="flex-grow">
+            <!-- Chat Container -->
+            <x-chatbot></x-chatbot>
+
             {{ $slot }}
         </main>
 
