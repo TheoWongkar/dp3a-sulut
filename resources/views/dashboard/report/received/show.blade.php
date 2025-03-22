@@ -27,7 +27,8 @@
                     </div>
                     <div class="flex flex-col">
                         <h3 class="font-medium">Tempat Kejadian:</h3>
-                        <span class="text-gray-800">{{ $report->scene }}</span>
+                        <span class="text-gray-800">{{ $report->scene }}, {{ $report->district }},
+                            {{ $report->regency }}</span>
                     </div>
                     <div class="flex flex-col">
                         <h3 class="font-medium text-black">Kronologi Kejadian:</h3>
@@ -189,7 +190,8 @@
                 class="bg-gray-700 text-white py-2 px-6 rounded-md hover:bg-gray-800 w-full md:w-auto text-center">
                 Kembali
             </a>
-            <form action="#" method="POST" class="w-full md:w-auto">
+            <form action="{{ route('dashboard.reports.destroy', $report->ticket_number) }}" method="POST"
+                class="w-full md:w-auto">
                 @csrf
                 @method('DELETE')
                 <button type="submit"

@@ -88,7 +88,7 @@
                             <td class="py-3 px-2 text-center">{{ $loop->iteration }}</td>
                             <td class="py-3 px-2">{{ $report->ticket_number }}</td>
                             <td class="py-3 px-2 text-center">{{ $report->violence_category }}</td>
-                            <td class="py-3 px-2">{{ $report->district }}, {{ $report->regency }}</td>
+                            <td class="py-3 px-2">{{ $report->district }}, {{ Str::limit($report->regency, 8) }}</td>
                             <td class="py-3 px-2 text-center">
                                 <span
                                     class="px-3 py-1 text-xs rounded-full shadow-md 

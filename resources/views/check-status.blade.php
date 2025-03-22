@@ -22,7 +22,8 @@
                                 class="block">{{ \Carbon\Carbon::parse($report->date)->translatedFormat('d M Y') }}
                             </span></p>
                         <p class="text-sm">Kategori: <span class="block">{{ $report->violence_category }}</span></p>
-                        <p class="text-sm">Lokasi: <span class="block">{{ $report->scene }}</span></p>
+                        <p class="text-sm">Lokasi: <span class="block">{{ $report->scene }} , {{ $report->district }},
+                                {{ $report->regency }}</span></p>
                     </div>
                 </div>
 

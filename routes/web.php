@@ -50,9 +50,10 @@ Route::middleware(['auth', 'employee.status.check'])->group(function () {
     Route::delete('/dashboard/karyawan/{nip}/hapus', [DashboardEmployeeController::class, 'destroy'])->name('dashboard.employees.destroy');
 
     Route::get('/dashboard/laporan/tambah', [DashboardReportController::class, 'create'])->name('dashboard.reports.create');
-    Route::post('/dashboard/laporan/tambah', [DashboardReportController::class, 'store'])->name('dashboard.reports.store');
+    Route::post('/dashboard/laporan/tambah', [DashboardReportController::class, 'store'])->middleware('throttle:10,5')->name('dashboard.reports.store');
     Route::get('/dashboard/laporan/{ticket_number}/ubah', [DashboardReportController::class, 'edit'])->name('dashboard.reports.edit');
-    Route::put('/dashboard/laporan/{ticket_number}/ubah', [DashboardReportController::class, 'update'])->name('dashboard.reports.update');
+    Route::put('/dashboard/laporan/{ticket_number}/ubah', [DashboardReportController::class, 'update'])->middleware('throttle:10,5')->name('dashboard.reports.update');
+    Route::delete('/dashboard/laporan/{ticket_number}/hapus', [DashboardReportController::class, 'destroy'])->middleware('throttle:10,5')->name('dashboard.reports.destroy');
 
     Route::get('/dashboard/laporan/{status}', [DashboardReportController::class, 'index'])->name('dashboard.reports.index');
     Route::get('/dashboard/laporan/{status}/{ticket_number}/verifikasi', [DashboardReportController::class, 'receivedShow'])->name('dashboard.reports.received.show');
