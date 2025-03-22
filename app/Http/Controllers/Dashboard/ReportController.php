@@ -297,6 +297,10 @@ class ReportController extends Controller
             $validated['evidence'] = $report->evidence;
         }
 
+        if (!$report->handled_id) {
+            $validated['handled_id'] = Auth::id();
+        }
+
         $report->update($validated);
 
         // Update data korban
@@ -333,6 +337,23 @@ class ReportController extends Controller
         ]);
 
         return redirect()->route('dashboard.reports.edit', $ticket_number)->with('success', 'Laporan berhasil diperbarui.');
+    }
+
+    public function destroy(string $ticket_number)
+    {
+        // Ambil Data Berdasarkan Ticket Number
+        $report = Report::where('ticket_number', $ticket_number)->firstOrFail();
+
+        // Hapus Gambar
+        if ($report->evidence) {
+            Storage::disk('public')->delete($report->evidence);
+        }
+
+        //Hapus Laporan
+        $report->delete();
+
+        return redirect()->route('dashboard.reports.index', ['status' => 'diterima'])
+            ->with('success', 'Laporan berhasil dihapus.');
     }
 
     public function receivedShow(string $status, string $ticket_number)

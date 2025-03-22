@@ -24,22 +24,22 @@ class Suspect extends Model
 
     public function setNikAttribute($value)
     {
-        $this->attributes['nik'] = base64_encode(Crypt::encryptString($value));
+        $this->attributes['nik'] = $value ? base64_encode(Crypt::encryptString($value)) : null;
     }
 
     public function setNameAttribute($value)
     {
-        $this->attributes['name'] = base64_encode(Crypt::encryptString($value));
+        $this->attributes['name'] = $value ? base64_encode(Crypt::encryptString($value)) : null;
     }
 
     public function getNikAttribute($value)
     {
-        return Crypt::decryptString(base64_decode($value));
+        return $value ? Crypt::decryptString(base64_decode($value)) : null;
     }
 
     public function getNameAttribute($value)
     {
-        return Crypt::decryptString(base64_decode($value));
+        return $value ? Crypt::decryptString(base64_decode($value)) : null;
     }
 
     public function report()

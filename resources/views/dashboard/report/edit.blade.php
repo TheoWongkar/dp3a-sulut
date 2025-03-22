@@ -146,7 +146,8 @@
 
                     <!-- NIK Korban -->
                     <div>
-                        <label for="victim_nik" class="text-sm font-medium text-black">NIK Korban</label>
+                        <label for="victim_nik" class="text-sm font-medium text-black">NIK Korban<span
+                                class="ml-1 text-red-500">*</span></label>
                         <input type="number" id="victim_nik" name="victim_nik"
                             class="mt-1 p-2 w-full bg-white text-sm border border-gray-200 rounded-md shadow-sm focus:outline-black"
                             placeholder="Masukkan nik korban" value="{{ old('victim_nik', $report->victim->nik) }}">
@@ -169,7 +170,8 @@
 
                     <!-- Usia Korban -->
                     <div>
-                        <label for="victim_age" class="text-sm font-medium text-black">Usia Korban</label>
+                        <label for="victim_age" class="text-sm font-medium text-black">Usia Korban<span
+                                class="ml-1 text-red-500">*</span></label>
                         <input type="number" id="victim_age" name="victim_age"
                             class="mt-1 p-2 w-full bg-white text-sm border border-gray-200 rounded-md shadow-sm focus:outline-black"
                             placeholder="Masukkan usia korban" value="{{ old('victim_age', $report->victim->age) }}">
@@ -215,7 +217,8 @@
 
                     <!-- Alamat Korban -->
                     <div>
-                        <label for="victim_address" class="text-sm font-medium text-black">Alamat Korban
+                        <label for="victim_address" class="text-sm font-medium text-black">Alamat Korban<span
+                                class="ml-1 text-red-500">*</span>
                         </label>
                         <textarea id="victim_address" name="victim_address" rows="3"
                             class="mt-1 p-2 w-full bg-white text-sm border border-gray-200 rounded-md shadow-sm focus:outline-black"
@@ -244,7 +247,8 @@
 
                     <!-- NIK Terduga -->
                     <div>
-                        <label for="suspect_nik" class="text-sm font-medium text-black">NIK Terduga</label>
+                        <label for="suspect_nik" class="text-sm font-medium text-black">NIK Terduga<span
+                                class="ml-1 text-red-500">*</span></label>
                         <input type="number" id="suspect_nik" name="suspect_nik"
                             class="mt-1 p-2 w-full bg-white text-sm border border-gray-200 rounded-md shadow-sm focus:outline-black"
                             placeholder="Masukkan nik terduga"
@@ -256,7 +260,8 @@
 
                     <!-- Nama Terduga -->
                     <div>
-                        <label for="suspect_name" class="text-sm font-medium text-black">Nama Terduga</label>
+                        <label for="suspect_name" class="text-sm font-medium text-black">Nama Terduga<span
+                                class="ml-1 text-red-500">*</span></label>
                         <input type="text" id="suspect_name" name="suspect_name"
                             class="mt-1 p-2 w-full bg-white text-sm border border-gray-200 rounded-md shadow-sm focus:outline-black"
                             placeholder="Masukkan nama terduga"
@@ -268,7 +273,8 @@
 
                     <!-- Usia Terduga -->
                     <div>
-                        <label for="suspect_age" class="text-sm font-medium text-black">Usia Terduga</label>
+                        <label for="suspect_age" class="text-sm font-medium text-black">Usia Terduga<span
+                                class="ml-1 text-red-500">*</span></label>
                         <input type="number" id="suspect_age" name="suspect_age"
                             class="mt-1 p-2 w-full bg-white text-sm border border-gray-200 rounded-md shadow-sm focus:outline-black"
                             placeholder="Masukkan usia terduga"
@@ -301,7 +307,7 @@
                     <!-- Nomor Telepon Terduga -->
                     <div>
                         <label for="suspect_phone" class="text-sm font-medium text-black">Nomor Telepon
-                            Terduga</label>
+                            Terduga<span class="ml-1 text-red-500">*</span></label>
                         <input type="number" id="suspect_phone" name="suspect_phone"
                             class="mt-1 p-2 w-full bg-white text-sm border border-gray-200 rounded-md shadow-sm focus:outline-black"
                             placeholder="Masukkan nomor telepon terduga"
@@ -315,7 +321,8 @@
 
                     <!-- Alamat Terduga -->
                     <div>
-                        <label for="suspect_address" class="text-sm font-medium text-black">Alamat Terduga</label>
+                        <label for="suspect_address" class="text-sm font-medium text-black">Alamat Terduga<span
+                                class="ml-1 text-red-500">*</span></label>
                         <textarea id="suspect_address" name="suspect_address" rows="3"
                             class="mt-1 p-2 w-full bg-white text-sm border border-gray-200 rounded-md shadow-sm focus:outline-black"
                             placeholder="Masukkan alamat terduga">{{ old('suspect_address', $report->suspect->address) }}</textarea>
@@ -343,7 +350,8 @@
 
                     <!-- NIK Pelapor -->
                     <div>
-                        <label for="reporter_nik" class="text-sm font-medium text-black">NIK Pelapor</label>
+                        <label for="reporter_nik" class="text-sm font-medium text-black">NIK Pelapor<span
+                                class="ml-1 text-red-500">*</span></label>
                         <input type="number" id="reporter_nik" name="reporter_nik"
                             class="mt-1 p-2 w-full bg-white text-sm border border-gray-200 rounded-md shadow-sm focus:outline-black"
                             placeholder="Masukkan nik pelapor"

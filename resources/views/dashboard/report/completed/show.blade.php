@@ -27,7 +27,8 @@
                     </div>
                     <div class="flex flex-col">
                         <h3 class="font-medium">Tempat Kejadian:</h3>
-                        <span class="text-gray-800">{{ $report->scene }}</span>
+                        <span class="text-gray-800">{{ $report->scene }}, {{ $report->district }},
+                            {{ $report->regency }}</span>
                     </div>
                     <div class="flex flex-col">
                         <h3 class="font-medium text-black">Kronologi Kejadian:</h3>
