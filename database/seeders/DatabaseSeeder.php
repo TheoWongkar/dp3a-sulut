@@ -11,6 +11,7 @@ use App\Models\Victim;
 use App\Models\Suspect;
 use App\Models\Employee;
 use App\Models\Reporter;
+use Illuminate\Support\Str;
 use App\Models\PostCategory;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -48,7 +49,22 @@ class DatabaseSeeder extends Seeder
         });
 
         // 3. Post categories
-        PostCategory::factory(5)->create();
+        $categories = [
+            'Kekerasan',
+            'Kegiatan DP3A',
+            'Hukum & Kebijakan',
+            'Pendidikan Publik',
+            'Berita Daerah',
+            'Prestasi & Apresiasi',
+        ];
+
+        foreach ($categories as $name) {
+            PostCategory::create([
+                'name' => $name,
+                'slug' => Str::slug($name),
+                'description' => fake()->sentence(),
+            ]);
+        }
 
         // 4. Posts
         Post::factory(15)->create();

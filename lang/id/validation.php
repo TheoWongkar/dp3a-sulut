@@ -280,5 +280,39 @@ return [
         'winner'                   => 'winner',
         'work'                     => 'work',
         'year'                     => 'tahun',
+
+        // Reporter
+        'reporter_name'            => 'Nama Pelapor',
+        'reporter_phone'           => 'No. Telepon Pelapor',
+        'reporter_gender'          => 'Jenis Kelamin Pelapor',
+        'reporter_address'         => 'Alamat Pelapor',
+        'reporter_age'             => 'Usia Pelapor',
+        'reporter_relationship_between'     => 'Hubungan dengan Korban',
+
+        // Victim
+        'victim_name'              => 'Nama Korban',
+        'victim_phone'             => 'No. Telepon Korban',
+        'victim_gender'            => 'Jenis Kelamin Korban',
+        'victim_age'               => 'Usia Korban',
+        'victim_address'           => 'Alamat Korban',
+        'victim_description'       => 'Keterangan Tambahan Korban',
+
+        // Suspect
+        'suspect_name'             => 'Nama Terduga',
+        'suspect_phone'            => 'No. Telepon Terduga',
+        'suspect_gender'           => 'Jenis Kelamin Terduga',
+        'suspect_age'              => 'Usia Terduga',
+        'suspect_address'          => 'Alamat Terduga',
+        'suspect_description'      => 'Keterangan Tambahan Terduga',
+
+        // Report
+        'incident_date'            => 'Tanggal Kejadian',
+        'violence_category'        => 'Kategori Kekerasan',
+        'regency'                  => 'Kabupaten/Kota',
+        'district'                 => 'Kecamatan',
+        'scene'                    => 'Tempat Kejadian',
+        'chronology'               => 'Kronologi',
+        'evidence'                 => 'Bukti',
+        'agree'                    => 'Pernyataan Persetujuan',
     ],
 ];
