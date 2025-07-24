@@ -37,4 +37,18 @@ class LoginController extends Controller
             'email' => 'Kredensial yang diberikan tidak sesuai dengan catatan kami.',
         ])->onlyInput('email');
     }
+
+    public function logout(Request $request): RedirectResponse
+    {
+        // Logout
+        Auth::logout();
+
+        // Reset Session
+        $request->session()->invalidate();
+
+        // Regenerate Token
+        $request->session()->regenerateToken();
+
+        return redirect('/');
+    }
 }

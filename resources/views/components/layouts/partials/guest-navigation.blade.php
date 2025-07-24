@@ -81,8 +81,13 @@
             <a href="{{ route('report.check-status') }}" class="px-5 py-3 hover:bg-[#E9F0FF]">Cek Status Laporan</a>
             <a href="{{ route('report.create') }}" class="px-5 py-3 hover:bg-[#E9F0FF]">Laporkan Kekerasan</a>
 
-            <x-buttons.primary-button href="{{ route('login') }}"
-                class="mt-3 px-5 py-2 self-center text-center w-5/6">Login</x-buttons.primary-button>
+            @auth
+                <x-buttons.primary-button href="{{ route('dashboard') }}"
+                    class="mt-3 px-5 py-2 self-center text-center w-5/6">Dashboard</x-buttons.primary-button>
+            @else
+                <x-buttons.primary-button href="{{ route('login') }}"
+                    class="mt-3 px-5 py-2 self-center text-center w-5/6">Login</x-buttons.primary-button>
+            @endauth
         </nav>
     </div>
 </div>

@@ -24,7 +24,7 @@ class HomeController extends Controller
             ->pluck('total', 'month');
 
         // Pastikan semua bulan terisi (0 jika tidak ada)
-        $monthlyData = collect(range(1, 12))->mapWithKeys(function ($month) use ($reportsPerMonth) {
+        $monthlyReports = collect(range(1, 12))->mapWithKeys(function ($month) use ($reportsPerMonth) {
             return [$month => $reportsPerMonth->get($month, 0)];
         });
 
@@ -45,6 +45,6 @@ class HomeController extends Controller
             ->take(15)
             ->get();
 
-        return view('index', compact('monthlyData', 'latestPosts', 'carouselPosts'));
+        return view('index', compact('monthlyReports', 'latestPosts', 'carouselPosts'));
     }
 }

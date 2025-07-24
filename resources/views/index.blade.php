@@ -1,12 +1,12 @@
 <x-guest-layout>
 
+    {{-- Judul Halaman --}}
+    <x-slot name="title">Beranda</x-slot>
+
     {{-- Script Tambahan --}}
     @push('scripts')
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     @endpush
-
-    {{-- Judul Halaman --}}
-    <x-slot name="title">Beranda</x-slot>
 
     {{-- Bagian Prakata --}}
     <section class="bg-white">
@@ -229,12 +229,12 @@
             type: 'line',
             data: {
                 labels: [
-                    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-                    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+                    'Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun',
+                    'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'
                 ],
                 datasets: [{
                     label: 'Jumlah Laporan',
-                    data: @json($monthlyData->values()),
+                    data: @json($monthlyReports->values()),
                     borderColor: '#141652',
                     backgroundColor: '#E9F0FF',
                     fill: true,

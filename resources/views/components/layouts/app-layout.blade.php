@@ -16,7 +16,7 @@
     <link rel="shortcut icon" href="{{ asset('img/application-logo.svg') }}" type="image/x-icon">
 
     {{-- Judul Halaman --}}
-    <title>DP3A Sulawesi Utara</title>
+    <title>DP3A - {{ $title }}</title>
 
     {{-- Google Font --}}
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -41,20 +41,21 @@
 
 <body class="font-sans antialiased">
 
-    <div class="flex flex-col min-h-screen">
+    <div x-data="{ sidebarOpen: false }" class="relative h-screen flex overflow-hidden" x-cloak>
+
         {{-- Navigasi --}}
-        @include('components.layouts.partials.guest-navigation')
+        @include('components.layouts.partials.app-navigation')
 
         {{-- Layout Utama --}}
-        <main class="flex-1 bg-gray-100">
+        <div class="flex-1 flex flex-col overflow-hidden">
             {{-- Header --}}
-            @include('components.layouts.partials.guest-header', ['title' => $title ?? null])
+            @include('components.layouts.partials.app-header')
 
-            {{ $slot }}
-        </main>
-
-        {{-- Footer --}}
-        @include('components.layouts.partials.guest-footer')
+            {{-- Page Content --}}
+            <main class="flex-1 overflow-y-auto p-5 bg-gray-100">
+                {{ $slot }}
+            </main>
+        </div>
     </div>
 
 </body>
