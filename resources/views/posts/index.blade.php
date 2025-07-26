@@ -22,12 +22,12 @@
                         {{-- Search --}}
                         <div class="w-full">
                             <x-forms.input name="search" placeholder="Cari berita..." autocomplete="off"
-                                :value="$search" x-on:input.debounce.500ms="$root.submit()" />
+                                :value="request('search')" x-on:input.debounce.500ms="$root.submit()" />
                         </div>
 
                         {{-- Filter Kategori --}}
                         <div class="w-full md:w-1/2">
-                            <x-forms.select name="category" :options="$categories->pluck('name', 'slug')" :selected="$category"
+                            <x-forms.select name="category" :options="$categories->pluck('name', 'slug')" :selected="request('category')"
                                 x-on:change="$root.submit()" />
                         </div>
                     </form>

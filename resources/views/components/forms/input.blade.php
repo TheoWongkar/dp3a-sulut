@@ -7,7 +7,7 @@
     'placeholder' => '',
 ])
 
-<div class="mb-4">
+<div>
     @if ($label)
         <label for="{{ $id }}" class="block mb-1 text-sm font-medium text-gray-700">
             {{ $label }}

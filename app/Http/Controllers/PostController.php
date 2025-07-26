@@ -18,6 +18,7 @@ class PostController extends Controller
             'category' => 'nullable|string|exists:post_categories,slug',
         ]);
 
+        // Ambil Nilai
         $search = $validated['search'] ?? null;
         $category = $validated['category'] ?? null;
 
@@ -63,8 +64,6 @@ class PostController extends Controller
             'posts',
             'latestPosts',
             'popularPosts',
-            'search',
-            'category'
         ));
     }
 

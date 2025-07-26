@@ -63,7 +63,7 @@
 
                 {{-- STEP 1: Pelapor --}}
                 <div x-cloak x-show="step === 1" x-transition>
-                    <div class="grid grid-cols-1 md:grid-cols-2 space-x-5">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <x-forms.input name="reporter_name" label="Nama Pelapor" />
                         <x-forms.select name="reporter_gender" label="Jenis Kelamin" :options="['Laki-laki', 'Perempuan']" />
                         <x-forms.input name="reporter_phone" label="No. Telepon" />
@@ -76,7 +76,7 @@
 
                 {{-- STEP 2: Korban --}}
                 <div x-cloak x-show="step === 2" x-transition>
-                    <div class="grid grid-cols-1 md:grid-cols-2 space-x-5">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <x-forms.input name="victim_name" label="Nama Korban" />
                         <x-forms.select name="victim_gender" label="Jenis Kelamin" :options="['Laki-laki', 'Perempuan']" />
                         <x-forms.input name="victim_phone" label="No. Telepon" />
@@ -88,7 +88,7 @@
 
                 {{-- STEP 3: Terduga --}}
                 <div x-cloak x-show="step === 3" x-transition>
-                    <div class="grid grid-cols-1 md:grid-cols-2 space-x-5">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <x-forms.input name="suspect_name" label="Nama Terduga (Opsional)" />
                         <x-forms.select name="suspect_gender" label="Jenis Kelamin (Opsional)" :options="['Laki-laki', 'Perempuan']" />
                         <x-forms.input name="suspect_phone" label="No. Telepon (Opsional)" />
@@ -100,7 +100,7 @@
 
                 {{-- STEP 4: Kasus --}}
                 <div x-cloak x-show="step === 4" x-transition>
-                    <div class="grid grid-cols-1 md:grid-cols-2 space-x-5">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <x-forms.select name="violence_category" label="Kategori Kekerasan" :options="['Fisik', 'Psikis', 'Seksual', 'Penelantaran', 'Eksploitasi', 'Lainnya']" />
                         <x-forms.input name="incident_date" label="Tanggal Kejadian" type="date" />
                         <x-forms.select name="regency" label="Kabupaten/Kota" id="regency">
