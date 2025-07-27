@@ -10,8 +10,8 @@
 
     {{-- Tahun --}}
     <form action="{{ route('dashboard') }}" method="GET" x-data>
-        <x-forms.select name="year" :label="'Tahun'" :options="array_combine($years, $years)" :selected="$year"
-            x-on:change="$root.submit()" class="mb-4" />
+        <x-forms.select name="year" :label="'Tahun'" :options="array_combine($years, $years)" :selected="$year" x-on:change="$root.submit()"
+            class="mb-4" />
     </form>
 
     {{-- Bagian Statistik Laporan --}}
@@ -472,8 +472,8 @@
         const postMonths = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
         const postStatusColors = {
             'Terbit': '#4ADE80',
-            'Arsip': '#FACC15',
-            'Draf': '#3B82F6'
+            'Arsip': '#3B82F6',
+            'Draf': '#FACC15'
         };
 
         // Line Chart per bulan per status

@@ -141,12 +141,14 @@ class DashboardController extends Controller
 
         // Top 5 authors dalam setahun
         $topAuthors = Post::whereYear('created_at', $year)
+            ->whereHas('author')
             ->select('author_id', DB::raw('COUNT(*) as count'))
             ->groupBy('author_id')
             ->orderByDesc('count')
-            ->with('author')
+            ->with('author.employee')
             ->limit(5)
             ->get();
+
 
         $data['topAuthorsNames'] = $topAuthors->pluck('author.name')->toArray();
 
@@ -154,7 +156,11 @@ class DashboardController extends Controller
         $monthlyAuthorCounts = [];
 
         foreach ($topAuthors as $author) {
-            $monthlyAuthorCounts[$author->author->name] = collect(range(1, 12))->map(function ($month) use ($author, $year) {
+            $name = optional($author->author->employee)->name
+                ?? optional($author->author)->name
+                ?? 'User Dihapus';
+
+            $monthlyAuthorCounts[$name] = collect(range(1, 12))->map(function ($month) use ($author, $year) {
                 return Post::whereYear('created_at', $year)
                     ->whereMonth('created_at', $month)
                     ->where('author_id', $author->author_id)
@@ -175,7 +181,7 @@ class DashboardController extends Controller
             ->limit(5)
             ->get();
 
-        $data['topHandlerNames'] = $topHandlers->pluck('changer.name')->toArray();
+        $data['topHandlerNames'] = $topHandlers->pluck('changedBy.name')->toArray();
 
         // Hitung jumlah status per bulan untuk tiap handler
         $monthlyHandlerCounts = [];

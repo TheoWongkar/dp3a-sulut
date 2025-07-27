@@ -44,7 +44,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // 2. Petugas lainnya
-        User::factory(9)->create()->each(function ($user) {
+        User::factory(14)->create()->each(function ($user) {
             Employee::factory()->create(['user_id' => $user->id]);
         });
 
@@ -70,7 +70,7 @@ class DatabaseSeeder extends Seeder
         Post::factory(15)->create();
 
         // 5. Reports
-        Report::factory(10)->create();
+        Report::factory(15)->create();
 
         // 6. Victim, Suspect, Reporter (1:1)
         Report::all()->each(function ($report) {
