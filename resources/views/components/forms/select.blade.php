@@ -1,5 +1,9 @@
 @props(['name', 'id' => $name, 'label' => null, 'options' => [], 'selected' => old($name)])
 
+@php
+    $opts = is_array($options) ? $options : $options->toArray();
+@endphp
+
 <div>
     @if ($label)
         <label for="{{ $id }}" class="block mb-1 text-sm font-medium text-gray-700">
@@ -18,8 +22,16 @@
         <option value="">-- Pilih {{ $label ?? 'Opsi' }} --</option>
         @foreach ($options as $key => $optionLabel)
             @php
-                $value = is_int($key) ? $optionLabel : $key;
+                if (is_string($key)) {
+                    $value = $key;
+                } elseif (is_int($key)) {
+                    $isNumericArray = array_keys($opts) === range(0, count($opts) - 1);
+                    $value = $isNumericArray ? $optionLabel : $key;
+                } else {
+                    $value = $key;
+                }
             @endphp
+
             <option value="{{ $value }}" @selected((string) $value === (string) $selected)>
                 {{ $optionLabel }}
             </option>

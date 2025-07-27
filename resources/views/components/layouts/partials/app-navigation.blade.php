@@ -54,8 +54,8 @@
         {{-- Berita --}}
         <div>
             <h1 class="mb-1 text-xs text-gray-400 font-bold uppercase">Media</h1>
-            <a href="#"
-                class="flex items-center space-x-3 px-4 py-2 text-sm font-semibold rounded-l-full hover:bg-blue-100 {{ Route::is('/') ? 'bg-gray-100 text-gray-800' : 'text-white hover:text-gray-800' }}">
+            <a href="{{ route('dashboard.post.index') }}"
+                class="flex items-center space-x-3 px-4 py-2 text-sm font-semibold rounded-l-full hover:bg-blue-100 {{ Route::is('dashboard.post.*') ? 'bg-gray-100 text-gray-800' : 'text-white hover:text-gray-800' }}">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                     class="bi bi-file-post" viewBox="0 0 16 16">
                     <path
@@ -65,8 +65,8 @@
                 </svg>
                 <span>Kelola Berita</span>
             </a>
-            <a href="#"
-                class="flex items-center space-x-3 px-4 py-2 text-sm font-semibold rounded-l-full hover:bg-blue-100 {{ Route::is('/') ? 'bg-gray-100 text-gray-800' : 'text-white hover:text-gray-800' }}">
+            <a href="{{ route('dashboard.post-category.index') }}"
+                class="flex items-center space-x-3 px-4 py-2 text-sm font-semibold rounded-l-full hover:bg-blue-100 {{ Route::is('dashboard.post-category.*') ? 'bg-gray-100 text-gray-800' : 'text-white hover:text-gray-800' }}">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                     class="bi bi-tags-fill" viewBox="0 0 16 16">
                     <path

@@ -4,6 +4,8 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\EmployeeController as DashboardEmployeeController;
+use App\Http\Controllers\Dashboard\PostCategoryController as DashboardPostCategoryController;
+use App\Http\Controllers\Dashboard\PostController as DashboardPostController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ReportController;
@@ -45,4 +47,18 @@ Route::middleware(['auth', 'active_user'])->group(function () {
     Route::get('/dashboard/pegawai/{nip}/ubah', [DashboardEmployeeController::class, 'edit'])->name('dashboard.employee.edit');
     Route::put('/dashboard/pegawai/{nip}/ubah', [DashboardEmployeeController::class, 'update'])->middleware('throttle:10,5')->name('dashboard.employee.update');
     Route::delete('/dashboard/pegawai/{nip}/hapus', [DashboardEmployeeController::class, 'destroy'])->middleware('throttle:10,5')->name('dashboard.employee.destroy');
+
+    // Dashboard Berita
+    Route::get('/dashboard/berita', [DashboardPostController::class, 'index'])->name('dashboard.post.index');
+    Route::get('/dashboard/berita/tambah', [DashboardPostController::class, 'create'])->name('dashboard.post.create');
+    Route::post('/dashboard/berita/tambah', [DashboardPostController::class, 'store'])->middleware('throttle:10,5')->name('dashboard.post.store');
+    Route::get('/dashboard/berita/{slug}/ubah', [DashboardPostController::class, 'edit'])->name('dashboard.post.edit');
+    Route::put('/dashboard/berita/{slug}/ubah', [DashboardPostController::class, 'update'])->middleware('throttle:10,5')->name('dashboard.post.update');
+    Route::delete('/dashboard/berita/{slug}/hapus', [DashboardPostController::class, 'destroy'])->middleware('throttle:10,5')->name('dashboard.post.destroy');
+
+    // Dashboard Kategori Berita
+    Route::get('/dashboard/kategori-berita', [DashboardPostCategoryController::class, 'index'])->name('dashboard.post-category.index');
+    Route::post('/dashboard/kategori-berita/tambah', [DashboardPostCategoryController::class, 'store'])->middleware('throttle:10,5')->name('dashboard.post-category.store');
+    Route::put('/dashboard/kategori-berita/{slug}/ubah', [DashboardPostCategoryController::class, 'update'])->middleware('throttle:10,5')->name('dashboard.post-category.update');
+    Route::delete('/dashboard/kategori-berita/{slug}/hapus', [DashboardPostCategoryController::class, 'destroy'])->middleware('throttle:10,5')->name('dashboard.post-category.destroy');
 });

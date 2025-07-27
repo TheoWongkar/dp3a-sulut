@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class PostCategory extends Model
 {
     /** @use HasFactory<\Database\Factories\PostCategoryFactory> */
-    use HasFactory;
+    use HasFactory, Sluggable;
 
     protected $fillable = [
         'name',
