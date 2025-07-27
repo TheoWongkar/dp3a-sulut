@@ -13,7 +13,8 @@
     </div>
 
     {{-- Dropdown User --}}
-    <div x-data="{ open: false }" class="relative flex items-center space-x-2 cursor-pointer" @click="open = !open">
+    <div x-data="{ open: false }" class="relative flex items-center space-x-2 cursor-pointer group"
+        @click="open = !open">
         <div class="flex flex-col text-sm text-gray-800 leading-none text-right">
             <span class="font-medium">{{ Str::limit(Auth::user()->name, 15, '...') }}</span>
             <span class="text-xs text-gray-700">{{ Auth::user()->role }}</span>
@@ -24,7 +25,8 @@
                     class="w-full h-full object-cover">
             </div>
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                class="bi bi-arrow-down-short w-5 h-5" viewBox="0 0 16 16">
+                class="bi bi-arrow-down-short w-5 h-5 group-hover:text-blue-600 transition-colors duration-200"
+                viewBox="0 0 16 16">
                 <path fill-rule="evenodd"
                     d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4" />
             </svg>
@@ -34,10 +36,10 @@
         <div x-show="open" @click.outside="open = false" x-transition
             class="absolute right-0 top-full mt-2 w-44 bg-white rounded-md border border-gray-300 shadow z-50 text-sm overflow-hidden">
             <a href="{{ route('home') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
-               Beranda
+                Beranda
             </a>
 
-            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+            <a href="{{ route('profile.edit') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
                 Profil Saya
             </a>
 

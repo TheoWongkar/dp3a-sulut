@@ -1,27 +1,26 @@
 @props([
-    'type' => session('flash.type', 'info'),
-    'message' => session('flash.message'),
+    'type' => session('flash.type') ?? (session('success') ? 'success' : (session('error') ? 'error' : (session('warning') ? 'warning' : 'info'))),
+    'message' => session('flash.message') ?? (session('success') ?? (session('error') ?? (session('warning') ?? session('info')))),
 ])
 
 @if ($message)
     @php
-        $colors = [
+        $color = match ($type) {
             'success' => 'green',
             'error' => 'red',
             'warning' => 'yellow',
-            'info' => 'blue',
-        ];
-        $color = $colors[$type] ?? 'blue';
+            default => 'blue',
+        };
     @endphp
 
-    <div x-data="{ show: true }" x-show="show" x-transition
-        class="mb-4 rounded-lg border border-{{ $color }}-300 bg-{{ $color }}-100 px-4 py-3 text-{{ $color }}-800 relative"
-        role="alert">
+    <div x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 5000)" {{-- auto-hide setelah 3 detik --}}
+        @class([
+            'rounded-lg px-4 py-3 relative border',
+            'bg-green-100 border-green-300 text-green-800' => $color === 'green',
+            'bg-red-100 border-red-300 text-red-800' => $color === 'red',
+            'bg-yellow-100 border-yellow-300 text-yellow-800' => $color === 'yellow',
+            'bg-blue-100 border-blue-300 text-blue-800' => $color === 'blue',
+        ]) role="alert">
         <span class="block text-sm font-medium">{{ $message }}</span>
-        <button type="button"
-            class="absolute top-2 right-2 text-{{ $color }}-800 hover:text-{{ $color }}-900"
-            @click="show = false">
-            &times;
-        </button>
     </div>
 @endif

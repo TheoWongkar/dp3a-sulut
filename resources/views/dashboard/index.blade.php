@@ -11,7 +11,7 @@
     {{-- Tahun --}}
     <form action="{{ route('dashboard') }}" method="GET" x-data>
         <x-forms.select name="year" :label="'Tahun'" :options="array_combine($years, $years)" :selected="$year"
-            x-on:change="$root.submit()" />
+            x-on:change="$root.submit()" class="mb-4" />
     </form>
 
     {{-- Bagian Statistik Laporan --}}

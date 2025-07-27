@@ -281,6 +281,20 @@ return [
         'work'                     => 'work',
         'year'                     => 'tahun',
 
+        // Employee
+        'position'                 => 'Jabatan',
+        'place_of_birth'           => 'Tempat Lahir',
+
+        // Report
+        'incident_date'            => 'Tanggal Kejadian',
+        'violence_category'        => 'Kategori Kekerasan',
+        'regency'                  => 'Kabupaten/Kota',
+        'district'                 => 'Kecamatan',
+        'scene'                    => 'Tempat Kejadian',
+        'chronology'               => 'Kronologi',
+        'evidence'                 => 'Bukti',
+        'agree'                    => 'Pernyataan Persetujuan',
+
         // Reporter
         'reporter_name'            => 'Nama Pelapor',
         'reporter_phone'           => 'No. Telepon Pelapor',
@@ -303,16 +317,6 @@ return [
         'suspect_gender'           => 'Jenis Kelamin Terduga',
         'suspect_age'              => 'Usia Terduga',
         'suspect_address'          => 'Alamat Terduga',
-        'suspect_description'      => 'Keterangan Tambahan Terduga',
-
-        // Report
-        'incident_date'            => 'Tanggal Kejadian',
-        'violence_category'        => 'Kategori Kekerasan',
-        'regency'                  => 'Kabupaten/Kota',
-        'district'                 => 'Kecamatan',
-        'scene'                    => 'Tempat Kejadian',
-        'chronology'               => 'Kronologi',
-        'evidence'                 => 'Bukti',
-        'agree'                    => 'Pernyataan Persetujuan',
+        'suspect_description'      => 'Keterangan Tambahan Terduga',        
     ],
 ];
