@@ -9,13 +9,13 @@
                     d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5" />
             </svg>
         </button>
-        <h1 class="text-gray-800 font-semibold">{{ $title ?? 'Dashboard' }}</h1>
+        <h1 class="text-gray-800 font-semibold line-clamp-1">{{ $title ?? 'Dashboard' }}</h1>
     </div>
 
     {{-- Dropdown User --}}
     <div x-data="{ open: false }" class="relative flex items-center space-x-2 cursor-pointer group"
         @click="open = !open">
-        <div class="flex flex-col text-sm text-gray-800 leading-none text-right">
+        <div class="hidden md:flex flex-col text-sm text-gray-800 leading-none text-right">
             <span class="font-medium">{{ Str::limit(Auth::user()->name, 15, '...') }}</span>
             <span class="text-xs text-gray-700">{{ Auth::user()->role }}</span>
         </div>

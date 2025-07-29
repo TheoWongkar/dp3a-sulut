@@ -1,7 +1,7 @@
-<x-guest-layout>
+<x-app-layout>
 
     {{-- Judul Halaman --}}
-    <x-slot name="title">Laporkan Kekerasan</x-slot>
+    <x-slot name="title">Tambah Laporan</x-slot>
 
     {{-- Modal Nomor Tiket --}}
     @if (session('ticket_number'))
@@ -23,48 +23,34 @@
                         di sini
                     </a>
                 </p>
+
+                <div class="mt-2">
+                    <x-buttons.primary-button type="button" @click="open = false">Tutup</x-buttons.primary-button>
+                </div>
             </div>
         </div>
     @endif
 
-    {{-- Bagian Laporkan --}}
-    <section class="relative z-10 -mt-[70vh] md:-mt-screen max-w-3xl mx-auto px-5 py-10" x-data="{ step: 1 }">
-        <div class="rounded-xl bg-gray-100 border-b border-gray-300 shadow p-10 space-y-5">
+    {{-- Bagian Tambah Laporan --}}
+    <section class="space-y-2">
 
-            {{-- Header --}}
-            <div class="text-center space-y-1">
-                <h2 class="text-2xl font-semibold text-gray-800">Formulir Laporan Kekerasan</h2>
-                <p class="text-sm text-gray-700 leading-relaxed">Mohon masukkan data dengan benar. Data yang Anda
-                    berikan
-                    bersifat rahasia dan tidak akan disebarluaskan.</p>
-            </div>
+        {{-- Flash Message --}}
+        <x-alerts.flash-message />
 
-            {{-- Navigasi Step --}}
-            <div class="flex flex-wrap justify-center text-center mb-8">
-                @php
-                    $steps = ['Pelapor', 'Korban', 'Terduga', 'Kasus', 'Pernyataan'];
-                @endphp
-                @foreach ($steps as $i => $stepTitle)
-                    <span class="flex-1 min-w-[100px] px-4 py-3 text-xs font-medium uppercase cursor-pointer"
-                        :class="{
-                            'bg-blue-600 text-white shadow scale-110': step === {{ $i + 1 }},
-                            'bg-gray-300 text-gray-700': step !==
-                                {{ $i + 1 }}
-                        }"
-                        @click="step = {{ $i + 1 }}">
-                        {{ $stepTitle }}
-                    </span>
-                @endforeach
-            </div>
-
-            {{-- Form --}}
-            <form action="{{ route('report.store') }}" method="POST" enctype="multipart/form-data">
+        {{-- Form Tambah Laporan --}}
+        <div class="p-4 bg-white rounded-lg border border-gray-300 shadow">
+            <form action="{{ route('dashboard.report.store') }}" method="POST" enctype="multipart/form-data"
+                class="space-y-4">
                 @csrf
 
-                {{-- STEP 1: Pelapor --}}
-                <div x-cloak x-show="step === 1" x-transition>
+                <div>
+                    <h2 class="mb-5 font-semibold text-gray-700">Data Pelapor</h2>
+
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <x-forms.input name="reporter_name" label="Nama Pelapor" />
+                        <div class="md:col-span-2">
+                            <x-forms.input name="reporter_name" label="Nama Pelapor" />
+                        </div>
+                        <x-forms.input name="reporter_nik" label="NIK (Opsional)" type="number" />
                         <x-forms.select name="reporter_gender" label="Jenis Kelamin" :options="['Laki-laki', 'Perempuan']" />
                         <x-forms.input name="reporter_phone" label="No. Telepon" />
                         <x-forms.input name="reporter_age" label="Usia" type="number" />
@@ -74,10 +60,14 @@
                     </div>
                 </div>
 
-                {{-- STEP 2: Korban --}}
-                <div x-cloak x-show="step === 2" x-transition>
+                <div>
+                    <h2 class="mb-5 font-semibold text-gray-700">Data Korban</h2>
+
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <x-forms.input name="victim_name" label="Nama Korban" />
+                        <div class="md:col-span-2">
+                            <x-forms.input name="victim_name" label="Nama Korban" />
+                        </div>
+                        <x-forms.input name="victim_nik" label="NIK (Opsional)" type="number" />
                         <x-forms.select name="victim_gender" label="Jenis Kelamin" :options="['Laki-laki', 'Perempuan']" />
                         <x-forms.input name="victim_phone" label="No. Telepon" />
                         <x-forms.input name="victim_age" label="Usia" type="number" />
@@ -86,10 +76,14 @@
                     </div>
                 </div>
 
-                {{-- STEP 3: Terduga --}}
-                <div x-cloak x-show="step === 3" x-transition>
+                <div>
+                    <h2 class="mb-5 font-semibold text-gray-700">Data Terduga</h2>
+
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <x-forms.input name="suspect_name" label="Nama Terduga (Opsional)" />
+                        <div class="md:col-span-2">
+                            <x-forms.input name="suspect_name" label="Nama Terduga (Opsional)" />
+                        </div>
+                        <x-forms.input name="suspect_nik" label="NIK (Opsional)" type="number" />
                         <x-forms.select name="suspect_gender" label="Jenis Kelamin (Opsional)" :options="['Laki-laki', 'Perempuan']" />
                         <x-forms.input name="suspect_phone" label="No. Telepon (Opsional)" />
                         <x-forms.input name="suspect_age" label="Usia (Opsional)" type="number" />
@@ -98,8 +92,9 @@
                     </div>
                 </div>
 
-                {{-- STEP 4: Kasus --}}
-                <div x-cloak x-show="step === 4" x-transition>
+                <div>
+                    <h2 class="mb-5 font-semibold text-gray-700">Informasi Kasus</h2>
+
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <x-forms.select name="violence_category" label="Kategori Kekerasan" :options="['Fisik', 'Psikis', 'Seksual', 'Penelantaran', 'Eksploitasi', 'Lainnya']" />
                         <x-forms.input name="incident_date" label="Tanggal Kejadian" type="date" />
@@ -120,52 +115,28 @@
                     </div>
                 </div>
 
-                {{-- STEP 5: Pernyataan --}}
-                <div x-cloak x-show="step === 5" x-transition>
-                    <div class="space-y-4">
-                        <h3 class="text-base font-semibold text-gray-800">Pernyataan Penanganan</h3>
+                <div class="space-y-2">
+                    <h2 class="mb-5 font-semibold text-gray-700">Pernyataan</h2>
 
-                        <p class="text-sm text-gray-700 leading-relaxed">Data yang Anda berikan bersifat rahasia dan
-                            tidak akan disebarluaskan.</p>
-                        <p class="text-sm text-gray-700 leading-relaxed">
-                            Dengan mengisi form ini saya menyatakan SETUJU untuk dilakukan penanganan dan
-                            pendampingan
-                            oleh UPTD-PPA Provinsi Sulawesi Utara.
-                        </p>
+                    <p class="text-sm text-gray-700 leading-relaxed">Data yang Anda berikan bersifat rahasia dan
+                        tidak akan disebarluaskan.</p>
+                    <p class="text-sm text-gray-700 leading-relaxed">
+                        Dengan mengisi form ini saya menyatakan SETUJU untuk dilakukan penanganan dan
+                        pendampingan
+                        oleh UPTD-PPA Provinsi Sulawesi Utara.
+                    </p>
 
-                        <div class="flex items-start gap-2">
-                            <input type="checkbox" name="agree" id="agree" required
-                                class="mt-1 border-gray-300 rounded shadow-sm focus:ring focus:ring-blue-200" />
-                            <label for="agree" class="text-sm text-gray-700">
-                                Saya menyetujui pernyataan di atas
-                            </label>
-                        </div>
+                    <div class="flex items-start gap-2">
+                        <input type="checkbox" name="agree" id="agree" required
+                            class="mt-1 border-gray-300 rounded shadow-sm focus:ring focus:ring-blue-200" />
+                        <label for="agree" class="text-sm text-gray-700">
+                            Saya menyetujui pernyataan di atas
+                        </label>
                     </div>
                 </div>
 
-                {{-- Navigation Buttons --}}
-                <div class="flex justify-between items-center mt-6">
-                    <div>
-                        <template x-if="step > 1">
-                            <x-buttons.primary-button type="button" @click="step--"
-                                class="bg-gray-600 hover:bg-gray-700">
-                                Sebelumnya
-                            </x-buttons.primary-button>
-                        </template>
-                    </div>
-                    <div>
-                        <template x-if="step < 5">
-                            <x-buttons.primary-button type="button" @click="step++">
-                                Selanjutnya
-                            </x-buttons.primary-button>
-                        </template>
-
-                        <template x-if="step === 5">
-                            <x-buttons.primary-button type="submit" class="bg-green-600 hover:bg-green-700">
-                                Kirim Laporan
-                            </x-buttons.primary-button>
-                        </template>
-                    </div>
+                <div class="mt-4 flex justify-end">
+                    <x-buttons.primary-button type="submit">Simpan</x-buttons.primary-button>
                 </div>
             </form>
         </div>
@@ -270,4 +241,4 @@
         });
     </script>
 
-</x-guest-layout>
+</x-app-layout>

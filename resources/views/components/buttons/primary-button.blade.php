@@ -1,6 +1,8 @@
 @props([
     'type' => 'button',
     'href' => null,
+    'name' => null,
+    'value' => null,
 ])
 
 @php
@@ -12,7 +14,8 @@
         {{ $slot }}
     </a>
 @else
-    <button type="{{ $type }}" {{ $attributes->merge(['class' => $baseClass]) }}>
+    <button type="{{ $type }}" name="{{ $name }}" value="{{ $value }}"
+        {{ $attributes->merge(['class' => $baseClass]) }}>
         {{ $slot }}
     </button>
 @endif

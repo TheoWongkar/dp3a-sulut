@@ -6,6 +6,7 @@ use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\EmployeeController as DashboardEmployeeController;
 use App\Http\Controllers\Dashboard\PostCategoryController as DashboardPostCategoryController;
 use App\Http\Controllers\Dashboard\PostController as DashboardPostController;
+use App\Http\Controllers\Dashboard\ReportController as DashboardReportController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ReportController;
@@ -61,4 +62,17 @@ Route::middleware(['auth', 'active_user'])->group(function () {
     Route::post('/dashboard/kategori-berita/tambah', [DashboardPostCategoryController::class, 'store'])->middleware('throttle:10,5')->name('dashboard.post-category.store');
     Route::put('/dashboard/kategori-berita/{slug}/ubah', [DashboardPostCategoryController::class, 'update'])->middleware('throttle:10,5')->name('dashboard.post-category.update');
     Route::delete('/dashboard/kategori-berita/{slug}/hapus', [DashboardPostCategoryController::class, 'destroy'])->middleware('throttle:10,5')->name('dashboard.post-category.destroy');
+
+    // Dashboard Laporan Statis
+    Route::get('/dashboard/laporan/tambah', [DashboardReportController::class, 'create'])->name('dashboard.report.create');
+    Route::post('/dashboard/laporan/tambah', [DashboardReportController::class, 'store'])->middleware('throttle:10,5')->name('dashboard.report.store');
+
+    // Dashboard Laporan Dinamis
+    Route::get('/dashboard/laporan/{status}', [DashboardReportController::class, 'index'])->name('dashboard.report.index');
+    Route::get('/dashboard/laporan/{status}/{ticket_number}/ubah', [DashboardReportController::class, 'edit'])->name('dashboard.report.edit');
+    Route::put('/dashboard/laporan/{status}/{ticket_number}/lengkapi-berkas', [DashboardReportController::class, 'receivedUpdate'])->middleware('throttle:10,5')->name('dashboard.report.received.update');
+    Route::put('/dashboard/laporan/{status}/{ticket_number}/verifikasi', [DashboardReportController::class, 'waitingverificationUpdate'])->middleware('throttle:10,5')->name('dashboard.report.waiting-verification.update');
+    Route::put('/dashboard/laporan/{status}/{ticket_number}/update-status', [DashboardReportController::class, 'processedUpdate'])->middleware('throttle:10,5')->name('dashboard.report.processed.update');
+    Route::get('/dashboard/laporan/{status}/{ticket_number}/pdf', [DashboardReportController::class, 'completedPdf'])->name('dashboard.report.completed.pdf');
+    Route::delete('/dashboard/laporan/{status}/{ticket_number}/hapus', [DashboardReportController::class, 'destroy'])->middleware('throttle:10,5')->name('dashboard.report.destroy');
 });

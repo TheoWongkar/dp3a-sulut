@@ -62,7 +62,7 @@ class ReportController extends Controller
             'regency' => 'required|string',
             'district' => 'required|string',
             'scene' => 'required|string',
-            'evidence' => 'nullable|file|mimes:jpg,jpeg,png,pdf,doc,docx|max:2048',
+            'evidence' => 'nullable|mimes:pdf,jpg,jpeg,png,mp4,webm|max:10240',
             'chronology' => 'required|string',
 
             // Agreement
@@ -120,7 +120,7 @@ class ReportController extends Controller
         // Simpan Status
         $report->statuses()->create([
             'status' => 'Diterima',
-            'description' => 'Laporan berhasil diterima, petugas kami akan segera menghubungi anda.',
+            'description' => 'Laporan telah diterima. Petugas kami akan segera menghubungi Anda.',
         ]);
 
         return redirect()->route('report.create')->with([
