@@ -203,7 +203,7 @@
                                 {{ \Carbon\Carbon::parse($report->created_at)->format('d/m/Y H:i') }}
                             </td>
                             <td class="p-2 whitespace-nowrap">
-                                <div class="flex justify-center items-center ">
+                                <div class="flex justify-center items-center gap-2">
                                     @if ($reportStatus == 'Diterima')
                                         <a href="{{ route('dashboard.report.edit', ['diterima', $report->ticket_number]) }}"
                                             class="text-blue-600 hover:underline text-sm">Lihat</a>
@@ -220,15 +220,22 @@
                                         <a href="{{ route('dashboard.report.edit', ['dibatalkan', $report->ticket_number]) }}"
                                             class="text-blue-600 hover:underline text-sm">Lihat</a>
                                     @endif
-                                    <form
-                                        action="{{ route('dashboard.report.destroy', [$status, $report->ticket_number]) }}"
-                                        method="POST" class="inline"
-                                        onsubmit="return confirm('Yakin ingin menghapus?')">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button
-                                            class="ml-2 text-red-600 hover:underline text-sm cursor-pointer">Hapus</button>
-                                    </form>
+
+                                    @can('delete', $report)
+                                        <form
+                                            action="{{ route('dashboard.report.destroy', [$status, $report->ticket_number]) }}"
+                                            method="POST" class="inline"
+                                            onsubmit="return confirm('Yakin ingin menghapus?')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button
+                                                class="text-red-600 hover:underline text-sm cursor-pointer">Hapus</button>
+                                        </form>
+                                    @else
+                                        <button type="button"
+                                            onclick="alert('Tindakan ini hanya bisa dilakukan oleh Admin.')"
+                                            class="text-gray-600 hover:underline text-sm cursor-pointer">Hapus</button>
+                                    @endcan
                                 </div>
                             </td>
                         </tr>

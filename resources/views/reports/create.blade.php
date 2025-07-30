@@ -61,6 +61,9 @@
             <form action="{{ route('report.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
+                {{-- reCAPTCHA V3 --}}
+                <x-shared.recaptcha action="report_store" />
+
                 {{-- STEP 1: Pelapor --}}
                 <div x-cloak x-show="step === 1" x-transition>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">

@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
@@ -13,6 +14,9 @@ class EmployeeController extends Controller
 {
     public function index(Request $request)
     {
+        // Cek Izin Akses
+        Gate::authorize('viewAny', Employee::class);
+
         // Validasi Search Form
         $validated = $request->validate([
             'status' => 'nullable|string|in:Aktif,Pensiun,Meninggal Dunia,Diberhentikan',
@@ -57,11 +61,17 @@ class EmployeeController extends Controller
 
     public function create()
     {
+        // Cek Izin Akses
+        Gate::authorize('create', Employee::class);
+
         return view('dashboard.employees.create');
     }
 
     public function store(Request $request)
     {
+        // Cek Izin Akses
+        Gate::authorize('create', Employee::class);
+
         // Validasi Input
         $validated = $request->validate(
             [
@@ -131,6 +141,9 @@ class EmployeeController extends Controller
         // Ambil data pegawai berdasarkan NIP
         $employee = Employee::where('nip', $nip)->firstOrFail();
 
+        // Cek Izin Akses
+        Gate::authorize('update', $employee);
+
         return view('dashboard.employees.edit', compact('employee'));
     }
 
@@ -138,6 +151,9 @@ class EmployeeController extends Controller
     {
         // Ambil employee berdasarkan NIP
         $employee = Employee::where('nip', $nip)->firstOrFail();
+
+        // Cek Izin Akses
+        Gate::authorize('update', $employee);
 
         // Validasi Input
         $validated = $request->validate(
@@ -213,6 +229,9 @@ class EmployeeController extends Controller
     {
         // Ambil data pegawai berdasarkan NIP
         $employee = Employee::where('nip', $nip)->firstOrFail();
+
+        // Cek Izin Akses
+        Gate::authorize('delete', $employee);
 
         // Hapus avatar jika ada
         if ($employee->avatar && Storage::disk('public')->exists($employee->avatar)) {

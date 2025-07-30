@@ -24,8 +24,11 @@
             </div>
 
             {{-- Form --}}
-            <form method="POST" action="{{ route('login') }}" class="space-y-5">
+            <form method="POST" action="{{ route('authenticate') }}" class="space-y-5">
                 @csrf
+
+                {{-- reCAPTCHA V3 --}}
+                <x-shared.recaptcha action="authenticate" />
 
                 {{-- Email --}}
                 <div>

@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Http\Controllers\Controller;
 use App\Models\PostCategory;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
 
 class PostCategoryController extends Controller
 {
@@ -52,6 +53,9 @@ class PostCategoryController extends Controller
 
     public function store(Request $request)
     {
+        // Cek Izin Akses
+        Gate::authorize('create', PostCategory::class);
+
         // Validasi Input
         $validated = $request->validate([
             'name' => 'required|string|max:255',
@@ -71,6 +75,9 @@ class PostCategoryController extends Controller
     {
         // Ambil data post category berdasarkan slug
         $postCategory = PostCategory::where('slug', $slug)->firstOrFail();
+
+        // Cek Izin Akses
+        Gate::authorize('update', $postCategory);
 
         // Validasi Input
         $validated = $request->validate([
@@ -92,6 +99,9 @@ class PostCategoryController extends Controller
     {
         // Ambil berita berdasarkan slug
         $postCategory = PostCategory::where('slug', $slug)->firstOrFail();
+
+        // Cek Izin Akses
+        Gate::authorize('delete', $postCategory);
 
         // Hapus data berita
         $postCategory->delete();

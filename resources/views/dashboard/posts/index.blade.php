@@ -185,16 +185,29 @@
                                 {{ \Carbon\Carbon::parse($post->created_at)->format('d/m/Y H:i') }}
                             </td>
                             <td class="p-2 whitespace-nowrap">
-                                <div class="flex justify-center items-center ">
-                                    <a href="{{ route('dashboard.post.edit', $post->slug) }}"
-                                        class="text-yellow-600 hover:underline text-sm">Edit</a>
-                                    <form action="{{ route('dashboard.post.destroy', $post->slug) }}" method="POST"
-                                        class="inline" onsubmit="return confirm('Yakin ingin menghapus?')">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button
-                                            class="ml-2 text-red-600 hover:underline text-sm cursor-pointer">Hapus</button>
-                                    </form>
+                                <div class="flex justify-center items-center gap-2">
+                                    @can('update', $post)
+                                        <a href="{{ route('dashboard.post.edit', $post->slug) }}"
+                                            class="text-yellow-600 hover:underline text-sm">Edit</a>
+                                    @else
+                                        <button type="button"
+                                            onclick="alert('Tindakan ini hanya bisa dilakukan oleh Admin atau pemilik berita.')"
+                                            class="text-gray-600 hover:underline text-sm cursor-pointer">Edit</button>
+                                    @endcan
+
+                                    @can('delete', $post)
+                                        <form action="{{ route('dashboard.post.destroy', $post->slug) }}" method="POST"
+                                            class="inline" onsubmit="return confirm('Yakin ingin menghapus?')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button
+                                                class="text-red-600 hover:underline text-sm cursor-pointer">Hapus</button>
+                                        </form>
+                                    @else
+                                        <button type="button"
+                                            onclick="alert('Tindakan ini hanya bisa dilakukan oleh Admin atau pemilik berita.')"
+                                            class="text-gray-600 hover:underline text-sm cursor-pointer">Hapus</button>
+                                    @endcan
                                 </div>
                             </td>
                         </tr>

@@ -184,7 +184,7 @@
                                 {{ \Carbon\Carbon::parse($employee->created_at)->format('d/m/Y H:i') }}
                             </td>
                             <td class="p-2 whitespace-nowrap">
-                                <div class="flex justify-center items-center ">
+                                <div class="flex justify-center items-center gap-2">
                                     <a href="{{ route('dashboard.employee.edit', $employee->nip) }}"
                                         class="text-yellow-600 hover:underline text-sm">Edit</a>
                                     <form action="{{ route('dashboard.employee.destroy', $employee->nip) }}"
@@ -193,7 +193,7 @@
                                         @csrf
                                         @method('DELETE')
                                         <button
-                                            class="ml-2 text-red-600 hover:underline text-sm cursor-pointer">Hapus</button>
+                                            class="text-red-600 hover:underline text-sm cursor-pointer">Hapus</button>
                                     </form>
                                 </div>
                             </td>

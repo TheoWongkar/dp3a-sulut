@@ -7,6 +7,7 @@ use App\Models\PostCategory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
@@ -67,6 +68,9 @@ class PostController extends Controller
         // Kategori Berita
         $categories = PostCategory::all();
 
+        // Cek Izin Akses
+        Gate::authorize('create', Post::class);
+
         return view('dashboard.posts.create', compact('categories'));
     }
 
@@ -107,6 +111,9 @@ class PostController extends Controller
         // Ambil berita berdasarkan slug
         $post = Post::where('slug', $slug)->firstOrFail();
 
+        // Cek Izin Akses
+        Gate::authorize('update', $post);
+
         return view('dashboard.posts.edit', compact('post', 'categories'));
     }
 
@@ -114,6 +121,9 @@ class PostController extends Controller
     {
         // Ambil berita berdasarkan slug
         $post = Post::where('slug', $slug)->firstOrFail();
+
+        // Cek Izin Akses
+        Gate::authorize('update', $post);
 
         // Validasi Input
         $validated = $request->validate([
@@ -150,6 +160,9 @@ class PostController extends Controller
     {
         // Ambil berita berdasarkan slug
         $post = Post::where('slug', $slug)->firstOrFail();
+
+        // Cek Izin Akses
+        Gate::authorize('delete', $post);
 
         // Hapus gambar jika ada
         if ($post->image && Storage::disk('public')->exists($post->image)) {

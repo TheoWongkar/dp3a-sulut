@@ -27,8 +27,14 @@
                         <x-buttons.primary-button type="submit" name="action" value="cancel"
                             onclick="return confirm('Yakin ingin membatalkan?')"
                             class="bg-red-600 hover:bg-red-700">Batalkan</x-buttons.primary-button>
-                        <x-buttons.primary-button type="submit"
-                            class="bg-green-600 hover:bg-green-700">Verifikasi</x-buttons.primary-button>
+                        @can('update', $report)
+                            <x-buttons.primary-button type="submit"
+                                class="bg-green-600 hover:bg-green-700">Verifikasi</x-buttons.primary-button>
+                        @else
+                            <x-buttons.primary-button type="button"
+                                onclick="alert('Tindakan ini hanya bisa dilakukan oleh Admin.')"
+                                class="bg-gray-600 hover:bg-gray-700">Verifikasi</x-buttons.primary-button>
+                        @endcan
                     </div>
                 </form>
             </div>

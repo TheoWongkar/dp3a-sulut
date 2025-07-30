@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 
 class ReportController extends Controller
@@ -424,6 +425,9 @@ class ReportController extends Controller
         $report = Report::with(['victim', 'suspect', 'reporter', 'statuses'])
             ->where('ticket_number', $ticket_number)->firstOrFail();
 
+        // Cek Izin Akses
+        Gate::authorize('update', $report);
+
         // Cek status terakhir sesuai dengan dipilih
         if ($report->latestStatus->status !== $statusMapped) {
             abort(403);
@@ -523,6 +527,9 @@ class ReportController extends Controller
         // Ambil laporan berdasarkan nomor tiket
         $report = Report::with(['victim', 'suspect', 'reporter', 'statuses'])
             ->where('ticket_number', $ticket_number)->firstOrFail();
+
+        // Cek Izin Akses
+        Gate::authorize('delete', $report);
 
         // Hapus file evidence jika ada
         if ($report->evidence && Storage::disk('public')->exists($report->evidence)) {

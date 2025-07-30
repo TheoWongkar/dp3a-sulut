@@ -22,12 +22,12 @@ Route::get('/berita/{slug}', [PostController::class, 'show'])->name('post.show')
 // Laporan
 Route::get('/cek-status-laporan', [ReportController::class, 'checkStatus'])->name('report.check-status');
 Route::get('/buat-laporan', [ReportController::class, 'create'])->name('report.create');
-Route::post('/buat-laporan', [ReportController::class, 'store'])->middleware('throttle:5,5')->name('report.store');
+Route::post('/buat-laporan', [ReportController::class, 'store'])->middleware(['throttle:5,5', 'recaptcha:report_store'])->name('report.store');
 
 Route::middleware('guest')->group(function () {
     // Login
     Route::get('/login', [LoginController::class, 'login'])->name('login');
-    Route::post('/login', [LoginController::class, 'authenticate'])->middleware('throttle:5,5')->name('authenticate');
+    Route::post('/login', [LoginController::class, 'authenticate'])->middleware(['throttle:5,5', 'recaptcha:authenticate'])->name('authenticate');
 });
 
 Route::middleware(['auth', 'active_user'])->group(function () {

@@ -10,36 +10,42 @@
         <div class="bg-gray-50 rounded-lg border border-gray-300 shadow">
             <div class="p-2 space-y-2">
                 <div class="flex flex-col lg:flex-row items-center justify-between gap-4">
-                    <div x-data="{ createModal: false }">
-                        {{-- Tombol Tambah --}}
-                        <x-buttons.primary-button @click="createModal = true"
-                            class="w-full lg:w-auto text-center bg-green-600 hover:bg-green-700">
-                            Tambah
-                        </x-buttons.primary-button>
+                    @can('create', App\Models\PostCategory::class)
+                        <div x-data="{ createModal: false }">
+                            {{-- Tombol Tambah --}}
+                            <x-buttons.primary-button @click="createModal = true"
+                                class="w-full lg:w-auto text-center bg-green-600 hover:bg-green-700">
+                                Tambah
+                            </x-buttons.primary-button>
 
-                        {{-- Modal --}}
-                        <div x-show="createModal" x-cloak
-                            class="fixed inset-0 flex items-center justify-center bg-black/50 z-10">
-                            <div class="w-full max-w-md bg-white rounded-lg shadow p-4">
-                                <h2 class="mb-5 font-semibold text-gray-700">Tambah Kategori</h2>
+                            {{-- Modal --}}
+                            <div x-show="createModal" x-cloak
+                                class="fixed inset-0 flex items-center justify-center bg-black/50 z-10">
+                                <div class="w-full max-w-md bg-white rounded-lg shadow p-4">
+                                    <h2 class="mb-5 font-semibold text-gray-700">Tambah Kategori</h2>
 
-                                <form action="{{ route('dashboard.post-category.store') }}" method="POST">
-                                    @csrf
+                                    <form action="{{ route('dashboard.post-category.store') }}" method="POST">
+                                        @csrf
 
-                                    <div class="grid gap-4">
-                                        <x-forms.input name="name" label="Nama"></x-forms.input>
-                                        <x-forms.textarea name="description" label="Deskripsi"></x-forms.textarea>
-                                    </div>
-                                    <div class="flex justify-end gap-2">
-                                        <x-buttons.primary-button type="button" @click="createModal = false"
-                                            class="bg-gray-600 hover:bg-gray-700">Kembali</x-buttons.primary-button>
-                                        <x-buttons.primary-button type="submit"
-                                            class="bg-green-600 hover:bg-green-700">Simpan</x-buttons.primary-button>
-                                    </div>
-                                </form>
+                                        <div class="grid gap-4">
+                                            <x-forms.input name="name" label="Nama"></x-forms.input>
+                                            <x-forms.textarea name="description" label="Deskripsi"></x-forms.textarea>
+                                        </div>
+                                        <div class="flex justify-end gap-2">
+                                            <x-buttons.primary-button type="button" @click="createModal = false"
+                                                class="bg-gray-600 hover:bg-gray-700">Kembali</x-buttons.primary-button>
+                                            <x-buttons.primary-button type="submit"
+                                                class="bg-green-600 hover:bg-green-700">Simpan</x-buttons.primary-button>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    @else
+                        <x-buttons.primary-button type="button"
+                            onclick="alert('Tindakan ini hanya bisa dilakukan oleh Admin.')"
+                            class="bg-gray-600 hover:bg-gray-700">Tambah</x-buttons.primary-button>
+                    @endcan
 
                     {{-- Form Filter & Search --}}
                     <form method="GET" action="{{ route('dashboard.post-category.index') }}"
@@ -166,56 +172,70 @@
                                 {{ \Carbon\Carbon::parse($postCategory->created_at)->format('d/m/Y H:i') }}
                             </td>
                             <td class="p-2 whitespace-nowrap">
-                                <div class="flex justify-center items-center ">
-                                    <div x-data="{ editModal: false }">
-                                        {{-- Tombol Edit --}}
-                                        <button @click="editModal = true"
-                                            class="text-yellow-600 hover:underline text-sm cursor-pointer">Edit</button>
+                                <div class="flex justify-center items-center gap-2">
+                                    @can('update', $postCategory)
+                                        <div x-data="{ editModal: false }">
+                                            {{-- Tombol Edit --}}
+                                            <button @click="editModal = true"
+                                                class="text-yellow-600 hover:underline text-sm cursor-pointer">Edit</button>
 
-                                        {{-- Modal Edit --}}
-                                        <div x-show="editModal" x-cloak
-                                            class="fixed inset-0 flex items-center justify-center bg-black/50 z-20">
-                                            <div class="w-full max-w-md bg-white rounded-lg shadow p-4">
-                                                <h2 class="mb-5 text-base font-semibold text-gray-700">Edit Kategori</h2>
+                                            {{-- Modal Edit --}}
+                                            <div x-show="editModal" x-cloak
+                                                class="fixed inset-0 flex items-center justify-center bg-black/50 z-20">
+                                                <div class="w-full max-w-md bg-white rounded-lg shadow p-4">
+                                                    <h2 class="mb-5 text-base font-semibold text-gray-700">Edit Kategori
+                                                    </h2>
 
-                                                <form
-                                                    action="{{ route('dashboard.post-category.update', $postCategory->slug) }}"
-                                                    method="POST">
-                                                    @csrf
-                                                    @method('PUT')
+                                                    <form
+                                                        action="{{ route('dashboard.post-category.update', $postCategory->slug) }}"
+                                                        method="POST">
+                                                        @csrf
+                                                        @method('PUT')
 
-                                                    <div class="grid gap-4">
-                                                        <x-forms.input name="name" label="Nama"
-                                                            value="{{ $postCategory->name }}"></x-forms.input>
-                                                        <x-forms.textarea name="description" label="Deskripsi">
-                                                            {{ $postCategory->description }}
-                                                        </x-forms.textarea>
-                                                    </div>
-                                                    <div class="flex justify-end gap-2">
-                                                        <x-buttons.primary-button type="button"
-                                                            @click="editModal = false"
-                                                            class="bg-gray-600 hover:bg-gray-700">Kembali</x-buttons.primary-button>
-                                                        <x-buttons.primary-button
-                                                            type="submit">Simpan</x-buttons.primary-button>
-                                                    </div>
-                                                </form>
+                                                        <div class="grid gap-4">
+                                                            <x-forms.input name="name" label="Nama"
+                                                                value="{{ $postCategory->name }}"></x-forms.input>
+                                                            <x-forms.textarea name="description" label="Deskripsi">
+                                                                {{ $postCategory->description }}
+                                                            </x-forms.textarea>
+                                                        </div>
+                                                        <div class="flex justify-end gap-2">
+                                                            <x-buttons.primary-button type="button"
+                                                                @click="editModal = false"
+                                                                class="bg-gray-600 hover:bg-gray-700">Kembali</x-buttons.primary-button>
+                                                            <x-buttons.primary-button
+                                                                type="submit">Simpan</x-buttons.primary-button>
+                                                        </div>
+                                                    </form>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <form action="{{ route('dashboard.post-category.destroy', $postCategory->slug) }}"
-                                        method="POST" class="inline"
-                                        onsubmit="return confirm('Yakin ingin menghapus?')">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button
-                                            class="ml-2 text-red-600 hover:underline text-sm cursor-pointer">Hapus</button>
-                                    </form>
+                                    @else
+                                        <button type="button"
+                                            onclick="alert('Tindakan ini hanya bisa dilakukan oleh Admin.')"
+                                            class="text-gray-600 hover:underline text-sm cursor-pointer">Edit</button>
+                                    @endcan
+
+                                    @can('delete', $postCategory)
+                                        <form action="{{ route('dashboard.post-category.destroy', $postCategory->slug) }}"
+                                            method="POST" class="inline"
+                                            onsubmit="return confirm('Yakin ingin menghapus?')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button
+                                                class="text-red-600 hover:underline text-sm cursor-pointer">Hapus</button>
+                                        </form>
+                                    @else
+                                        <button type="button"
+                                            onclick="alert('Tindakan ini hanya bisa dilakukan oleh Admin.')"
+                                            class="text-gray-600 hover:underline text-sm cursor-pointer">Hapus</button>
+                                    @endcan
                                 </div>
                             </td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="8" class="p-4 text-center text-gray-500">Tidak ada data kategori berita
+                            <td colspan="6" class="p-4 text-center text-gray-500">Tidak ada data kategori berita
                             </td>
                         </tr>
                     @endforelse
