@@ -87,7 +87,9 @@
                     </div>
                 </div>
 
-                <div class="mt-4 flex justify-end">
+                <div class="mt-4 flex justify-end gap-2">
+                    <x-buttons.primary-button href="{{ route('dashboard.post.index') }}"
+                        class="bg-gray-600 hover:bg-gray-700">Kembali</x-buttons.primary-button>
                     <x-buttons.primary-button type="submit">Simpan</x-buttons.primary-button>
                 </div>
             </form>

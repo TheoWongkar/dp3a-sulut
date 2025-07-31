@@ -121,7 +121,7 @@ class ReportController extends Controller
             'regency' => 'required|string',
             'district' => 'required|string',
             'scene' => 'required|string',
-            'evidence' => 'nullable|mimes:pdf,jpg,jpeg,png,mp4,webm|max:10240',
+            'evidence' => 'nullable|mimes:pdf,jpg,jpeg,png,mp4,webm|max:51200',
             'chronology' => 'required|string',
 
             // Agreement
@@ -137,7 +137,7 @@ class ReportController extends Controller
             'regency' => $validated['regency'],
             'district' => $validated['district'],
             'scene' => $validated['scene'],
-            'chronology' => $validated['chronology'] ?? null,
+            'chronology' => $validated['chronology'],
         ]);
 
         // Simpan file evidence jika ada
@@ -148,34 +148,34 @@ class ReportController extends Controller
 
         // Simpan Reporter
         $report->reporter()->create([
-            'name' => $validated['reporter_name'],
             'nik' => $validated['reporter_nik'] ?? null,
+            'name' => $validated['reporter_name'],
             'phone' => $validated['reporter_phone'],
+            'address' => $validated['reporter_address'],
+            'age' => $validated['reporter_age'],
             'gender' => $validated['reporter_gender'],
             'relationship_between' => $validated['reporter_relationship_between'],
-            'address' => $validated['reporter_address'] ?? null,
-            'age' => $validated['reporter_age'] ?? null,
         ]);
 
         // Simpan Korban
         $report->victim()->create([
+            'nik' => $validated['victim_nik'],
             'name' => $validated['victim_name'],
-            'nik' => $validated['victim_nik'] ?? null,
+            'phone' => $validated['victim_phone'],
+            'address' => $validated['victim_address'],
+            'age' => $validated['victim_age'],
             'gender' => $validated['victim_gender'],
-            'age' => $validated['victim_age'] ?? null,
-            'phone' => $validated['victim_phone'] ?? null,
-            'address' => $validated['victim_address'] ?? null,
             'description' => $validated['victim_description'] ?? null,
         ]);
 
         // Simpan Terduga
         $report->suspect()->create([
-            'name' => $validated['suspect_name'],
             'nik' => $validated['suspect_nik'] ?? null,
-            'gender' => $validated['suspect_gender'],
-            'age' => $validated['suspect_age'] ?? null,
+            'name' => $validated['suspect_name'] ?? null,
             'phone' => $validated['suspect_phone'] ?? null,
             'address' => $validated['suspect_address'] ?? null,
+            'age' => $validated['suspect_age'] ?? null,
+            'gender' => $validated['suspect_gender'] ?? null,
             'description' => $validated['suspect_description'] ?? null,
         ]);
 
@@ -304,7 +304,7 @@ class ReportController extends Controller
             'regency' => 'required|string',
             'district' => 'required|string',
             'scene' => 'required|string',
-            'evidence' => 'nullable|mimes:pdf,jpg,jpeg,png,mp4,webm|max:10240',
+            'evidence' => 'nullable|mimes:pdf,jpg,jpeg,png,mp4,webm|max:51200',
             'chronology' => 'required|string',
         ]);
 
@@ -315,7 +315,7 @@ class ReportController extends Controller
             'regency' => $validated['regency'],
             'district' => $validated['district'],
             'scene' => $validated['scene'],
-            'chronology' => $validated['chronology'] ?? null,
+            'chronology' => $validated['chronology'],
         ]);
 
         // Simpan file evidence jika ada
@@ -329,34 +329,34 @@ class ReportController extends Controller
 
         // Simpan Reporter
         $report->reporter->update([
-            'name' => $validated['reporter_name'],
             'nik' => $validated['reporter_nik'] ?: null,
+            'name' => $validated['reporter_name'],
             'phone' => $validated['reporter_phone'],
+            'address' => $validated['reporter_address'] ?: null,
+            'age' => $validated['reporter_age'],
             'gender' => $validated['reporter_gender'],
             'relationship_between' => $validated['reporter_relationship_between'],
-            'address' => $validated['reporter_address'] ?: null,
-            'age' => $validated['reporter_age'] ?? null,
         ]);
 
         // Simpan Korban
         $report->victim->update([
-            'name' => $validated['victim_name'],
             'nik' => $validated['victim_nik'] ?: null,
-            'gender' => $validated['victim_gender'],
-            'age' => $validated['victim_age'] ?? null,
-            'phone' => $validated['victim_phone'] ?? null,
+            'name' => $validated['victim_name'],
+            'phone' => $validated['victim_phone'],
             'address' => $validated['victim_address'] ?: null,
+            'age' => $validated['victim_age'],
+            'gender' => $validated['victim_gender'],
             'description' => $validated['victim_description'] ?? null,
         ]);
 
         // Simpan Terduga
         $report->suspect->update([
-            'name' => $validated['suspect_name'] ?? null,
             'nik' => $validated['suspect_nik'] ?: null,
-            'gender' => $validated['suspect_gender'],
-            'age' => $validated['suspect_age'] ?? null,
+            'name' => $validated['suspect_name'] ?? null,
             'phone' => $validated['suspect_phone'] ?? null,
             'address' => $validated['suspect_address'] ?: null,
+            'age' => $validated['suspect_age'] ?? null,
+            'gender' => $validated['suspect_gender'] ?? null,
             'description' => $validated['suspect_description'] ?? null,
         ]);
 

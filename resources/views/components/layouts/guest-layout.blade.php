@@ -11,6 +11,13 @@
         content="Website Dinas Pemberdayaan Perempuan dan Perlindungan Anak (DP3A), Sulawesi Utara. Dirancang untuk sistem informasi pelaporan kekerasan terhadap anak.">
     <meta name="keywords" content="Elapor DP3A Sulut, sistem pelaporan online, layanan perlindungan anak">
     <meta name="author" content="DP3A Sulawesi Utara">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta property="og:title" content="DP3A - {{ $title }}">
+    <meta property="og:description"
+        content="Website Dinas Pemberdayaan Perempuan dan Perlindungan Anak (DP3A) Sulawesi Utara.">
+    <meta property="og:image" content="{{ asset('img/hero-image.webp') }}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url()->current() }}">
 
     {{-- Favicon --}}
     <link rel="shortcut icon" href="{{ asset('img/application-logo.svg') }}" type="image/x-icon">
@@ -35,6 +42,10 @@
     <style>
         [x-cloak] {
             display: none !important;
+        }
+
+        .grecaptcha-badge {
+            z-index: 9999 !important;
         }
     </style>
 </head>

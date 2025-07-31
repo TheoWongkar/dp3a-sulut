@@ -11,7 +11,6 @@ class Report extends Model
     use HasFactory;
 
     protected $fillable = [
-        'handled_id',
         'ticket_number',
         'violence_category',
         'chronology',
@@ -30,11 +29,6 @@ class Report extends Model
         } while (self::where('ticket_number', $ticket_number)->exists());
 
         return $ticket_number;
-    }
-
-    public function handler()
-    {
-        return $this->belongsTo(User::class, 'handled_id');
     }
 
     public function victim()

@@ -33,7 +33,7 @@ class DatabaseSeeder extends Seeder
 
         Employee::factory()->create([
             'user_id' => $adminUser->id,
-            'name' => 'Admin DP3A',
+            'name' => 'Theoterra Wongkar',
             'gender' => 'Laki-laki',
             'position' => 'Administrator',
             'date_of_birth' => '2003-08-19',

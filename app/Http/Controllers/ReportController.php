@@ -19,7 +19,7 @@ class ReportController extends Controller
         $ticketNumber = $validated['ticket_number'] ?? null;
 
         // Data Laporan
-        $report = Report::with('handler', 'victim', 'suspect', 'reporter', 'statuses', 'latestStatus')->where('ticket_number', 'LIKE', "$ticketNumber")->first();
+        $report = Report::with('statuses', 'latestStatus')->where('ticket_number', 'LIKE', "$ticketNumber")->first();
 
         return view('reports.check-status', compact('report', 'ticketNumber'));
     }
@@ -62,7 +62,7 @@ class ReportController extends Controller
             'regency' => 'required|string',
             'district' => 'required|string',
             'scene' => 'required|string',
-            'evidence' => 'nullable|mimes:pdf,jpg,jpeg,png,mp4,webm|max:10240',
+            'evidence' => 'nullable|mimes:pdf,jpg,jpeg,png,mp4,webm|max:51200',
             'chronology' => 'required|string',
 
             // Agreement
@@ -78,42 +78,42 @@ class ReportController extends Controller
             'regency' => $validated['regency'],
             'district' => $validated['district'],
             'scene' => $validated['scene'],
-            'chronology' => $validated['chronology'] ?? null,
+            'chronology' => $validated['chronology'],
         ]);
 
         // Simpan file evidence jika ada
         if ($request->hasFile('evidence')) {
-            $path = $request->file('evidence')->store('evidences', 'public');
-            $report->update(['evidence' => $path]);
+            $evidencePath = $request->file('evidence')->store('reports', 'public');
+            $report->update(['evidence' => $evidencePath]);
         }
 
         // Simpan Reporter
         $report->reporter()->create([
             'name' => $validated['reporter_name'],
             'phone' => $validated['reporter_phone'],
+            'address' => $validated['reporter_address'],
+            'age' => $validated['reporter_age'],
             'gender' => $validated['reporter_gender'],
             'relationship_between' => $validated['reporter_relationship_between'],
-            'address' => $validated['reporter_address'] ?? null,
-            'age' => $validated['reporter_age'] ?? null,
         ]);
 
         // Simpan Korban
         $report->victim()->create([
             'name' => $validated['victim_name'],
+            'phone' => $validated['victim_phone'],
+            'address' => $validated['victim_address'],
+            'age' => $validated['victim_age'],
             'gender' => $validated['victim_gender'],
-            'age' => $validated['victim_age'] ?? null,
-            'phone' => $validated['victim_phone'] ?? null,
-            'address' => $validated['victim_address'] ?? null,
             'description' => $validated['victim_description'] ?? null,
         ]);
 
         // Simpan Terduga
         $report->suspect()->create([
-            'name' => $validated['suspect_name'],
-            'gender' => $validated['suspect_gender'],
-            'age' => $validated['suspect_age'] ?? null,
+            'name' => $validated['suspect_name'] ?? null,
             'phone' => $validated['suspect_phone'] ?? null,
             'address' => $validated['suspect_address'] ?? null,
+            'age' => $validated['suspect_age'] ?? null,
+            'gender' => $validated['suspect_gender'] ?? null,
             'description' => $validated['suspect_description'] ?? null,
         ]);
 

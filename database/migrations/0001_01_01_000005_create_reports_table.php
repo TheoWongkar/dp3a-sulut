@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('reports', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('handled_id')->nullable()->constrained('users')->onDelete('set null');
             $table->string('ticket_number')->unique();
             $table->enum('violence_category', ['Fisik', 'Psikis', 'Seksual', 'Penelantaran', 'Eksploitasi', 'Lainnya']);
             $table->text('chronology')->nullable();

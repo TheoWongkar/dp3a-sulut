@@ -236,7 +236,7 @@
             @foreach ($report->statuses as $status)
                 <tr>
                     <td>{{ $status->status }}</td>
-                    <td>{{ $status->changedBy->employee->name }}</td>
+                    <td>{{ $status->changedBy->employee->name ?? 'Sistem' }}</td>
                     <td>{{ $status->description ?: 'Tidak ada keterangan tambahan' }}</td>
                     <td>{{ $status->created_at->translatedFormat('d/m/Y H:i') }}</td>
                 </tr>

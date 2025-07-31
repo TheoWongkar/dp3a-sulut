@@ -52,11 +52,6 @@ class User extends Authenticatable
         return $this->hasOne(Employee::class);
     }
 
-    public function handledReports()
-    {
-        return $this->hasMany(Report::class, 'handled_id');
-    }
-
     public function statusChanges()
     {
         return $this->hasMany(Status::class, 'changed_by');

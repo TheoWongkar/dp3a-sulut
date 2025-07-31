@@ -77,6 +77,7 @@ class DashboardController extends Controller
 
         // Gender (suspects)
         $data['suspectGenders'] = Suspect::whereHas('report', fn($q) => $q->whereYear('created_at', $year))
+            ->whereNotNull('gender')
             ->selectRaw('gender, COUNT(*) as count')
             ->groupBy('gender')
             ->pluck('count', 'gender');

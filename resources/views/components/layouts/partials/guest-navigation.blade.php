@@ -33,7 +33,7 @@
             <a href="{{ route('home') }}"
                 class="{{ Route::is('home') ? 'underline underline-offset-8 text-blue-100' : '' }} hover:underline hover:underline-offset-8 transition">Beranda</a>
             <a href="{{ route('post.index') }}"
-                class="{{ Route::is('post.index') ? 'underline underline-offset-8 text-blue-100' : '' }} hover:underline hover:underline-offset-8 transition">Berita</a>
+                class="{{ Route::is('post.*') ? 'underline underline-offset-8 text-blue-100' : '' }} hover:underline hover:underline-offset-8 transition">Berita</a>
             <a href="{{ route('report.check-status') }}"
                 class="{{ Route::is('report.check-status') ? 'underline underline-offset-8 text-blue-100' : '' }} hover:underline hover:underline-offset-8 transition">Cek
                 Status Laporan</a>

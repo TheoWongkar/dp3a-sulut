@@ -191,7 +191,7 @@
                                 <a :href="'{{ route('post.index', '') }}/' + post.slug" aria-label="Berita"
                                     class="block">
                                     <img :src="post.image" :alt="post.title"
-                                        class="rounded-xl shadow hover:shadow-md transition duration-300 w-full h-36 object-cover">
+                                        class="rounded-xl shadow hover:shadow-md transition duration-300 w-36 h-36 object-cover">
                                 </a>
                             </template>
 

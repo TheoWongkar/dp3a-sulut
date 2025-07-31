@@ -104,7 +104,7 @@
                             <x-forms.input name="evidence" label="Bukti (Opsional)" type="file"
                                 accept="application/pdf,image/jpeg,image/png,video/mp4,video/webm"
                                 class="file:mr-4 file:px-3 file:text-xs file:text-white file:rounded-xs file:bg-gray-600" />
-                            <p class="mt-1 text-xs text-gray-600">Format: PDF, JPG, JPEG, PNG, MP4, WEBM. Max 10MB.</p>
+                            <p class="mt-1 text-xs text-gray-600">Format: PDF, JPG, JPEG, PNG, MP4, WEBM. Max 50MB.</p>
                             @if ($report->evidence)
                                 <p class="text-xs">
                                     Saat ini:

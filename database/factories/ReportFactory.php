@@ -20,7 +20,6 @@ class ReportFactory extends Factory
     public function definition(): array
     {
         return [
-            'handled_id' => User::inRandomOrder()->first()?->id,
             'ticket_number' => Report::generateTicketNumber(),
             'violence_category' => fake()->randomElement(['Fisik', 'Psikis', 'Seksual', 'Penelantaran', 'Eksploitasi', 'Lainnya']),
             'chronology' => fake()->paragraph(),

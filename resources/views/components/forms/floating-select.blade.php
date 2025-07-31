@@ -32,7 +32,7 @@
 
 <style>
     select.filled + label {
-    transform: translateY(-0.375rem) scale(0.75); /* naik dan kecil */
+    transform: translateY(-0.375rem) scale(0.75);
     transform-origin: top left;
 }
 
